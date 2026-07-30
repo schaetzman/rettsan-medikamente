@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wirkstoff-Trainer — Rettungsdienst Hessen</title>
+<meta name="description" content="Trainer für Wirkstoffgruppen und Notfallmedikamente nach den hessischen Algorithmen V 4.2">
+<meta name="theme-color" content="#0B1A2E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B1A2E; --ink-800:#102841; --steel-700:#1E3A5F; --steel-600:#2A4A73; --steel-500:#3A5C87;
+  --ember:#F4A261; --ember-300:#F8C68A; --ember-600:#D96C2C; --ember-50:#FEF7EE;
+  --paper:#FAF8F4; --paper-100:#F3EFE7; --paper-200:#E6DFD2;
+  --green:#10B981; --blue:#3B82F6; --violet:#A855F7; --wrong:#E5484D;
+  --font-display:'Fraunces',Georgia,serif;
+  --font-sans:'Inter Tight',system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --tap:44px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font-sans); color:var(--paper); background-color:var(--ink);
+  background-image:
+    radial-gradient(ellipse at 20% 30%, rgba(244,162,97,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(58,92,135,0.15) 0%, transparent 50%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'><g fill='none' stroke='%231E3A5F' stroke-width='0.6' opacity='0.35'><path d='M-50 200 Q 150 120, 300 200 T 650 180'/><path d='M-50 240 Q 150 160, 300 240 T 650 220'/><path d='M-50 280 Q 150 200, 300 280 T 650 260'/><path d='M-50 320 Q 150 240, 300 320 T 650 300'/><path d='M-50 360 Q 150 280, 300 360 T 650 340'/><path d='M-50 400 Q 150 320, 300 400 T 650 380'/><path d='M-50 440 Q 150 360, 300 440 T 650 420'/></g></svg>");
+  background-size:cover,cover,600px 600px; background-attachment:fixed;
+  min-height:100vh; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.label{font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.18em;font-size:.68rem;font-weight:500}
+h1,h2,h3{font-family:var(--font-display);font-variation-settings:"opsz" 144;letter-spacing:-.025em;line-height:1.02;margin:0}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.appear{animation:fadeIn .5s ease-out both}
+@keyframes shake{10%,90%{transform:translateX(-2px)}30%,70%{transform:translateX(4px)}50%{transform:translateX(-4px)}}
+.shake{animation:shake .35s}
+
+/* ---------- Shell ---------- */
+.wrap{max-width:56rem;margin:0 auto;padding:1rem 1rem 5.5rem}
+header.top{display:flex;align-items:center;gap:.75rem;padding:.9rem 0 1.1rem;border-bottom:1px solid rgba(230,223,210,.14)}
+.mark{width:38px;height:38px;border-radius:9px;flex:0 0 auto;display:grid;place-items:center;
+  background:linear-gradient(145deg,var(--ember),var(--ember-600));color:var(--ink);
+  font-family:var(--font-display);font-weight:900;font-size:1.05rem}
+.top h1{font-size:1.18rem;font-weight:600}
+.top .sub{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ember);opacity:.85;margin-top:.18rem}
+.spacer{flex:1}
+.iconbtn{background:rgba(230,223,210,.07);border:1px solid rgba(230,223,210,.16);color:var(--paper);
+  border-radius:9px;min-width:var(--tap);height:var(--tap);padding:0 .7rem;font-size:.9rem;cursor:pointer;font-family:var(--font-sans)}
+.iconbtn:active{background:rgba(244,162,97,.2)}
+
+/* ---------- Home ---------- */
+.hero{padding:1.6rem 0 1.1rem}
+.hero h2{font-size:2.1rem;font-weight:600}
+.hero h2 em{font-style:italic;color:var(--ember)}
+.hero p{color:rgba(250,248,244,.7);line-height:1.55;margin:.7rem 0 0;font-size:.95rem}
+.stats{display:flex;gap:.5rem;flex-wrap:wrap;margin:1.1rem 0 0}
+.stat{background:rgba(30,58,95,.4);border:1px solid rgba(230,223,210,.13);border-radius:11px;padding:.55rem .8rem;flex:1;min-width:6.5rem}
+.stat b{display:block;font-family:var(--font-display);font-size:1.5rem;font-weight:700;line-height:1}
+.stat span{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,248,244,.55)}
+
+.modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:.75rem;margin-top:1.3rem}
+.mode{display:block;width:100%;text-align:left;cursor:pointer;font-family:var(--font-sans);color:var(--paper);
+  background:rgba(16,40,65,.72);border:1px solid rgba(230,223,210,.14);border-left:3px solid var(--ember);
+  border-radius:12px;padding:.95rem 1rem;transition:background .18s,transform .1s}
+.mode:active{transform:scale(.985)}
+.mode:hover{background:rgba(30,58,95,.75)}
+.mode .t{font-family:var(--font-display);font-size:1.12rem;font-weight:600;display:flex;align-items:center;gap:.5rem}
+.mode .d{font-size:.85rem;color:rgba(250,248,244,.66);margin-top:.3rem;line-height:1.45}
+.mode .bar{height:4px;border-radius:2px;background:rgba(230,223,210,.13);margin-top:.7rem;overflow:hidden}
+.mode .bar i{display:block;height:100%;background:var(--ember);border-radius:2px}
+.mode.alt{border-left-color:var(--blue)}
+.mode.alt2{border-left-color:var(--green)}
+.mode.alt3{border-left-color:var(--violet)}
+
+/* ---------- Karten / Spiel ---------- */
+.panel{background:rgba(16,40,65,.7);border:1px solid rgba(230,223,210,.14);border-radius:14px;padding:1rem;margin-top:1rem}
+.qline{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ember);margin-bottom:.5rem}
+.prompt{font-family:var(--font-display);font-size:1.3rem;font-weight:600;line-height:1.2}
+.prompt small{display:block;font-family:var(--font-sans);font-size:.85rem;font-weight:400;color:rgba(250,248,244,.66);margin-top:.35rem;line-height:1.45}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1rem}
+.col h4{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;
+  color:rgba(250,248,244,.5);margin:0 0 .45rem;font-weight:500}
+.chip{display:block;width:100%;text-align:left;font-family:var(--font-sans);font-size:.9rem;line-height:1.3;
+  color:var(--paper);background:rgba(30,58,95,.55);border:1px solid rgba(230,223,210,.16);
+  border-radius:10px;padding:.7rem .75rem;margin-bottom:.5rem;cursor:pointer;min-height:var(--tap);
+  transition:background .15s,border-color .15s,opacity .25s}
+.chip small{display:block;font-family:var(--font-mono);font-size:.56rem;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(250,248,244,.45);margin-top:.2rem}
+.chip:hover{background:rgba(42,74,115,.7)}
+.chip.sel{border-color:var(--ember);background:rgba(244,162,97,.18);box-shadow:0 0 0 1px var(--ember) inset}
+.chip.ok{border-color:var(--green);background:rgba(16,185,129,.16);opacity:.55;cursor:default}
+.chip.bad{border-color:var(--wrong);background:rgba(229,72,77,.18)}
+.chip.pick{border-color:var(--blue);background:rgba(59,130,246,.18)}
+
+.opts{display:grid;gap:.5rem;margin-top:1rem}
+.feedback{margin-top:.9rem;border-radius:11px;padding:.8rem .9rem;font-size:.88rem;line-height:1.5;border:1px solid}
+.feedback.good{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.45)}
+.feedback.bad{background:rgba(229,72,77,.12);border-color:rgba(229,72,77,.45)}
+.feedback b{font-weight:600}
+.feedback .why{display:block;margin-top:.4rem;color:rgba(250,248,244,.75)}
+
+.actions{display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap}
+.btn{font-family:var(--font-sans);font-size:.92rem;font-weight:500;cursor:pointer;border-radius:10px;
+  padding:.75rem 1.1rem;min-height:var(--tap);border:1px solid transparent;flex:1}
+.btn.primary{background:var(--ember);color:var(--ink);font-weight:600}
+.btn.primary:active{background:var(--ember-600)}
+.btn.ghost{background:transparent;border-color:rgba(230,223,210,.28);color:var(--paper)}
+
+.progressbar{height:5px;background:rgba(230,223,210,.13);border-radius:3px;overflow:hidden;margin:.9rem 0 0}
+.progressbar i{display:block;height:100%;background:var(--ember);transition:width .3s}
+.scoreline{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:.6rem;
+  letter-spacing:.13em;text-transform:uppercase;color:rgba(250,248,244,.55);margin-top:.45rem}
+.scoreline .streak{color:var(--ember)}
+
+/* ---------- Steckbrief / Nachschlagen ---------- */
+.search{width:100%;font-family:var(--font-sans);font-size:1rem;color:var(--paper);
+  background:rgba(30,58,95,.5);border:1px solid rgba(230,223,210,.2);border-radius:10px;
+  padding:.75rem .85rem;min-height:var(--tap);margin-top:.8rem}
+.search::placeholder{color:rgba(250,248,244,.4)}
+.filters{display:flex;gap:.4rem;margin-top:.7rem;overflow-x:auto;padding-bottom:.4rem;
+  scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.filters::-webkit-scrollbar{height:4px}
+.filters::-webkit-scrollbar-thumb{background:rgba(244,162,97,.35);border-radius:2px}
+.filt{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  background:rgba(30,58,95,.5);border:1px solid rgba(230,223,210,.18);color:rgba(250,248,244,.75);
+  border-radius:99px;padding:.4rem .7rem;cursor:pointer;min-height:32px;white-space:nowrap;flex:0 0 auto}
+.filt.on{background:var(--ember);color:var(--ink);border-color:var(--ember);font-weight:500}
+
+.card{background:rgba(16,40,65,.7);border:1px solid rgba(230,223,210,.14);border-radius:13px;
+  padding:.9rem 1rem;margin-top:.7rem;border-left:3px solid var(--steel-500)}
+.card.o2{border-left-color:var(--blue)}
+.card h3{font-size:1.15rem;font-weight:600;display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap}
+.card .mno{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.12em;color:var(--ember);
+  border:1px solid rgba(244,162,97,.4);border-radius:5px;padding:.12rem .35rem}
+.card .grp{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;
+  color:rgba(250,248,244,.55);margin-top:.3rem}
+.row{display:flex;gap:.6rem;margin-top:.6rem;font-size:.87rem;line-height:1.45;align-items:flex-start}
+.row .k{font-family:var(--font-mono);font-size:.56rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ember);flex:0 0 4.6rem;padding-top:.18rem}
+.row .v{flex:1;color:rgba(250,248,244,.86)}
+.row.cave .k{color:var(--wrong)}
+.who{display:inline-flex;gap:.3rem;flex-wrap:wrap;margin-top:.15rem}
+.tag{font-family:var(--font-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;
+  border-radius:5px;padding:.18rem .4rem;border:1px solid}
+.tag.rs{color:var(--green);border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.1)}
+.tag.ns{color:var(--ember-300);border-color:rgba(244,162,97,.45);background:rgba(244,162,97,.1)}
+.tag.na{color:#93C5FD;border-color:rgba(59,130,246,.5);background:rgba(59,130,246,.1)}
+.saa{display:inline-block;font-family:var(--font-mono);font-size:.55rem;letter-spacing:.08em;
+  color:#FCD34D;border:1px solid rgba(252,211,77,.45);background:rgba(252,211,77,.1);
+  border-radius:5px;padding:.15rem .38rem;margin-left:.3rem}
+
+/* ---------- Info / Recht ---------- */
+.note{background:rgba(244,162,97,.09);border:1px solid rgba(244,162,97,.3);border-radius:12px;
+  padding:.85rem 1rem;font-size:.87rem;line-height:1.55;margin-top:1rem;color:rgba(250,248,244,.88)}
+.note b{color:var(--ember)}
+.warn{background:rgba(229,72,77,.1);border-color:rgba(229,72,77,.4)}
+.warn b{color:#FCA5A5}
+table.legal{width:100%;border-collapse:collapse;margin-top:.8rem;font-size:.84rem}
+table.legal th,table.legal td{text-align:left;padding:.55rem .5rem;border-bottom:1px solid rgba(230,223,210,.13);vertical-align:top}
+table.legal th{font-family:var(--font-mono);font-size:.56rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ember);font-weight:500}
+table.legal td{color:rgba(250,248,244,.82);line-height:1.45}
+
+/* ---------- Nav ---------- */
+nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;
+  background:rgba(11,26,46,.96);backdrop-filter:blur(12px);border-top:1px solid rgba(230,223,210,.14);
+  padding-bottom:env(safe-area-inset-bottom)}
+nav.bottom button{flex:1;background:none;border:none;color:rgba(250,248,244,.5);cursor:pointer;
+  padding:.6rem .2rem .7rem;font-family:var(--font-mono);font-size:.55rem;letter-spacing:.11em;
+  text-transform:uppercase;min-height:56px}
+nav.bottom button .ic{display:block;font-size:1.15rem;margin-bottom:.14rem;line-height:1}
+nav.bottom button.on{color:var(--ember)}
+
+footer{text-align:center;padding:1.6rem 0 .5rem}
+footer .label{color:var(--ember);opacity:.55}
+.src{font-size:.72rem;color:rgba(250,248,244,.42);line-height:1.6;margin-top:.6rem}
+
+/* Handschuh-Modus */
+body.glove{--tap:56px}
+body.glove .chip{font-size:1rem;padding:.95rem .85rem}
+body.glove .btn{font-size:1rem;padding:.95rem 1.2rem}
+body.glove .filt{font-size:.66rem;padding:.55rem .85rem}
+
+.hidden{display:none !important}
+@media(max-width:420px){ .cols{grid-template-columns:1fr} .hero h2{font-size:1.7rem} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="mark">Rx</div>
+    <div>
+      <h1>Wirkstoff-Trainer</h1>
+      <div class="sub">Hessen-Algorithmen V 4.2</div>
+    </div>
+    <div class="spacer"></div>
+    <button class="iconbtn" id="gloveBtn" title="Handschuh-Modus">🧤</button>
+  </header>
+
+  <!-- HOME -->
+  <section id="v-home" class="view appear">
+    <div class="hero">
+      <h2>Welcher Wirkstoff gehört zu <em>welchem Notfall?</em></h2>
+      <p>Fünf Spielmodi auf Basis der Notfallmedikamente M 1–M 26 der hessischen Algorithmen
+      (Stand 04.12.2025). Kurze Runden, sofortiges Feedback, Fortschritt bleibt auf dem Gerät.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="s-drugs">26</b><span>Wirkstoffe</span></div>
+      <div class="stat"><b id="s-groups">20</b><span>Gruppen</span></div>
+      <div class="stat"><b id="s-cases">15</b><span>Notfallbilder</span></div>
+      <div class="stat"><b id="s-xp">0</b><span>Punkte</span></div>
+    </div>
+
+    <div class="modes">
+      <button class="mode" data-go="match"><div class="t">🎯 Wirkstoff → Notfall</div>
+        <div class="d">Paare zuordnen: Welches Medikament gehört zu welchem Notfallbild?</div>
+        <div class="bar"><i id="p-match" style="width:0%"></i></div></button>
+      <button class="mode alt" data-go="group"><div class="t">🗂️ Wirkstoff → Gruppe</div>
+        <div class="d">Subsumieren: Welcher Wirkstoff gehört unter welche Wirkstoffgruppe?</div>
+        <div class="bar"><i id="p-group" style="width:0%"></i></div></button>
+      <button class="mode alt2" data-go="koffer"><div class="t">🧰 Notfall-Koffer</div>
+        <div class="d">Alle passenden Wirkstoffe zu einem Notfall auswählen — Mehrfachauswahl.</div>
+        <div class="bar"><i id="p-koffer" style="width:0%"></i></div></button>
+      <button class="mode alt3" data-go="wer"><div class="t">👤 Wer darf&#39;s geben?</div>
+        <div class="d">Schnellrunde: RS, Notfallsanitäter oder Notarzt — Kompetenzstufen sitzen lassen.</div>
+        <div class="bar"><i id="p-wer" style="width:0%"></i></div></button>
+      <button class="mode" data-go="cave"><div class="t">⚠️ Cave &amp; Kontraindikation</div>
+        <div class="d">Die Fallen: Wann darf ein Wirkstoff gerade nicht gegeben werden?</div>
+        <div class="bar"><i id="p-cave" style="width:0%"></i></div></button>
+    </div>
+
+    <div class="note warn">
+      <b>Bevor du losspielst — der Rahmen.</b> Die Hessen-Algorithmen sind die Lehrmeinung für
+      <b>Notfallsanitäter</b>. Als Rettungssanitäter gibst du diese Medikamente nicht eigenverantwortlich —
+      du erkennst das Notfallbild, bereitest vor, sprichst laut mit, gibst nach Anordnung und überwachst danach.
+      Genau dafür ist der Trainer da. Verbindlich ist immer die unterschriebene SAA deines ÄLRD im
+      Wetteraukreis. <button class="btn ghost" style="margin-top:.6rem" data-go="info">Rechtsrahmen ansehen</button>
+    </div>
+  </section>
+
+  <!-- SPIEL -->
+  <section id="v-play" class="view hidden"></section>
+
+  <!-- NACHSCHLAGEN -->
+  <section id="v-ref" class="view hidden">
+    <div class="hero" style="padding-bottom:.4rem">
+      <h2>Nachschlagen</h2>
+      <p>Alle 26 Wirkstoffe der hessischen Algorithmen plus Vollelektrolytlösung — mit Gruppe,
+      Indikation, Dosis und Cave.</p>
+    </div>
+    <input class="search" id="q" placeholder="Suchen: Wirkstoff, Handelsname, Gruppe, Notfall…" autocomplete="off">
+    <div class="filters" id="filters"></div>
+    <div id="reflist"></div>
+  </section>
+
+  <!-- INFO -->
+  <section id="v-info" class="view hidden">
+    <div class="hero" style="padding-bottom:.4rem">
+      <h2>Rechtsrahmen &amp; Quellen</h2>
+      <p>Wer darf was — und woher die Inhalte dieser App stammen.</p>
+    </div>
+
+    <div class="panel">
+      <div class="qline">Kompetenzstufen</div>
+      <table class="legal">
+        <tr><th>Stufe</th><th>Grundlage</th><th>Medikamente</th></tr>
+        <tr><td><span class="tag rs">RS</span></td>
+          <td>Rettungssanitäter, landesrechtliche Qualifikation, HRDG. Kein eigenes Heilkundemandat.</td>
+          <td>Sauerstoff im Rahmen der Basismaßnahmen; orale Glukose beim wachen, schluckfähigen
+          Patienten (K 8). Alles Weitere nur nach Anordnung/Delegation — vorbereiten, assistieren, überwachen.</td></tr>
+        <tr><td><span class="tag ns">NotSan</span></td>
+          <td>NotSanG § 2a / § 4 Abs. 2 Nr. 2c. Die Hessen-Algorithmen sind hierfür die Lehrmeinung.</td>
+          <td>Die Wirkstoffe M 1–M 26 unter den im Algorithmus genannten Bedingungen —
+          soweit der ÄLRD sie vor Ort freigegeben hat.</td></tr>
+        <tr><td><span class="tag na">NA</span></td>
+          <td>Approbierter Arzt, volle Heilkunde.</td>
+          <td>Ohne Katalogbindung, inkl. Narkose, Katecholamin-Perfusor, Reproterol, Magnesium, Thrombolyse.</td></tr>
+      </table>
+    </div>
+
+    <div class="note warn">
+      <b>Wichtig für deinen ersten Dienst.</b> Die Algorithmen sagen selbst ausdrücklich, dass sie
+      <i>nicht</i> festlegen, welche Maßnahmen im einzelnen Rettungsdienstbereich tatsächlich ausgeübt
+      werden dürfen. Das regelt die SAA des ÄLRD — für dich also der Wetteraukreis. Diese Unterlage ist
+      nicht öffentlich; lass sie dir am ersten Tag aushändigen und gleiche sie mit diesem Trainer ab.
+    </div>
+
+    <div class="note">
+      <b>Gelbe SAA-Marker.</b> Wo im Trainer <span class="saa">SAA prüfen</span> steht, ist der Zahlenwert
+      in den öffentlich zugänglichen Blättern nicht eindeutig belegt oder lokal geregelt. Dort steht bewusst
+      keine erfundene Dosis — das trägst du aus deinem SOP-Ordner nach.
+    </div>
+
+    <div class="panel">
+      <div class="qline">Quellen</div>
+      <div style="font-size:.86rem;line-height:1.6;color:rgba(250,248,244,.82)">
+        <p style="margin:0 0 .5rem">
+        <b>Algorithmen zur Notfallversorgung — Lehrmeinung für die Notfallsanitäter-Ausbildung an den
+        hessischen Rettungsdienstschulen</b>, Hessenalgorithmen <b>V 4.2</b>, Stand 04.12.2025,
+        Teil 1 (Krankheitsbilder K, Prozeduren P, Verfahren V) und Teil 2 (Medikamente M 1–M 26).
+        Quelle: UAG 3 (ÄLRD) der hessischen Expertengruppe zum NotSanG (HMfG).</p>
+        <p style="margin:0 0 .5rem">Digitalfassung: hessen.sop-easy.de</p>
+        <p style="margin:0">Rechtsrahmen: NotSanG, Hessisches Rettungsdienstgesetz (HRDG).</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="qline">Fortschritt</div>
+      <div id="statsBox" style="font-size:.87rem;line-height:1.6;color:rgba(250,248,244,.82)"></div>
+      <div class="actions">
+        <button class="btn ghost" id="resetBtn">Fortschritt zurücksetzen</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="label">Designed by Legacy Aviation</span>
+    <div class="src">Lernhilfe — keine Handlungsanweisung. Verbindlich ist die SAA deines ÄLRD.</div>
+  </footer>
+</div>
+
+<nav class="bottom">
+  <button data-go="home" class="on"><span class="ic">◈</span>Start</button>
+  <button data-go="match"><span class="ic">🎯</span>Üben</button>
+  <button data-go="ref"><span class="ic">📖</span>Nachschlagen</button>
+  <button data-go="info"><span class="ic">§</span>Rahmen</button>
+</nav>
+
+<script>
+'use strict';
+
+/* =========================================================================
+   DATEN — Notfallmedikamente M 1–M 26 der Hessenalgorithmen V 4.2 (04.12.2025)
+   Dosen wörtlich aus den Algorithmusblättern. Wo nichts eindeutig belegt ist,
+   steht saa:true statt einer erfundenen Zahl.
+   ========================================================================= */
+
+const GROUPS = {
+  gas:      {n:'Sauerstoff / medizinisches Gas', k:'Hebt das Sauerstoffangebot ans Gewebe'},
+  volumen:  {n:'Infusionslösung / Volumen',      k:'Füllt das Gefäßsystem, hält den Zugang offen'},
+  nonop:    {n:'Nicht-Opioid-Analgetikum',       k:'Schmerz- und Fieberhemmung ohne Opioidrezeptor'},
+  opioid:   {n:'Opioid-Analgetikum',             k:'Zentrale Schmerzdämpfung über Opioidrezeptoren'},
+  dissoz:   {n:'Dissoziatives Analgetikum',      k:'NMDA-Antagonist: Analgesie plus Abkopplung'},
+  benzo:    {n:'Benzodiazepin',                  k:'GABA-Verstärkung: dämpfend, krampfunterbrechend'},
+  antiepi:  {n:'Antikonvulsivum (Nicht-Benzo)',  k:'Unterbricht den Status nach Benzodiazepin-Versagen'},
+  katechol: {n:'Katecholamin / Sympathomimetikum', k:'Alpha und Beta: Kreislauf hoch, Bronchien auf'},
+  beta2:    {n:'Beta-2-Sympathomimetikum',       k:'Weitet gezielt die Bronchien'},
+  anticho:  {n:'Parasympatholytikum (Anticholinergikum)', k:'Blockt Acetylcholin: Bronchien auf, Herzfrequenz hoch'},
+  steroid:  {n:'Glukokortikoid',                 k:'Dämpft Entzündung und Schwellung, wirkt verzögert'},
+  antihist: {n:'Antihistaminikum (H1-Blocker)',  k:'Blockiert die Histaminwirkung'},
+  antieme:  {n:'Antiemetikum',                   k:'Hemmt Übelkeit und Brechreiz'},
+  antihypo: {n:'Antihypoglykämikum',             k:'Hebt den Blutzucker'},
+  nitrat:   {n:'Nitrat / Vasodilatator',         k:'Weitet die Gefäße, senkt die Vorlast'},
+  tah:      {n:'Thrombozytenaggregationshemmer', k:'Bremst das Verklumpen der Blutplättchen'},
+  antiarr:  {n:'Antiarrhythmikum',               k:'Stabilisiert den Herzrhythmus'},
+  spasmo:   {n:'Spasmolytikum',                  k:'Entspannt die glatte Muskulatur der Hohlorgane'},
+  antihyp:  {n:'Antihypertensivum',              k:'Senkt den Blutdruck kontrolliert'},
+  antidot:  {n:'Antidot / Antagonist',           k:'Verdrängt den Wirkstoff vom Rezeptor'},
+  vitamin:  {n:'Vitamin / Substitution',         k:'Ersetzt einen fehlenden Kofaktor'}
+};
+
+const DRUGS = [
+ {id:'m1', m:'M 1', n:'Acetylsalicylsäure', h:'ASS, Aspirin i.v.', g:'tah',
+  w:'Hemmt die Thrombozytenaggregation und bremst so das Wachsen des Gerinnsels im Herzkranzgefäß.',
+  i:'Akutes Koronarsyndrom (K 1)',
+  d:'150–300 mg p.o. oder 75–250 mg i.v. — Dosierung nach lokalen Absprachen',
+  c:'Aktive Blutung, bekannte ASS-Unverträglichkeit / Analgetika-Asthma, Ulkusanamnese.',
+  who:['ns'], k:['k1']},
+
+ {id:'m2', m:'M 2', n:'Adrenalin', h:'Epinephrin, Suprarenin', g:'katechol',
+  w:'Stimuliert Alpha- und Beta-Rezeptoren: Gefäße enger, Herz schneller und kräftiger, Bronchien weiter.',
+  i:'Reanimation (K 12/K 13), Anaphylaxie (K 9), bedrohliche Bradykardie (K 3), Krupp/extrapulmonale Obstruktion beim Kind (K 7)',
+  d:'Reanimation Erw.: 1 mg i.v./i.o. alle 3–5 Min. · Kind: 0,01 mg/kgKG · Anaphylaxie i.m.: unter 30 kg 0,01 mg/kgKG, 30–60 kg 0,1 mg je 10 kg, über 60 kg 0,5 mg (1× Wdh. nach 5 Min.) · Krupp: 5 mg vernebelt · Bradykardie-Pushdose: 1:100 verdünnt, 1 ml (10 µg) langsam i.v., wiederholbar nach 3 Min.',
+  c:'Konzentrationsverwechslung! Bei der Anaphylaxie i.m. in den Oberschenkel — nicht i.v. Herzrhythmusstörungen, Blutdruckspitzen, erhöhter Sauerstoffverbrauch des Herzens.',
+  who:['ns','na'], k:['k12','k13','k9','k3','k7']},
+
+ {id:'m3', m:'M 3', n:'Amiodaron', h:'Cordarex', g:'antiarr',
+  w:'Beeinflusst mehrere Ionenkanäle und stabilisiert den Herzrhythmus.',
+  i:'Reanimation bei defibrillierbarem Rhythmus (VF/pVT) — K 12 / K 13',
+  d:'Erw.: 300 mg i.v./i.o. nach dem 3. Schock, 150 mg nach dem 5. Schock · Kind: 5 mg/kgKG (Wdh. nach dem 5. Schock, max. 150 mg)',
+  c:'Blutdruckabfall, Bradykardie; enthält Jod. In der Reanimation strikt Teamaufgabe mit lauter Rückmeldung.',
+  who:['ns','na'], k:['k12','k13']},
+
+ {id:'m4', m:'M 4', n:'Atropin', h:'Atropinsulfat', g:'anticho',
+  w:'Blockt den Vagus am Herzen — die Herzfrequenz steigt.',
+  i:'Symptomatische Bradykardie (K 3)',
+  d:'0,5 mg i.v., Wiederholung alle 3–5 Min., Maximaldosis 3 mg',
+  c:'Keine Atropingabe bei AV-Block II Typ Mobitz und AV-Block III — infrahissärer Block, Gefahr des totalen AV-Blocks. Vorher respiratorische Ursachen ausschließen. Mundtrockenheit, weite Pupillen.',
+  who:['ns','na'], k:['k3']},
+
+ {id:'m5', m:'M 5', n:'Butylscopolamin', h:'Buscopan', g:'spasmo',
+  w:'Entspannt die glatte Muskulatur der Hohlorgane und löst so den Kolikschmerz.',
+  i:'Abdomineller Schmerz / Kolik (K 16a)',
+  d:'20 mg langsam i.v., falls nicht kontraindiziert',
+  c:'Bei der Nierenkolik laut AWMF nicht empfohlen, bei der Gallenkolik empfohlen. Tachykardie, Mundtrockenheit; nicht bei Tachyarrhythmie oder Engwinkelglaukom.',
+  who:['ns'], k:['k16a']},
+
+ {id:'m6', m:'M 6', n:'Clemastin', h:'Tavegil', g:'antihist',
+  w:'Blockiert H1-Rezeptoren und schwächt Juckreiz, Quaddeln und Gefäßweitstellung ab.',
+  i:'Anaphylaktische Reaktion (K 9) — nachrangig zum Adrenalin',
+  d:'Erw. 2 mg i.v. · Kinder über 1 Jahr 0,03 mg/kgKG i.v.',
+  c:'Wirkt langsam — nie statt Adrenalin. Müdigkeit, bei rascher Gabe Blutdruckabfall. Laut V 4.2 bei leichter Symptomatik nur bei Hautsymptomen.',
+  who:['ns'], k:['k9']},
+
+ {id:'m7', m:'M 7', n:'Dimenhydrinat', h:'Vomex A', g:'antieme',
+  w:'Blockiert H1-Rezeptoren im Brechzentrum — dämpft Übelkeit und Brechreiz. Chemisch ein Antihistaminikum, eingesetzt als Antiemetikum.',
+  i:'Starke Übelkeit (K 17), typisch auch begleitend zur Opioidgabe',
+  d:'Erw./Jugendliche max. 62 mg langsam i.v. oder in VEL · Kinder 6–14 J. 1,25 mg/kgKG · Tagesmaximum Erw. 400 mg, Kinder 6–14 J. 150 mg',
+  c:'Sedierung; anticholinerge Wirkung mit Mundtrockenheit. Langsam geben.',
+  who:['ns'], k:['k17']},
+
+ {id:'m8', m:'M 8', n:'Dimetinden', h:'Fenistil', g:'antihist',
+  w:'H1-Blocker — schwächt die Histaminwirkung bei allergischer Reaktion ab.',
+  i:'Anaphylaktische Reaktion (K 9)',
+  d:'0,1 mg/kgKG i.v.',
+  c:'Wie Clemastin nachrangig zum Adrenalin. Sedierung, bei schneller Gabe Blutdruckabfall.',
+  who:['ns'], k:['k9']},
+
+ {id:'m9', m:'M 9', n:'Esketamin', h:'Ketanest S', g:'dissoz',
+  w:'NMDA-Antagonist: sehr starke Analgesie mit Dissoziation, Kreislauf und Atemantrieb bleiben meist stabil, bronchodilatatorisch.',
+  i:'Sehr starke Schmerzen — ausschließlich traumatisch (K 16b)',
+  d:'0,125–0,250 mg/kgKG langsam titriert i.v. · nasal 0,250–0,500 mg/kgKG, ggf. fraktioniert · insgesamt max. 0,500 mg/kgKG. Midazolam fakultativ als Co-Analgesie',
+  c:'Nur bei traumatischen Schmerzen. Kontraindiziert bei akuter KHK, malignem Hypertonus, manifester Hyperthyreose, GCS unter 12 durch Alkohol/Drogen/Psychopharmaka, akuter psychogener Erkrankung. Ohne Midazolam Risiko von Albträumen und Panikattacken. Übelkeit — langsam geben.',
+  who:['ns','na'], k:['k16b']},
+
+ {id:'m10', m:'M 10', n:'Fentanyl', h:'Fentanyl-Janssen', g:'opioid',
+  w:'Starkes, kurz wirksames Opioid — bindet an Opioidrezeptoren im ZNS.',
+  i:'Sehr starke bis stärkste Schmerzen, insbesondere traumatisch, NRS über 5 (K 16a/b/c)',
+  d:'0,001 mg/kgKG langsam titriert i.v., Wiederholung alle 2 Min. bei NRS über 5',
+  c:'Hohes Risiko der Atemdepression bei großer Dosisvarianz. KI: AF unter 10/min oder SpO2 unter 90 %, GCS unter 12 durch psychoaktive Substanzen, HF unter 50 oder RRsys unter 100 mmHg, eingeschränkter Zugriff zum Patienten, Kinder unter 12 Monaten. Antidot Naloxon.',
+  who:['ns','na'], k:['k16a','k16b','k16c']},
+
+ {id:'m11', m:'M 11', n:'Flumazenil', h:'Anexate', g:'antidot',
+  w:'Verdrängt Benzodiazepine kompetitiv vom GABA-Rezeptor und hebt ihre Wirkung auf.',
+  i:'Antagonisierung von Benzodiazepinen — im Algorithmus ausdrücklich nur „sehr kritisch in Erwägung ziehen“ bei Midazolam-bedingtem A-/B-Problem (K 10, K 16b)',
+  d:'', saa:true,
+  c:'Krampfgefahr, besonders bei Mischintoxikation und bei Epileptikern. Wirkt kürzer als das Benzodiazepin — Rebound. Erst Atemweg und Beatmung, dann Antidot.',
+  who:['ns','na'], k:['k10','k16b'], neu:true},
+
+ {id:'m12', m:'M 12', n:'Glucose', h:'Glucose 40 %, G 40', g:'antihypo',
+  w:'Füllt den Blutzucker direkt auf.',
+  i:'Symptomatische Hypoglykämie (K 8)',
+  d:'Erwachsene 8 g i.v. · Kinder unter 12 J. 0,2 g/kgKG, 1:1 mit NaCl 0,9 % verdünnen (vor allem bei G 40 %) · Wiederholung alle 3 Min. bis BZ im Normbereich. Wach und schluckfähig: Glukose bzw. schnellwirksame Kohlenhydrate oral',
+  c:'Nichts oral beim bewusstseinsgetrübten Patienten (Aspiration). Paravenöse Gabe schädigt das Gewebe. Definition: Bewusstseinseinschränkung mit BZ unter 60 mg/dl (Kinder 54, Neugeborene 50) — die Werte sind nur orientierend, entscheidend ist die Symptomatik.',
+  who:['rs','ns'], k:['k8'], rsnote:'Orale Glukose beim wachen, schluckfähigen Patienten ist der Teil, den du als RS im Basisalgorithmus tatsächlich machst.'},
+
+ {id:'m13', m:'M 13', n:'Glyceroltrinitrat', h:'Nitro, Nitrolingual', g:'nitrat',
+  w:'Setzt NO frei, weitet vor allem die venösen Gefäße — Vorlast und Herzarbeit sinken, die Koronardurchblutung wird besser.',
+  i:'Akutes Koronarsyndrom (K 1), Linksherzinsuffizienz mit akuter Dyspnoe (K 2)',
+  d:'1 Hub sublingual (0,4 mg), Wiederholung frühestens nach 3 Min., falls die Bedingungen weiter erfüllt sind, max. 3 Hübe',
+  c:'Bedingung K 1: RRsys über 100 mmHg und HF 50–130/min. Bedingung K 2: RRsys über 150 mmHg (bei laufendem CPAP über 130 mmHg, weil CPAP zusätzlich die Vorlast senkt). Kontraindiziert nach PDE-5-Hemmern (Potenzmittel) — danach fragen!',
+  who:['ns'], k:['k1','k2']},
+
+ {id:'m14', m:'M 14', n:'Ipratropiumbromid', h:'Atrovent', g:'anticho',
+  w:'Blockt Acetylcholin an den Bronchien — zusätzliche Bronchodilatation, ergänzt Salbutamol.',
+  i:'Akute obstruktive Atemwegserkrankung (K 5 Erwachsene / K 6 Kinder)',
+  d:'Erw.: 2 Amp. à 0,25 mg in 2 ml (= 0,5 mg in 4 ml) mit Sauerstoff vernebeln, nach 30 Min. wiederholbar · Kinder: 1 Amp. à 0,25 mg, nach jeweils 20 Min. 2× wiederholbar',
+  c:'Laut K 6 Kontraindikation bei Kindern unter 6 Jahren. Mundtrockenheit; bei Engwinkelglaukom Augen schützen, Maske dicht führen.',
+  who:['ns'], k:['k5','k6']},
+
+ {id:'m15', m:'M 15', n:'Levetiracetam', h:'Keppra', g:'antiepi',
+  w:'Antikonvulsivum ohne Benzodiazepin-Wirkprofil — greift am synaptischen Vesikelprotein SV2A an.',
+  i:'Benzodiazepin-refraktärer Status epilepticus ab 12 Jahren (K 10)',
+  d:'60 mg/kgKG, max. 4500 mg, als Kurzinfusion über 10 Min.',
+  c:'Kontraindiziert unter 12 Jahren. Kommt erst, wenn Midazolam den Status nicht durchbrochen hat.',
+  who:['ns','na'], k:['k10'], neu:true},
+
+ {id:'m16', m:'M 16', n:'Midazolam', h:'Dormicum', g:'benzo',
+  w:'Verstärkt GABA — dämpfend, angstlösend, muskelentspannend, krampfunterbrechend.',
+  i:'Status epilepticus (K 10), Co-Analgesie beim traumatischen Schmerz (K 16b), Sedierung in der Postreanimationsphase (K 15)',
+  d:'Status: 0,2 mg/kgKG i.v. (max. 10 mg Bolus, unter 40 kg max. 5 mg), Wdh. nach 2 Min. falls ohne Wirkung · nasal ebenso 0,2 mg/kgKG, Wdh. nach 4 Min. · Co-Analgesie: 10–50 kg 0,2 mg je 10 kg, über 50 kg 1 mg langsam i.v. · Postreanimation: über 50 kg 5 mg, unter 50 kg 1 mg je 10 kg',
+  c:'Gute Überwachung — A- und B-Problem durch Midazolam auslösbar. Für die nasale Gabe die Konzentration 5 mg/ml verwenden, es gibt verschiedene! KI: Ateminsuffizienz (AF unter 10, SpO2 unter 90 %), Kreislaufinstabilität, Myasthenia gravis. Hypotonie, anterograde Amnesie.',
+  who:['ns','na'], k:['k10','k16b','k15']},
+
+ {id:'m17', m:'M 17', n:'Morphin', h:'Morphinhydrochlorid, MSI', g:'opioid',
+  w:'Klassisches starkes Opioid, gute analgetische Potenz.',
+  i:'Starke Schmerzen NRS über 5, traumatisch und nicht traumatisch (K 16a/b/c)',
+  d:'0,04 mg/kgKG langsam titriert i.v., Wiederholung alle 2 Min. bei NRS über 5',
+  c:'Atemdepression, Kreislaufdepression, Übelkeit — deshalb langsam geben und an ein Antiemetikum denken. KI wie bei den anderen Opioiden: AF unter 10 / SpO2 unter 90 %, GCS unter 12 durch psychoaktive Substanzen, HF unter 50 / RRsys unter 100 mmHg, Kinder unter 12 Monaten.',
+  who:['ns','na'], k:['k16a','k16b','k16c']},
+
+ {id:'m18', m:'M 18', n:'Nalbuphin', h:'Nalpain', g:'opioid',
+  w:'Partieller Opioidagonist (Kappa-Agonist, My-Antagonist) — gute Analgesie bei geringerem Atemdepressionsrisiko. Kein BtM.',
+  i:'Starke Schmerzen, traumatisch und nicht traumatisch (K 16a/b/c)',
+  d:'12–65 J.: 0,2 mg/kgKG langsam titriert i.v. · unter 12 oder über 65 J.: 0,1 mg/kgKG · ab 12 J. einmalige Wiederholung 0,1 mg/kgKG ab 6 Min. bei NRS ab 6 · Gesamtdosis max. 20 mg',
+  c:'Früher Ceiling-Effekt: mehr Dosis bringt keine zusätzliche Analgesie, nur mehr Nebenwirkungen. Bei Patienten unter My-Agonisten (Morphin, Fentanyl, Methadon) Entzugssymptome. KI: Kinder unter 18 Monaten, schwere Nieren-/Leberschäden.',
+  who:['ns','na'], k:['k16a','k16b','k16c']},
+
+ {id:'m19', m:'M 19', n:'Naloxon', h:'Narcanti', g:'antidot',
+  w:'Verdrängt Opioide vom Rezeptor und hebt ihre Wirkung — vor allem die Atemdepression — auf.',
+  i:'Opioidüberhang / Opioidintoxikation mit Atemdepression',
+  d:'', saa:true,
+  c:'Wirkt kürzer als die meisten Opioide — Rebound der Atemdepression, deshalb lückenlose Überwachung und Transport. Löst beim Abhängigen einen akuten Entzug aus. Erst Atemweg und Beatmung sichern, dann titrieren.',
+  who:['ns','na'], k:[]},
+
+ {id:'m20', m:'M 20', n:'Paracetamol', h:'Perfalgan', g:'nonop',
+  w:'Zentral wirksames Analgetikum und Antipyretikum, keine relevante Entzündungshemmung.',
+  i:'Mittelstarke Schmerzen (K 16a)',
+  d:'', saa:true,
+  c:'Zwingend die Anamnese zu vorangegangenen Paracetamolgaben — Maximaldosis beachten! KI: Allergie gegen Paracetamol/NSAR, Leberfunktionsstörung (auch bei schwerem Alkoholmissbrauch und Mangelernährung), schwere Nierenerkrankung, Epilepsie unter Antiepileptika, Blutbildungsstörungen. Kreislaufkollaps bei schneller Gabe. Vorteil: keine Atemdepression, gut kombinierbar.',
+  who:['ns'], k:['k16a']},
+
+ {id:'m21', m:'M 21', n:'Piritramid', h:'Dipidolor', g:'opioid',
+  w:'Starkes Opioid mit im Vergleich längerer Wirkdauer.',
+  i:'Starke Schmerzen NRS über 5 (K 16a/b/c)',
+  d:'0,06 mg/kgKG langsam titriert i.v., Wiederholung alle 2 Min.',
+  dwarn:'Die Änderungsliste zur V 4.2 nennt für M 21 dagegen 0,1–0,2 mg/kgKG. Widerspruch — vor der Anwendung in der SAA gegenprüfen.',
+  c:'Wie alle Opioide: Atemdepression, Kreislaufdepression, Übelkeit, GCS-Abfall. KI: GCS unter 12 durch psychoaktive Substanzen, Kreislaufinstabilität, Ateminsuffizienz.',
+  who:['ns','na'], k:['k16a','k16b','k16c']},
+
+ {id:'m22', m:'M 22', n:'Prednisolon', h:'Solu-Decortin, Rectodelt', g:'steroid',
+  w:'Glukokortikoid: dämpft Entzündung und Schwellung. Wirkt verzögert über Minuten bis Stunden — deshalb früh geben.',
+  i:'Obstruktive Atemwegserkrankung (K 5/K 6), extrapulmonale Obstruktion beim Kind / Krupp (K 7), Anaphylaxie (K 9)',
+  d:'Erw.: 50–100 mg p.o. oder i.v. (nach lokalen Vorgaben) · Anaphylaxie: 250 mg i.v. (bei leichter Symptomatik nur bei Rebound) · Kind: 100 mg Supp. rektal, ggf. 2 mg/kgKG i.v.',
+  c:'Kein Ersatz für Adrenalin bei der Anaphylaxie — nur Ergänzung. Bei Einmalgabe kaum akute Nebenwirkungen. Bei Kindern erfragen, ob die Eltern schon 100 mg rektal gegeben haben.',
+  who:['ns'], k:['k5','k6','k7','k9']},
+
+ {id:'m23', m:'M 23', n:'Salbutamol', h:'Sultanol, Ventolin', g:'beta2',
+  w:'Stimuliert Beta-2-Rezeptoren der Bronchialmuskulatur — die Bronchien weiten sich, der Atemwegswiderstand sinkt.',
+  i:'Akute obstruktive Atemwegserkrankung (K 5 Erwachsene / K 6 Kinder), Bronchospasmus bei Anaphylaxie',
+  d:'Erw.: 2 Amp. à 1,25 mg in 2,5 ml (= 2,5 mg in 5 ml) mit Sauerstoff vernebeln, nach 15 Min. wiederholen · Kinder: 1 Amp. à 1,25 mg, über 20 kg nach 15 Min. wiederholbar',
+  c:'KI laut K 5/K 6: vorausgegangene Überdosierung mit Beta-Mimetika, Tachykardie über 150/min, Tachyarrhythmie, im Kinderalgorithmus zusätzlich Kinder unter 4 Jahren. Tremor, Unruhe, Kalium fällt. Bei „kreißender Schwangerer“ Kontraindikation beachten.',
+  who:['ns'], k:['k5','k6','k9']},
+
+ {id:'m24', m:'M 24', n:'Sauerstoff', h:'O2, medizinisch', g:'gas',
+  w:'Erhöht den Sauerstoffanteil der Einatemluft und damit das Angebot ans Gewebe.',
+  i:'Jeder kritische Patient, Hypoxie, Reanimation, CO-Vergiftung (K 19), Schlaganfall (K 11) — Prozedur P 5',
+  d:'Zielbereich SpO2 94–98 % · Schlaganfall: Gabe bei SpO2 unter 95 % · CO-Vergiftung: 15 l/min über Maske bzw. 100 % — hier richtet sich die Indikation nach der Klinik, nicht nach der Sättigung · Reanimation 100 %',
+  c:'Bei CO-Vergiftung ist die Pulsoxymetrie trügerisch — sie kann trotz schwerer Vergiftung normal sein. Bei COPD nicht blind hochdosieren. Brandgefahr, kein Öl/Fett an Armaturen.',
+  who:['rs','ns','na'], k:['k19','k11','k12'],
+  rsnote:'Der eine Wirkstoff, den du als RS im Rahmen der Basismaßnahmen eigenständig einsetzt.'},
+
+ {id:'m25', m:'M 25', n:'Thiamin', h:'Vitamin B1, Betabion', g:'vitamin',
+  w:'Ersetzt Vitamin B1 — beugt der Wernicke-Enzephalopathie vor, die durch Glukosegabe beim Mangelzustand ausgelöst werden kann.',
+  i:'Begleitend zur Hypoglykämie-Behandlung (K 8) bei Verdacht auf alkoholassoziierte Bewusstlosigkeit, Alkoholerkrankung und Kachexie',
+  d:'100 mg i.v.',
+  c:'Selten anaphylaktische Reaktionen bei schneller i.v.-Gabe.',
+  who:['ns','na'], k:['k8']},
+
+ {id:'m26', m:'M 26', n:'Urapidil', h:'Ebrantil', g:'antihyp',
+  w:'Alpha-1-Blocker mit zentraler Komponente — weitet die Gefäße und senkt den Blutdruck kontrolliert, meist ohne Reflextachykardie.',
+  i:'Hypertensiver Notfall (K 4)',
+  d:'5 mg i.v. über 1 Min., Wiederholung nach 3 Min., bis max. 25 mg',
+  c:'Ziel ist nicht der Normwert, sondern eine Senkung der Extremwerte um etwa 10–15 % — zu schnelle Senkung gefährdet die Hirndurchblutung. Grenzwerte: RRsys über 180 und/oder RRdia über 110 mmHg, Schwangere über 160/110, Schlaganfall erst über 220/120. Potenziell stark wirksam mit nicht vorhersehbarer individueller Reaktion — deshalb vorsichtig beginnen.',
+  who:['ns','na'], k:['k4']},
+
+ {id:'vel', m:'—', n:'Vollelektrolytlösung', h:'VEL, Sterofundin, Ringer-Acetat', g:'volumen',
+  w:'Kristalloide Infusionslösung: füllt das Gefäßsystem, hält den Zugang offen, dient als Trägerlösung.',
+  i:'Praktisch in jedem Algorithmus als „venöser Zugang, langsame VEL-Infusion“; Volumentherapie bei Sepsis (K 18) und Anaphylaxie (K 9)',
+  d:'Meist „langsame VEL-Infusion“, oft 500 ml · Anaphylaxie mit Schock: 1000 ml · Sepsis: 500–1000 ml',
+  c:'Bei Linksherzinsuffizienz und Lungenödem zurückhaltend. Bei der Nierenkolik langsam laufen lassen — zu viel Volumen verstärkt über den Harnstau den Schmerz.',
+  who:['rs','ns'], k:['k18','k9','k1'],
+  rsnote:'Zugang und Infusion darfst du als RS nur nach Anordnung/Delegation — die Trägerlösung selbst ist unkritisch, „scharfe“ Medikamente kommen über NotSan/NA.',
+  extra:true}
+];
+
+const CASES = [
+ {id:'k1',  n:'Akutes Koronarsyndrom', k:'K 1',
+  s:'Druck/Enge im Brustkorb, oft ausstrahlend, atem- und bewegungsunabhängig, aus der Ruhe heraus, Kaltschweiß',
+  rs:'12-Kanal-EKG spätestens 10 Min. nach Eintreffen, Monitoring, Zugang vorbereiten, PDE-5-Hemmer erfragen'},
+ {id:'k2',  n:'Linksherzinsuffizienz mit akuter Dyspnoe', k:'K 2',
+  s:'Beidseits feuchte Rasselgeräusche, Distanzrasseln, schaumiges, teils blutiges Sputum',
+  rs:'Sitzende Lagerung, CPAP vorbereiten, Blutdruck engmaschig — die Nitro-Grenze hängt daran'},
+ {id:'k3',  n:'Bedrohliche Bradykardie', k:'K 3',
+  s:'Symptomatische Bradykardie: Schläfrigkeit, Schwindel, Übelkeit, Atemnot, Synkope',
+  rs:'EKG, respiratorische Ursache ausschließen, Pacing und Reanimationsbereitschaft vorbereiten'},
+ {id:'k4',  n:'Hypertensiver Notfall', k:'K 4',
+  s:'RRsys über 180 und/oder RRdia über 110 mmHg plus Organsymptomatik',
+  rs:'Blutdruck an beiden Armen, Neurocheck, Verlaufsmessung — Ziel ist nur 10–15 % Senkung'},
+ {id:'k5',  n:'Obstruktive Atemwegserkrankung (Erwachsene)', k:'K 5',
+  s:'Exspiratorischer Stridor, Giemen, Orthopnoe; „silent chest“ = höchste Gefahr',
+  rs:'Vernebler mit Sauerstoff richten, sitzende Lagerung, SpO2 und Atemarbeit beobachten'},
+ {id:'k6',  n:'Obstruktive Atemwegserkrankung (Kind bis 12 J.)', k:'K 6',
+  s:'Dyspnoe, exspiratorischer Stridor, Husten, Giemen; schweigendes Kind = hochgradige Gefährdung',
+  rs:'Kind bei den Eltern lassen, Vernebler vorbereiten, Altersgrenzen der Wirkstoffe kennen'},
+ {id:'k7',  n:'Extrapulmonale Atemwegsobstruktion (Kind) / Krupp', k:'K 7',
+  s:'Inspiratorischer Stridor, bellender Husten, Heiserkeit; DD Epiglottitis',
+  rs:'Ruhe bewahren, Kind nicht aufregen, Vernebler und Steroid vorbereiten'},
+ {id:'k8',  n:'Symptomatische Hypoglykämie', k:'K 8',
+  s:'Bewusstseinsstörung, Unruhe, Zittern, Kaltschweiß bei BZ unter 60 mg/dl (Kind 54)',
+  rs:'BZ messen! Wach und schluckfähig: orale Glukose — das ist deine Maßnahme. Insulinpumpe stoppen'},
+ {id:'k9',  n:'Anaphylaktische Reaktion', k:'K 9',
+  s:'Grad I Haut, Grad II–III ABCD-Problem mit Schock/Obstruktion, Grad IV Reanimation',
+  rs:'Allergenzufuhr stoppen, Adrenalin i.m. vorbereiten, Volumen richten, Reevaluation'},
+ {id:'k10', n:'Status epilepticus', k:'K 10',
+  s:'Anfall länger als 5 Min. oder zwei Anfälle ohne Bewusstsein dazwischen',
+  rs:'Vor Verletzung und Aspiration schützen, BZ messen, MAD und Absaugung richten'},
+ {id:'k11', n:'Schlaganfall', k:'K 11',
+  s:'FAST4D, Herdsymptomatik, Zeitfenster unter 24 h entscheidet über Stroke Unit oder Thrombektomiezentrum',
+  rs:'Zeitpunkt des Symptombeginns exakt erfragen, Zugang auf der nicht betroffenen Seite, BZ messen'},
+ {id:'k12', n:'Kreislaufstillstand Erwachsener', k:'K 12',
+  s:'Keine Reaktion, keine normale Atmung — CPR 30:2, Frequenz 100–120, Tiefe 5–6 cm',
+  rs:'Thoraxkompression, Wechsel alle 2 Min., AED/Defi, Beatmung, Medikamente aufziehen'},
+ {id:'k13', n:'Kreislaufstillstand Kind', k:'K 13',
+  s:'5 initiale Beatmungen, dann 15:2; Schock 4 J/kgKG, ab dem 6. Schock 8 J/kgKG',
+  rs:'Gewicht abschätzen (1 J. 10 kg, 6 J. 20 kg, 10 J. 30 kg), Dosen mitrechnen und laut bestätigen'},
+ {id:'k15', n:'Postreanimationsphase', k:'K 15',
+  s:'Nach ROSC: SpO2 94–98 %, etCO2 35–45 mmHg, MAP 65–100, BZ über 60, Temperatur unter 37 °C',
+  rs:'Lückenloses Monitoring, 30° Oberkörperhochlage, Hyperthermie vermeiden, Zielklinik anmelden'},
+ {id:'k16a',n:'Abdomineller Schmerz / Kolik', k:'K 16a',
+  s:'Kolikartiger Bauchschmerz; Ziel ist die Transportfähigkeit, keine vitale Bedrohung',
+  rs:'Lagerung nach Wunsch, Infusion langsam laufen lassen, Schmerz mit NRS dokumentieren'},
+ {id:'k16b',n:'Traumatischer Schmerz', k:'K 16b',
+  s:'Starke Schmerzen nach Trauma, NRS über 5; Bedingungen RRsys über 100, HF 50–130, SpO2 über 92 %',
+  rs:'Ruhigstellung und Lagerung zuerst, NRS vorher/nachher, nach Gabe Atmung und RR überwachen'},
+ {id:'k16c',n:'Thorakaler Schmerz', k:'K 16c',
+  s:'DD Angina pectoris, Lungenembolie, Aortendissektion, Boerhaave, Pneumothorax',
+  rs:'12-Kanal-EKG, Schmerzcharakter genau erfragen — das trennt die Differentialdiagnosen'},
+ {id:'k17', n:'Starke Übelkeit', k:'K 17',
+  s:'Übelkeit mit Aspirationsgefahr und schlechter Compliance',
+  rs:'Nierenschale und Absaugung, Seitenlage erwägen, Zugang vorbereiten'},
+ {id:'k18', n:'Sepsis / septischer Schock', k:'K 18',
+  s:'Infektverdacht plus NEWS2-Score; Fieber oder Hypothermie, Tachypnoe, HF über 100, RRsys unter 100',
+  rs:'Temperatur messen, NEWS2 erheben, großlumigen Zugang und Volumen vorbereiten, Sauerstoff großzügig'},
+ {id:'k19', n:'Kohlenmonoxid-Vergiftung', k:'K 19',
+  s:'CO-Exposition; Kopfschmerz, Schwindel, Übelkeit bis Bewusstlosigkeit. „Kratzen im Hals“ ist KEIN CO-Zeichen',
+  rs:'Eigenschutz! Patient aus der Gefahrenzone, 15 l/min Sauerstoff unabhängig von der Sättigung'}
+];
+
+/* ---- abgeleitete Strukturen ---- */
+const D = {}; DRUGS.forEach(function(d){ D[d.id]=d; });
+const C = {}; CASES.forEach(function(c){ C[c.id]=c; });
+const drugsByCase = {};
+CASES.forEach(function(c){ drugsByCase[c.id] = DRUGS.filter(function(d){ return d.k.indexOf(c.id)>=0; }); });
+const usedGroups = Array.from(new Set(DRUGS.map(function(d){return d.g;})));
+
+/* =========================================================================
+   STATE
+   ========================================================================= */
+const KEY = 'rs_wirkstoff_v1';
+let S = { xp:0, best:{}, seen:{}, right:{}, wrong:{}, glove:false, rounds:0 };
+try{ const raw = localStorage.getItem(KEY); if(raw) S = Object.assign(S, JSON.parse(raw)); }catch(e){}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+function markSeen(id, ok){
+  S.seen[id]=(S.seen[id]||0)+1;
+  if(ok){ S.right[id]=(S.right[id]||0)+1; } else { S.wrong[id]=(S.wrong[id]||0)+1; }
+}
+function mastery(id){
+  const r=S.right[id]||0, w=S.wrong[id]||0, t=r+w;
+  if(!t) return 0;
+  return Math.max(0, Math.min(1, (r - w*0.5)/Math.max(4,t)));
+}
+
+/* =========================================================================
+   HELFER
+   ========================================================================= */
+function el(id){ return document.getElementById(id); }
+function shuffle(a){ const x=a.slice(); for(let i=x.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=x[i];x[i]=x[j];x[j]=t; } return x; }
+function pick(a,n){ return shuffle(a).slice(0,n); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function whoTags(d){
+  return d.who.map(function(w){
+    const lbl = w==='rs'?'RS':(w==='ns'?'NotSan':'Notarzt');
+    return '<span class="tag '+w+'">'+lbl+'</span>';
+  }).join('');
+}
+/* Wirkstoffe, die für den Trainer wenig taugen, aus manchen Modi halten */
+function playable(){ return DRUGS.filter(function(d){ return !d.extra; }); }
+
+/* =========================================================================
+   ROUTING
+   ========================================================================= */
+let current='home';
+const MODES = ['match','group','koffer','wer','cave'];
+function go(v){
+  current=v;
+  ['home','play','ref','info'].forEach(function(x){ el('v-'+x).classList.add('hidden'); });
+  const isMode = MODES.indexOf(v)>=0;
+  el('v-'+(isMode?'play':v)).classList.remove('hidden');
+  document.querySelectorAll('nav.bottom button').forEach(function(b){
+    const t=b.getAttribute('data-go');
+    b.classList.toggle('on', t===v || (isMode && t==='match'));
+  });
+  window.scrollTo(0,0);
+  if(isMode) startRound(v);
+  if(v==='home') renderHome();
+  if(v==='ref') renderRef();
+  if(v==='info') renderStats();
+}
+document.addEventListener('click', function(e){
+  const b = e.target.closest('[data-go]');
+  if(b){ go(b.getAttribute('data-go')); }
+});
+
+/* =========================================================================
+   HOME
+   ========================================================================= */
+function renderHome(){
+  el('s-drugs').textContent = DRUGS.filter(function(d){return !d.extra;}).length;
+  el('s-groups').textContent = usedGroups.length;
+  el('s-cases').textContent = CASES.length;
+  el('s-xp').textContent = S.xp;
+  MODES.forEach(function(m){
+    const bar = el('p-'+m);
+    if(bar) bar.style.width = Math.min(100, Math.round((S.best[m]||0)))+'%';
+  });
+}
+
+/* =========================================================================
+   SPIEL-ENGINE
+   ========================================================================= */
+let R = null;
+
+function startRound(mode){
+  R = { mode:mode, i:0, n:0, score:0, streak:0, bestStreak:0, items:[] };
+  if(mode==='match')  R.items = buildMatch();
+  if(mode==='group')  R.items = buildGroup();
+  if(mode==='koffer') R.items = buildKoffer();
+  if(mode==='wer')    R.items = buildWer();
+  if(mode==='cave')   R.items = buildCave();
+  R.n = R.items.length;
+  renderPlay();
+}
+
+/* --- Modus 1: Wirkstoff -> Notfall (Paare) ---
+   Eindeutigkeit ist Pflicht: ein Wirkstoff darf innerhalb einer Runde nur zu
+   GENAU EINEM der gezeigten Notfallbilder passen. Sonst würde die App eine
+   fachlich richtige Zuordnung (z. B. Prednisolon -> K 5 statt K 7) als
+   falsch werten und damit Unsinn antrainieren. */
+function buildMatch(){
+  const usable = CASES.filter(function(c){
+    return drugsByCase[c.id].filter(function(d){ return !d.extra; }).length>0;
+  });
+  const rounds=[];
+  for(let r=0; r<4; r++){
+    const pairs = buildOnePairSet(usable, 4);
+    if(pairs.length>=3) rounds.push({type:'pairs', pairs:pairs});
+  }
+  return rounds;
+}
+function buildOnePairSet(usable, want){
+  for(let attempt=0; attempt<40; attempt++){
+    const cases = shuffle(usable);
+    const chosen=[];
+    for(let i=0; i<cases.length && chosen.length<want; i++){
+      const c = cases[i];
+      /* Notfall darf zu keinem bereits gewählten Wirkstoff passen */
+      if(chosen.some(function(p){ return p.drug.k.indexOf(c.id)>=0; })) continue;
+      const cands = shuffle(drugsByCase[c.id].filter(function(d){
+        if(d.extra) return false;
+        if(chosen.some(function(p){ return p.drug.id===d.id; })) return false;
+        /* Wirkstoff darf zu keinem bereits gewählten Notfall passen */
+        return !chosen.some(function(p){ return d.k.indexOf(p.cas.id)>=0; });
+      }));
+      if(cands.length) chosen.push({drug:cands[0], cas:c});
+    }
+    if(chosen.length>=3) return chosen;
+  }
+  return [];
+}
+
+/* --- Modus 2: Wirkstoff -> Gruppe --- */
+function buildGroup(){
+  return pick(playable(), 10).map(function(d){
+    const wrong = pick(usedGroups.filter(function(g){ return g!==d.g; }), 3);
+    return {type:'single', id:d.id, q:d.n, sub:d.h?('Handelsname z. B. '+d.h):'',
+      line:'Welche Wirkstoffgruppe?',
+      opts: shuffle([d.g].concat(wrong)).map(function(g){ return {v:g, t:GROUPS[g].n, s:GROUPS[g].k}; }),
+      correct:d.g,
+      why:d.n+' — '+GROUPS[d.g].n+'. '+d.w};
+  });
+}
+
+/* --- Modus 3: Notfall-Koffer (Mehrfachauswahl) --- */
+function buildKoffer(){
+  const usable = CASES.filter(function(c){ return drugsByCase[c.id].filter(function(d){return !d.extra;}).length>=2; });
+  return pick(usable, 6).map(function(c){
+    const right = drugsByCase[c.id].filter(function(d){ return !d.extra; });
+    const wrong = pick(playable().filter(function(d){ return d.k.indexOf(c.id)<0; }), Math.max(3, 7-right.length));
+    return {type:'multi', id:c.id, q:c.n, sub:c.s, line:c.k+' — welche Wirkstoffe stehen im Algorithmus?',
+      opts: shuffle(right.concat(wrong)).map(function(d){ return {v:d.id, t:d.n, s:d.m+' · '+GROUPS[d.g].n}; }),
+      correct: right.map(function(d){ return d.id; }),
+      why:'Im Algorithmus '+c.k+' stehen: '+right.map(function(d){return d.n;}).join(', ')+'. Deine RS-Rolle: '+c.rs+'.'};
+  });
+}
+
+/* --- Modus 4: Wer darf's geben? --- */
+function buildWer(){
+  const opts=[{v:'rs',t:'Rettungssanitäter',s:'im Rahmen der Basismaßnahmen'},
+              {v:'ns',t:'Notfallsanitäter',s:'nach Algorithmus / SAA'},
+              {v:'na',t:'Nur Notarzt',s:'ärztliche Maßnahme'}];
+  const extra=[
+    {id:'x1', q:'Reproterol i.v. beim schweren Asthmaanfall', sub:'K 5 — Notarztmaßnahme', correct:'na',
+     why:'Reproterol steht in K 5 ausdrücklich unter „Notarzt“ — genau wie Magnesiumsulfat i.v. und die endotracheale Intubation.'},
+    {id:'x2', q:'Noradrenalin-Spritzenpumpe beim septischen Schock', sub:'K 18', correct:'na',
+     why:'Die Katecholamingabe in K 18 ist dem Notarzt zugeordnet: 5 mg auf 50 ml, 0,014–0,28 µg/kg/min, Ziel-MAD mindestens 65 mmHg.'},
+    {id:'x3', q:'Orale Glukose beim wachen, schluckfähigen Patienten', sub:'K 8', correct:'rs',
+     why:'Das ist der Basisast von K 8 und die eine Medikamentengabe, die als RS zu deinen Basismaßnahmen zählt.'},
+    {id:'x4', q:'Sauerstoff nach P 5 beim kritischen Patienten', sub:'P 5', correct:'rs',
+     why:'Sauerstoff ist Basismaßnahme — Zielbereich SpO2 94–98 %.'},
+    {id:'x5', q:'Narkoseeinleitung mit Thiopental oder Propofol', sub:'K 10 — refraktärer Status', correct:'na',
+     why:'Narkose inklusive Relaxierung zur Atemwegssicherung ist ausschließlich ärztlich.'},
+    {id:'x6', q:'Thrombolyse in der Periarrest-Situation', sub:'Verdacht auf Thrombembolie', correct:'na',
+     why:'Die präklinische Lyse ist eine rein ärztliche Entscheidung und Maßnahme.'}
+  ];
+  const fromDrugs = pick(playable(), 8).map(function(d){
+    const top = d.who.indexOf('rs')>=0 ? 'rs' : 'ns';
+    return {type:'single', id:d.id, q:d.n+' geben', sub:d.m+' · '+d.i.split('(')[0].trim(),
+      line:'Wer darf das im Regelfall?', opts:opts.slice(), correct:top,
+      why: top==='rs'
+        ? (d.rsnote || (d.n+' zählt zu den Maßnahmen, die du als RS selbst durchführst.'))
+        : (d.n+' ist eine Maßnahme des Notfallsanitäters nach Algorithmus — du bereitest vor, sprichst die Konzentration laut mit und überwachst danach.')};
+  });
+  const fromExtra = pick(extra,3).map(function(x){
+    return {type:'single', id:x.id, q:x.q, sub:x.sub, line:'Wer darf das?', opts:opts.slice(), correct:x.correct, why:x.why};
+  });
+  return shuffle(fromDrugs.concat(fromExtra));
+}
+
+/* --- Modus 5: Cave & Kontraindikation --- */
+const CAVES = [
+ {id:'m2',  q:'Anaphylaxie beim Erwachsenen über 60 kg — wie wird Adrenalin gegeben?',
+  opts:['0,5 mg i.m. in den Oberschenkel','1 mg i.v. als Bolus','0,5 mg vernebelt','0,1 mg s.c.'],
+  correct:0, why:'K 9: Adrenalin i.m. in den Oberschenkel, über 60 kgKG 0,5 mg, einmal wiederholbar nach 5 Min. Die i.v.-Gabe gehört zur schweren Symptomatik unter ärztlicher Führung — die häufigste Falle überhaupt.'},
+ {id:'m13', q:'Was musst du vor jeder Nitrogabe zwingend erfragen?',
+  opts:['Einnahme von PDE-5-Hemmern (Potenzmittel)','Letzte Mahlzeit','Tetanusschutz','Allergien gegen Jod'],
+  correct:0, why:'Nitro nach PDE-5-Hemmern führt zu schwerem Blutdruckabfall. Zusätzlich gilt in K 1: RRsys über 100 mmHg und HF 50–130/min.'},
+ {id:'m4',  q:'Bei welchem Befund darf Atropin laut V 4.2 gerade nicht gegeben werden?',
+  opts:['AV-Block II Typ Mobitz oder AV-Block III','Sinusbradykardie 45/min','Bradykardie nach Erbrechen','AV-Block I'],
+  correct:0, why:'Neu in V 4.2: Bei infrahissärem Block ist ein totaler AV-Block nicht auszuschließen — stattdessen führt der Algorithmus zu Adrenalin (Hinweis ERC/GRC 2025).'},
+ {id:'m9',  q:'Esketamin ist im hessischen Algorithmus zugelassen für …',
+  opts:['ausschließlich traumatisch bedingte starke Schmerzen','jeden starken Schmerz','Koliken','thorakalen Schmerz'],
+  correct:0, why:'K 16b: Esketamin ausschließlich bei traumatischen Schmerzen. Kontraindiziert unter anderem bei akuter KHK, malignem Hypertonus und manifester Hyperthyreose.'},
+ {id:'m16', q:'Welche Midazolam-Konzentration empfiehlt der Algorithmus für die nasale Gabe?',
+  opts:['5 mg/ml (15 mg in 3 ml)','1 mg/ml','2 mg/ml','10 mg/ml'],
+  correct:0, why:'K 10 warnt ausdrücklich: es sind verschiedene Konzentrationen verfügbar. Für nasal ist 5 mg/ml empfohlen — bei 1 mg/ml wäre das Volumen viel zu groß.'},
+ {id:'m22', q:'Welche Aussage zum Prednisolon bei der Anaphylaxie stimmt?',
+  opts:['Es ersetzt das Adrenalin nicht, es ergänzt es','Es ist die Erstmaßnahme','Es wirkt binnen Sekunden','Es ist bei Kindern kontraindiziert'],
+  correct:0, why:'Glukokortikoide wirken verzögert. In K 9 steht Adrenalin i.m. an erster Stelle; Prednisolon 250 mg i.v. gehört zur schweren Symptomatik, bei leichter nur bei Rebound.'},
+ {id:'m12', q:'Wann darf Glukose oral gegeben werden?',
+  opts:['Nur beim wachen und schluckfähigen Patienten','Immer bei BZ unter 60','Bei jedem Bewusstlosen','Nur bei Kindern'],
+  correct:0, why:'K 8 verzweigt genau hier: wach und schluckfähig → orale Kohlenhydrate; sonst i.v. Glukose. Beim getrübten Patienten droht Aspiration.'},
+ {id:'m26', q:'Welches Ziel gibt K 4 für die Blutdrucksenkung vor?',
+  opts:['Senkung der Extremwerte um etwa 10–15 %','Normwert 120/80 erreichen','Unter 140/90 senken','Halbierung des Ausgangswerts'],
+  correct:0, why:'Nicht die optimale Einstellung ist das Ziel — zu starke Senkung gefährdet die Hirndurchblutung. Urapidil vorsichtig ab 5 mg titrieren, max. 25 mg.'},
+ {id:'m19', q:'Warum bleibt ein mit Naloxon behandelter Patient zwingend überwacht?',
+  opts:['Naloxon wirkt kürzer als die meisten Opioide — Rebound','Naloxon macht müde','Naloxon senkt den Blutzucker','Naloxon wirkt erst nach 30 Minuten'],
+  correct:0, why:'Nach dem Abklingen des Antidots kann die Atemdepression zurückkehren. Deshalb: lückenlose Überwachung und Transport, nie „aufgeweckt und zurückgelassen“.'},
+ {id:'m24', q:'CO-Vergiftung (K 19): Wonach richtet sich die Sauerstoffgabe?',
+  opts:['Nach der Klinik, nicht nach der Sättigung','Nach der SpO2','Nach der Atemfrequenz','Nach dem Blutdruck'],
+  correct:0, why:'Die Pulsoxymetrie kann bei CO trügerisch normal sein. K 19: 15 l/min über Maske, bei schwerer Symptomatik 100 % und ggf. CPAP.'},
+ {id:'m18', q:'Was ist der Ceiling-Effekt bei Nalbuphin?',
+  opts:['Mehr Dosis bringt keine zusätzliche Analgesie, nur mehr Nebenwirkungen','Es wirkt erst ab einer Mindestdosis','Es wirkt nur bei Kindern','Die Wirkung hält besonders lange'],
+  correct:0, why:'Deshalb ist die Gesamtdosis auf 20 mg begrenzt. Zusätzlich: bei Patienten unter My-Agonisten drohen Entzugssymptome.'},
+ {id:'m10', q:'Ab welcher Atemfrequenz gilt ein Opioid laut Algorithmus als kontraindiziert?',
+  opts:['AF unter 10/min (bzw. SpO2 unter 90 %)','AF unter 16/min','AF über 20/min','Es gibt keine Grenze'],
+  correct:0, why:'Ateminsuffizienz mit AF unter 10/min oder SpO2 unter 90 % ist Kontraindikation für Fentanyl, Morphin und Piritramid — ebenso HF unter 50 oder RRsys unter 100 mmHg.'},
+ {id:'m20', q:'Was ist vor jeder Paracetamolgabe zwingend zu erfragen?',
+  opts:['Vorangegangene Paracetamolgaben — Maximaldosis!','Der Tetanusschutz','Die letzte Mahlzeit','Der Impfstatus'],
+  correct:0, why:'Das M-20-Blatt schreibt die Anamnese ausdrücklich als zwingend vor. Kontraindikationen unter anderem Leberfunktionsstörung, schwerer Alkoholmissbrauch, schwere Nierenerkrankung.'},
+ {id:'m5',  q:'Bei welcher Kolik ist Butylscopolamin laut Leitlinie nicht empfohlen?',
+  opts:['Nierenkolik','Gallenkolik','Beide','Keine von beiden'],
+  correct:0, why:'K 16a zitiert die AWMF-Leitlinien: DG Urologie empfiehlt Butylscopolamin bei der Nierenkolik nicht, DG Gastroenterologie bei der Gallenkolik schon.'},
+ {id:'m15', q:'Wann kommt Levetiracetam im Status epilepticus zum Zug?',
+  opts:['Erst wenn Benzodiazepine den Status nicht durchbrochen haben, ab 12 J.','Als Erstmaßnahme','Nur bei Kindern unter 12','Statt Midazolam bei fehlendem Zugang'],
+  correct:0, why:'Neu in V 4.0/4.2: benzodiazepinrefraktärer Status ab 12 Jahren, 60 mg/kgKG, max. 4500 mg als Kurzinfusion über 10 Min.'},
+ {id:'m23', q:'Welche Kontraindikation nennt K 5 für Salbutamol?',
+  opts:['Tachykardie über 150/min bzw. Tachyarrhythmie','Fieber','Alter über 65','Bekanntes Asthma'],
+  correct:0, why:'Dazu die vorausgegangene Überdosierung mit Beta-Mimetika (Selbstmedikation!) — dann geht der Algorithmus direkt auf Ipratropiumbromid.'},
+ {id:'m25', q:'Warum Thiamin bei alkoholassoziierter Bewusstlosigkeit?',
+  opts:['Vitamin-B1-Mangel — Schutz vor Wernicke-Enzephalopathie','Es hebt den Blutzucker','Es antagonisiert Alkohol','Es beugt dem Krampfanfall vor'],
+  correct:0, why:'K 8: ggf. 100 mg i.v. bei Verdacht auf alkoholassoziierte Bewusstlosigkeit, Alkoholerkrankung und Kachexie — begleitend zur Glukosegabe.'},
+ {id:'m11', q:'Wie beschreibt der Algorithmus den Einsatz von Flumazenil?',
+  opts:['Sehr kritisch in Erwägung ziehen — erst Atemweg sichern','Standard nach jeder Midazolamgabe','Immer vor dem Transport','Nur bei Kindern'],
+  correct:0, why:'Die Fußnote in K 10 und K 16b sagt wörtlich, das Antidot sei „sehr kritisch in Erwägung“ zu ziehen — Atemwegssicherung kommt zuerst. Krampfgefahr bei Mischintoxikation.'}
+];
+function buildCave(){
+  return pick(CAVES, 8).map(function(x){
+    const shuffled = shuffle(x.opts.map(function(t,i){ return {t:t, ok:i===x.correct}; }));
+    return {type:'single', id:x.id, q:x.q, sub:'', line:'Cave & Kontraindikation',
+      opts: shuffled.map(function(o,i){ return {v:String(i), t:o.t, s:''}; }),
+      correct: String(shuffled.findIndex(function(o){ return o.ok; })),
+      why:x.why};
+  });
+}
+
+/* =========================================================================
+   RENDER SPIEL
+   ========================================================================= */
+const MODE_TITLE = {match:'Wirkstoff → Notfall', group:'Wirkstoff → Gruppe',
+  koffer:'Notfall-Koffer', wer:'Wer darf&#39;s geben?', cave:'Cave & Kontraindikation'};
+
+function renderPlay(){
+  const v = el('v-play');
+  if(!R || R.i >= R.n){ return renderResult(); }
+  const it = R.items[R.i];
+  let body='';
+  if(it.type==='pairs') body = renderPairs(it);
+  else body = renderQuestion(it);
+
+  v.innerHTML =
+   '<div class="hero" style="padding:1.1rem 0 .2rem">'+
+     '<div class="label" style="color:var(--ember)">'+MODE_TITLE[R.mode]+'</div>'+
+     '<div class="progressbar"><i style="width:'+Math.round(R.i/R.n*100)+'%"></i></div>'+
+     '<div class="scoreline"><span>Aufgabe '+(R.i+1)+' / '+R.n+'</span>'+
+       '<span class="streak">'+(R.streak>1?('Serie '+R.streak+' 🔥'):('Punkte '+R.score))+'</span></div>'+
+   '</div>'+ body +
+   '<div class="actions"><button class="btn ghost" data-go="home">Runde beenden</button></div>';
+  v.classList.add('appear');
+  wire(it);
+}
+
+function renderQuestion(it){
+  return '<div class="panel">'+
+    '<div class="qline">'+esc(it.line)+'</div>'+
+    '<div class="prompt">'+esc(it.q)+ (it.sub?'<small>'+esc(it.sub)+'</small>':'') +'</div>'+
+    '<div class="opts" id="opts">'+
+      it.opts.map(function(o){
+        return '<button class="chip" data-v="'+esc(o.v)+'">'+esc(o.t)+
+               (o.s?'<small>'+esc(o.s)+'</small>':'')+'</button>';
+      }).join('')+
+    '</div>'+
+    (it.type==='multi'?'<div class="actions"><button class="btn primary" id="checkBtn">Prüfen</button></div>':'')+
+    '<div id="fb"></div>'+
+  '</div>';
+}
+
+function renderPairs(it){
+  const left = shuffle(it.pairs);
+  const right = shuffle(it.pairs);
+  return '<div class="panel">'+
+   '<div class="qline">Paare bilden — tippe links einen Wirkstoff, dann rechts den Notfall</div>'+
+   '<div class="cols">'+
+     '<div class="col"><h4>Wirkstoff</h4>'+
+       left.map(function(p){ return '<button class="chip L" data-id="'+p.drug.id+'">'+esc(p.drug.n)+
+         '<small>'+esc(p.drug.m)+'</small></button>'; }).join('')+'</div>'+
+     '<div class="col"><h4>Notfallbild</h4>'+
+       right.map(function(p){ return '<button class="chip Rr" data-id="'+p.cas.id+'">'+esc(p.cas.n)+
+         '<small>'+esc(p.cas.k)+'</small></button>'; }).join('')+'</div>'+
+   '</div><div id="fb"></div></div>';
+}
+
+function wire(it){
+  const fb = el('fb');
+  if(it.type==='pairs'){
+    const map={}; it.pairs.forEach(function(p){ map[p.drug.id]=p.cas.id; });
+    let selL=null, done=0;
+    const total=it.pairs.length;
+    document.querySelectorAll('.chip.L').forEach(function(b){
+      b.addEventListener('click', function(){
+        if(b.classList.contains('ok')) return;
+        document.querySelectorAll('.chip.L').forEach(function(x){ x.classList.remove('sel'); });
+        b.classList.add('sel'); selL=b;
+      });
+    });
+    document.querySelectorAll('.chip.Rr').forEach(function(b){
+      b.addEventListener('click', function(){
+        if(!selL || b.classList.contains('ok')) return;
+        const did=selL.getAttribute('data-id'), cid=b.getAttribute('data-id');
+        if(map[did]===cid){
+          selL.classList.remove('sel'); selL.classList.add('ok'); b.classList.add('ok');
+          markSeen(did,true); R.score+=10; R.streak++; R.bestStreak=Math.max(R.bestStreak,R.streak);
+          S.xp+=10; done++;
+          const d=D[did], c=C[cid];
+          fb.innerHTML='<div class="feedback good"><b>✓ '+esc(d.n)+' → '+esc(c.n)+'</b>'+
+            '<span class="why">'+esc(d.i)+'</span></div>';
+          if(done===total){
+            setTimeout(function(){ R.i++; save(); renderPlay(); }, 900);
+          }
+        } else {
+          b.classList.add('bad','shake');
+          markSeen(did,false); R.streak=0; R.score=Math.max(0,R.score-3);
+          const d=D[did], c=C[cid];
+          fb.innerHTML='<div class="feedback bad"><b>✗ '+esc(d.n)+' gehört nicht zu '+esc(c.n)+'</b>'+
+            '<span class="why">'+esc(d.n)+' steht bei: '+esc(d.i)+'</span></div>';
+          setTimeout(function(){ b.classList.remove('bad','shake'); }, 500);
+        }
+        selL=null;
+      });
+    });
+    return;
+  }
+
+  if(it.type==='multi'){
+    const chosen={};
+    document.querySelectorAll('#opts .chip').forEach(function(b){
+      b.addEventListener('click', function(){
+        if(b.disabled) return;
+        const v=b.getAttribute('data-v');
+        chosen[v]=!chosen[v];
+        b.classList.toggle('pick', !!chosen[v]);
+      });
+    });
+    el('checkBtn').addEventListener('click', function(){
+      const sel = Object.keys(chosen).filter(function(k){ return chosen[k]; });
+      const corr = it.correct;
+      const missed = corr.filter(function(c){ return sel.indexOf(c)<0; });
+      const extra  = sel.filter(function(s){ return corr.indexOf(s)<0; });
+      const ok = missed.length===0 && extra.length===0;
+      document.querySelectorAll('#opts .chip').forEach(function(b){
+        const v=b.getAttribute('data-v'); b.disabled=true; b.classList.remove('pick');
+        if(corr.indexOf(v)>=0) b.classList.add('ok');
+        else if(chosen[v]) b.classList.add('bad');
+      });
+      markSeen(it.id, ok);
+      if(ok){ R.score+=15; S.xp+=15; R.streak++; R.bestStreak=Math.max(R.bestStreak,R.streak); }
+      else { R.streak=0; }
+      el('checkBtn').outerHTML='<button class="btn primary" id="nextBtn">Weiter</button>';
+      el('fb').innerHTML='<div class="feedback '+(ok?'good':'bad')+'"><b>'+
+        (ok?'✓ Vollständig richtig':'✗ Nicht ganz')+'</b><span class="why">'+esc(it.why)+
+        (missed.length?' <br>Gefehlt: '+missed.map(function(m){return esc(D[m].n);}).join(', '):'')+
+        (extra.length?' <br>Zu viel: '+extra.map(function(m){return esc(D[m].n);}).join(', '):'')+
+        '</span></div>';
+      el('nextBtn').addEventListener('click', function(){ R.i++; save(); renderPlay(); });
+      save();
+    });
+    return;
+  }
+
+  /* single choice */
+  document.querySelectorAll('#opts .chip').forEach(function(b){
+    b.addEventListener('click', function(){
+      if(b.disabled) return;
+      const v=b.getAttribute('data-v');
+      const ok = v===it.correct;
+      document.querySelectorAll('#opts .chip').forEach(function(x){
+        x.disabled=true;
+        if(x.getAttribute('data-v')===it.correct) x.classList.add('ok');
+        else if(x===b) x.classList.add('bad','shake');
+      });
+      markSeen(it.id, ok);
+      if(ok){ R.score+=10; S.xp+=10; R.streak++; R.bestStreak=Math.max(R.bestStreak,R.streak); }
+      else { R.streak=0; }
+      el('fb').innerHTML='<div class="feedback '+(ok?'good':'bad')+'"><b>'+
+        (ok?'✓ Richtig':'✗ Leider nicht')+'</b><span class="why">'+esc(it.why)+'</span></div>'+
+        '<div class="actions"><button class="btn primary" id="nextBtn">Weiter</button></div>';
+      el('nextBtn').addEventListener('click', function(){ R.i++; save(); renderPlay(); });
+      save();
+    });
+  });
+}
+
+function renderResult(){
+  const pct = R.n? Math.round(R.score/(R.n*12)*100):0;
+  const p = Math.max(0, Math.min(100, pct));
+  S.best[R.mode]=Math.max(S.best[R.mode]||0, p);
+  S.rounds=(S.rounds||0)+1;
+  save();
+  const txt = p>=85?'Sitzt. Das ist Dienstniveau.' : p>=60?'Solide — die Lücken siehst du oben im Feedback.' : 'Noch wacklig. Nochmal, das wird schnell besser.';
+  el('v-play').innerHTML =
+   '<div class="hero"><div class="label" style="color:var(--ember)">Runde beendet</div>'+
+   '<h2 style="margin-top:.5rem">'+R.score+' Punkte</h2>'+
+   '<p>'+esc(txt)+' Längste Serie: '+R.bestStreak+'.</p></div>'+
+   '<div class="actions">'+
+     '<button class="btn primary" id="againBtn">Nochmal</button>'+
+     '<button class="btn ghost" data-go="home">Zur Übersicht</button>'+
+   '</div>';
+  el('againBtn').addEventListener('click', function(){ startRound(R.mode); });
+}
+
+/* =========================================================================
+   NACHSCHLAGEN
+   ========================================================================= */
+let refFilter='all';
+function renderRef(){
+  const f = el('filters');
+  const groups = usedGroups.slice().sort(function(a,b){ return GROUPS[a].n.localeCompare(GROUPS[b].n); });
+  f.innerHTML = '<button class="filt'+(refFilter==='all'?' on':'')+'" data-f="all">Alle</button>'+
+    groups.map(function(g){
+      return '<button class="filt'+(refFilter===g?' on':'')+'" data-f="'+g+'">'+esc(GROUPS[g].n)+'</button>';
+    }).join('');
+  f.querySelectorAll('.filt').forEach(function(b){
+    b.addEventListener('click', function(){ refFilter=b.getAttribute('data-f'); renderRef(); });
+  });
+  drawRef();
+}
+function drawRef(){
+  const q = (el('q').value||'').toLowerCase().trim();
+  const list = DRUGS.filter(function(d){
+    if(refFilter!=='all' && d.g!==refFilter) return false;
+    if(!q) return true;
+    const hay = [d.n,d.h,d.m,GROUPS[d.g].n,d.i,d.w,d.c].join(' ').toLowerCase();
+    return hay.indexOf(q)>=0;
+  });
+  el('reflist').innerHTML = list.length? list.map(function(d){
+    return '<div class="card'+(d.g==='gas'?' o2':'')+'">'+
+      '<h3>'+esc(d.n)+' <span class="mno">'+esc(d.m)+'</span>'+(d.neu?' <span class="saa">neu in V 4.x</span>':'')+'</h3>'+
+      '<div class="grp">'+esc(GROUPS[d.g].n)+(d.h?' · '+esc(d.h):'')+'</div>'+
+      '<div class="who">'+whoTags(d)+'</div>'+
+      '<div class="row"><div class="k">Wirkung</div><div class="v">'+esc(d.w)+'</div></div>'+
+      '<div class="row"><div class="k">Indikation</div><div class="v">'+esc(d.i)+'</div></div>'+
+      '<div class="row"><div class="k">Dosis</div><div class="v">'+
+        (d.d? esc(d.d) : '<i>Im öffentlichen Blatt nicht eindeutig belegt.</i> <span class="saa">SAA prüfen</span>')+
+        (d.dwarn? '<br><span class="saa">Achtung</span> '+esc(d.dwarn):'')+
+      '</div></div>'+
+      '<div class="row cave"><div class="k">Cave</div><div class="v">'+esc(d.c)+'</div></div>'+
+      (d.rsnote?'<div class="row"><div class="k">Für dich</div><div class="v">'+esc(d.rsnote)+'</div></div>':'')+
+    '</div>';
+  }).join('') : '<div class="note">Nichts gefunden. Andere Schreibweise probieren — auch Handelsnamen funktionieren.</div>';
+}
+
+/* =========================================================================
+   STATISTIK
+   ========================================================================= */
+function renderStats(){
+  const ids = Object.keys(S.seen);
+  const weak = ids.filter(function(i){ return D[i] && mastery(i)<0.4 && (S.wrong[i]||0)>0; })
+                  .sort(function(a,b){ return mastery(a)-mastery(b); }).slice(0,6);
+  el('statsBox').innerHTML =
+    '<p style="margin:0 0 .5rem">Punkte gesamt: <b>'+S.xp+'</b> · Runden gespielt: <b>'+(S.rounds||0)+'</b> · '+
+    'Wirkstoffe berührt: <b>'+ids.filter(function(i){return !!D[i];}).length+'</b></p>'+
+    (weak.length? '<p style="margin:0">Das solltest du dir nochmal ansehen: <b>'+
+      weak.map(function(i){ return esc(D[i].n); }).join(', ')+'</b></p>'
+      : '<p style="margin:0">Noch keine Schwachstellen erkennbar — spiel ein paar Runden.</p>');
+}
+
+/* =========================================================================
+   INIT
+   ========================================================================= */
+el('q').addEventListener('input', drawRef);
+el('gloveBtn').addEventListener('click', function(){
+  S.glove=!S.glove; document.body.classList.toggle('glove', S.glove); save();
+});
+el('resetBtn').addEventListener('click', function(){
+  if(window.confirm('Fortschritt wirklich löschen?')){
+    S={xp:0,best:{},seen:{},right:{},wrong:{},glove:S.glove,rounds:0}; save(); renderStats(); renderHome();
+  }
+});
+if(S.glove) document.body.classList.add('glove');
+renderHome();
+
+/* Service Worker + Auto-Update */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('service-worker.js').then(function(reg){
+      reg.update();
+      setInterval(function(){ reg.update(); }, 60*60*1000);
+    }).catch(function(){});
+    let reloaded=false;
+    navigator.serviceWorker.addEventListener('controllerchange', function(){
+      if(reloaded) return; reloaded=true; window.location.reload();
+    });
+  });
+}
+</script>
+</body>
+</html>
