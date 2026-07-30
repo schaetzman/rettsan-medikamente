@@ -152,6 +152,8 @@ header.top{display:flex;align-items:center;gap:.75rem;padding:.9rem 0 1.1rem;bor
 .tag.rs{color:var(--green);border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.1)}
 .tag.ns{color:var(--ember-300);border-color:rgba(244,162,97,.45);background:rgba(244,162,97,.1)}
 .tag.na{color:#93C5FD;border-color:rgba(59,130,246,.5);background:rgba(59,130,246,.1)}
+.tag.board{color:var(--green);border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.1)}
+.tag.noboard{color:rgba(250,248,244,.55);border-color:rgba(230,223,210,.25);background:rgba(230,223,210,.05)}
 .saa{display:inline-block;font-family:var(--font-mono);font-size:.55rem;letter-spacing:.08em;
   color:#FCD34D;border:1px solid rgba(252,211,77,.45);background:rgba(252,211,77,.1);
   border-radius:5px;padding:.15rem .38rem;margin-left:.3rem}
@@ -297,6 +299,17 @@ body.glove .filt{font-size:.66rem;padding:.55rem .85rem}
       keine erfundene Dosis — das trägst du aus deinem SOP-Ordner nach.
     </div>
 
+    <div class="note">
+      <b>Marker „an Bord RTW 231“ / „nicht auf RTW 231“.</b> Zeigt, ob der Wirkstoff in der Materialfinder-Liste
+      von genau diesem einen Fahrzeug (RTW 231, ASB Wetterau) auftaucht — unabhängig davon, ob er im
+      Hessen-Katalog steht. Fentanyl, Morphin und Piritramid gehören zum Katalog, stehen aber nicht auf der
+      RTW-231-Liste; dort ist Nalbuphin (M 18, kein BtM) das gelistete Analgetikum. Das heißt nicht, dass
+      diese drei im Bereich ASB Wetterau nie vorkommen — am wahrscheinlichsten kommen sie über den
+      nachalarmierten Notarzt (NEF/NAW, eigene Ausstattung, ohne Katalogbindung) oder auf einem anderen
+      Fahrzeug der Wache. Der Marker ist eine Fahrzeug-Momentaufnahme aus einer Materialliste, kein Ersatz
+      für das, was du am ersten Diensttag am Fahrzeug und im SOP-Ordner selbst siehst.
+    </div>
+
     <div class="panel">
       <div class="qline">Quellen</div>
       <div style="font-size:.86rem;line-height:1.6;color:rgba(250,248,244,.82)">
@@ -306,7 +319,8 @@ body.glove .filt{font-size:.66rem;padding:.55rem .85rem}
         Teil 1 (Krankheitsbilder K, Prozeduren P, Verfahren V) und Teil 2 (Medikamente M 1–M 26).
         Quelle: UAG 3 (ÄLRD) der hessischen Expertengruppe zum NotSanG (HMfG).</p>
         <p style="margin:0 0 .5rem">Digitalfassung: hessen.sop-easy.de</p>
-        <p style="margin:0">Rechtsrahmen: NotSanG, Hessisches Rettungsdienstgesetz (HRDG).</p>
+        <p style="margin:0 0 .5rem">Rechtsrahmen: NotSanG, Hessisches Rettungsdienstgesetz (HRDG).</p>
+        <p style="margin:0">Bestückung RTW 231: Materialfinder-Liste ASB (Stand 30.07.2026).</p>
       </div>
     </div>
 
@@ -371,162 +385,161 @@ const DRUGS = [
   i:'Akutes Koronarsyndrom (K 1)',
   d:'150–300 mg p.o. oder 75–250 mg i.v. — Dosierung nach lokalen Absprachen',
   c:'Aktive Blutung, bekannte ASS-Unverträglichkeit / Analgetika-Asthma, Ulkusanamnese.',
-  who:['ns'], k:['k1']},
+  who:['ns'], k:['k1'], board:true},
 
  {id:'m2', m:'M 2', n:'Adrenalin', h:'Epinephrin, Suprarenin', g:'katechol',
   w:'Stimuliert Alpha- und Beta-Rezeptoren: Gefäße enger, Herz schneller und kräftiger, Bronchien weiter.',
   i:'Reanimation (K 12/K 13), Anaphylaxie (K 9), bedrohliche Bradykardie (K 3), Krupp/extrapulmonale Obstruktion beim Kind (K 7)',
   d:'Reanimation Erw.: 1 mg i.v./i.o. alle 3–5 Min. · Kind: 0,01 mg/kgKG · Anaphylaxie i.m.: unter 30 kg 0,01 mg/kgKG, 30–60 kg 0,1 mg je 10 kg, über 60 kg 0,5 mg (1× Wdh. nach 5 Min.) · Krupp: 5 mg vernebelt · Bradykardie-Pushdose: 1:100 verdünnt, 1 ml (10 µg) langsam i.v., wiederholbar nach 3 Min.',
   c:'Konzentrationsverwechslung! Bei der Anaphylaxie i.m. in den Oberschenkel — nicht i.v. Herzrhythmusstörungen, Blutdruckspitzen, erhöhter Sauerstoffverbrauch des Herzens.',
-  who:['ns','na'], k:['k12','k13','k9','k3','k7']},
+  who:['ns','na'], k:['k12','k13','k9','k3','k7'], board:true},
 
  {id:'m3', m:'M 3', n:'Amiodaron', h:'Cordarex', g:'antiarr',
   w:'Beeinflusst mehrere Ionenkanäle und stabilisiert den Herzrhythmus.',
   i:'Reanimation bei defibrillierbarem Rhythmus (VF/pVT) — K 12 / K 13',
   d:'Erw.: 300 mg i.v./i.o. nach dem 3. Schock, 150 mg nach dem 5. Schock · Kind: 5 mg/kgKG (Wdh. nach dem 5. Schock, max. 150 mg)',
   c:'Blutdruckabfall, Bradykardie; enthält Jod. In der Reanimation strikt Teamaufgabe mit lauter Rückmeldung.',
-  who:['ns','na'], k:['k12','k13']},
+  who:['ns','na'], k:['k12','k13'], board:true},
 
  {id:'m4', m:'M 4', n:'Atropin', h:'Atropinsulfat', g:'anticho',
   w:'Blockt den Vagus am Herzen — die Herzfrequenz steigt.',
   i:'Symptomatische Bradykardie (K 3)',
   d:'0,5 mg i.v., Wiederholung alle 3–5 Min., Maximaldosis 3 mg',
   c:'Keine Atropingabe bei AV-Block II Typ Mobitz und AV-Block III — infrahissärer Block, Gefahr des totalen AV-Blocks. Vorher respiratorische Ursachen ausschließen. Mundtrockenheit, weite Pupillen.',
-  who:['ns','na'], k:['k3']},
+  who:['ns','na'], k:['k3'], board:true},
 
  {id:'m5', m:'M 5', n:'Butylscopolamin', h:'Buscopan', g:'spasmo',
   w:'Entspannt die glatte Muskulatur der Hohlorgane und löst so den Kolikschmerz.',
   i:'Abdomineller Schmerz / Kolik (K 16a)',
   d:'20 mg langsam i.v., falls nicht kontraindiziert',
   c:'Bei der Nierenkolik laut AWMF nicht empfohlen, bei der Gallenkolik empfohlen. Tachykardie, Mundtrockenheit; nicht bei Tachyarrhythmie oder Engwinkelglaukom.',
-  who:['ns'], k:['k16a']},
+  who:['ns'], k:['k16a'], board:true},
 
  {id:'m6', m:'M 6', n:'Clemastin', h:'Tavegil', g:'antihist',
   w:'Blockiert H1-Rezeptoren und schwächt Juckreiz, Quaddeln und Gefäßweitstellung ab.',
   i:'Anaphylaktische Reaktion (K 9) — nachrangig zum Adrenalin',
   d:'Erw. 2 mg i.v. · Kinder über 1 Jahr 0,03 mg/kgKG i.v.',
   c:'Wirkt langsam — nie statt Adrenalin. Müdigkeit, bei rascher Gabe Blutdruckabfall. Laut V 4.2 bei leichter Symptomatik nur bei Hautsymptomen.',
-  who:['ns'], k:['k9']},
+  who:['ns'], k:['k9'], board:true},
 
  {id:'m7', m:'M 7', n:'Dimenhydrinat', h:'Vomex A', g:'antieme',
   w:'Blockiert H1-Rezeptoren im Brechzentrum — dämpft Übelkeit und Brechreiz. Chemisch ein Antihistaminikum, eingesetzt als Antiemetikum.',
   i:'Starke Übelkeit (K 17), typisch auch begleitend zur Opioidgabe',
   d:'Erw./Jugendliche max. 62 mg langsam i.v. oder in VEL · Kinder 6–14 J. 1,25 mg/kgKG · Tagesmaximum Erw. 400 mg, Kinder 6–14 J. 150 mg',
   c:'Sedierung; anticholinerge Wirkung mit Mundtrockenheit. Langsam geben.',
-  who:['ns'], k:['k17']},
+  who:['ns'], k:['k17'], board:true},
 
  {id:'m8', m:'M 8', n:'Dimetinden', h:'Fenistil', g:'antihist',
   w:'H1-Blocker — schwächt die Histaminwirkung bei allergischer Reaktion ab.',
   i:'Anaphylaktische Reaktion (K 9)',
   d:'0,1 mg/kgKG i.v.',
   c:'Wie Clemastin nachrangig zum Adrenalin. Sedierung, bei schneller Gabe Blutdruckabfall.',
-  who:['ns'], k:['k9']},
+  who:['ns'], k:['k9'], board:true},
 
  {id:'m9', m:'M 9', n:'Esketamin', h:'Ketanest S', g:'dissoz',
   w:'NMDA-Antagonist: sehr starke Analgesie mit Dissoziation, Kreislauf und Atemantrieb bleiben meist stabil, bronchodilatatorisch.',
   i:'Sehr starke Schmerzen — ausschließlich traumatisch (K 16b)',
   d:'0,125–0,250 mg/kgKG langsam titriert i.v. · nasal 0,250–0,500 mg/kgKG, ggf. fraktioniert · insgesamt max. 0,500 mg/kgKG. Midazolam fakultativ als Co-Analgesie',
   c:'Nur bei traumatischen Schmerzen. Kontraindiziert bei akuter KHK, malignem Hypertonus, manifester Hyperthyreose, GCS unter 12 durch Alkohol/Drogen/Psychopharmaka, akuter psychogener Erkrankung. Ohne Midazolam Risiko von Albträumen und Panikattacken. Übelkeit — langsam geben.',
-  who:['ns','na'], k:['k16b']},
+  who:['ns','na'], k:['k16b'], board:true},
 
  {id:'m10', m:'M 10', n:'Fentanyl', h:'Fentanyl-Janssen', g:'opioid',
   w:'Starkes, kurz wirksames Opioid — bindet an Opioidrezeptoren im ZNS.',
   i:'Sehr starke bis stärkste Schmerzen, insbesondere traumatisch, NRS über 5 (K 16a/b/c)',
   d:'0,001 mg/kgKG langsam titriert i.v., Wiederholung alle 2 Min. bei NRS über 5',
   c:'Hohes Risiko der Atemdepression bei großer Dosisvarianz. KI: AF unter 10/min oder SpO2 unter 90 %, GCS unter 12 durch psychoaktive Substanzen, HF unter 50 oder RRsys unter 100 mmHg, eingeschränkter Zugriff zum Patienten, Kinder unter 12 Monaten. Antidot Naloxon.',
-  who:['ns','na'], k:['k16a','k16b','k16c']},
+  who:['ns','na'], k:['k16a','k16b','k16c'], board:false, boardNote:'Steht nicht auf der RTW-231-Materialliste — dort ist Nalbuphin (M 18) das gelistete Analgetikum. Kommt am ehesten über den Notarzt (eigene Ausstattung) ins Spiel, nicht aus dem RTW-Fach.'},
 
  {id:'m11', m:'M 11', n:'Flumazenil', h:'Anexate', g:'antidot',
   w:'Verdrängt Benzodiazepine kompetitiv vom GABA-Rezeptor und hebt ihre Wirkung auf.',
   i:'Antagonisierung von Benzodiazepinen — im Algorithmus ausdrücklich nur „sehr kritisch in Erwägung ziehen“ bei Midazolam-bedingtem A-/B-Problem (K 10, K 16b)',
   d:'', saa:true,
   c:'Krampfgefahr, besonders bei Mischintoxikation und bei Epileptikern. Wirkt kürzer als das Benzodiazepin — Rebound. Erst Atemweg und Beatmung, dann Antidot.',
-  who:['ns','na'], k:['k10','k16b'], neu:true},
+  who:['ns','na'], k:['k10','k16b'], neu:true, board:true},
 
  {id:'m12', m:'M 12', n:'Glucose', h:'Glucose 40 %, G 40', g:'antihypo',
   w:'Füllt den Blutzucker direkt auf.',
   i:'Symptomatische Hypoglykämie (K 8)',
   d:'Erwachsene 8 g i.v. · Kinder unter 12 J. 0,2 g/kgKG, 1:1 mit NaCl 0,9 % verdünnen (vor allem bei G 40 %) · Wiederholung alle 3 Min. bis BZ im Normbereich. Wach und schluckfähig: Glukose bzw. schnellwirksame Kohlenhydrate oral',
   c:'Nichts oral beim bewusstseinsgetrübten Patienten (Aspiration). Paravenöse Gabe schädigt das Gewebe. Definition: Bewusstseinseinschränkung mit BZ unter 60 mg/dl (Kinder 54, Neugeborene 50) — die Werte sind nur orientierend, entscheidend ist die Symptomatik.',
-  who:['rs','ns'], k:['k8'], rsnote:'Orale Glukose beim wachen, schluckfähigen Patienten ist der Teil, den du als RS im Basisalgorithmus tatsächlich machst.'},
+  who:['rs','ns'], k:['k8'], rsnote:'Orale Glukose beim wachen, schluckfähigen Patienten ist der Teil, den du als RS im Basisalgorithmus tatsächlich machst.', board:true},
 
  {id:'m13', m:'M 13', n:'Glyceroltrinitrat', h:'Nitro, Nitrolingual', g:'nitrat',
   w:'Setzt NO frei, weitet vor allem die venösen Gefäße — Vorlast und Herzarbeit sinken, die Koronardurchblutung wird besser.',
   i:'Akutes Koronarsyndrom (K 1), Linksherzinsuffizienz mit akuter Dyspnoe (K 2)',
   d:'1 Hub sublingual (0,4 mg), Wiederholung frühestens nach 3 Min., falls die Bedingungen weiter erfüllt sind, max. 3 Hübe',
   c:'Bedingung K 1: RRsys über 100 mmHg und HF 50–130/min. Bedingung K 2: RRsys über 150 mmHg (bei laufendem CPAP über 130 mmHg, weil CPAP zusätzlich die Vorlast senkt). Kontraindiziert nach PDE-5-Hemmern (Potenzmittel) — danach fragen!',
-  who:['ns'], k:['k1','k2']},
+  who:['ns'], k:['k1','k2'], board:true},
 
  {id:'m14', m:'M 14', n:'Ipratropiumbromid', h:'Atrovent', g:'anticho',
   w:'Blockt Acetylcholin an den Bronchien — zusätzliche Bronchodilatation, ergänzt Salbutamol.',
   i:'Akute obstruktive Atemwegserkrankung (K 5 Erwachsene / K 6 Kinder)',
   d:'Erw.: 2 Amp. à 0,25 mg in 2 ml (= 0,5 mg in 4 ml) mit Sauerstoff vernebeln, nach 30 Min. wiederholbar · Kinder: 1 Amp. à 0,25 mg, nach jeweils 20 Min. 2× wiederholbar',
   c:'Laut K 6 Kontraindikation bei Kindern unter 6 Jahren. Mundtrockenheit; bei Engwinkelglaukom Augen schützen, Maske dicht führen.',
-  who:['ns'], k:['k5','k6']},
+  who:['ns'], k:['k5','k6'], board:true},
 
  {id:'m15', m:'M 15', n:'Levetiracetam', h:'Keppra', g:'antiepi',
   w:'Antikonvulsivum ohne Benzodiazepin-Wirkprofil — greift am synaptischen Vesikelprotein SV2A an.',
   i:'Benzodiazepin-refraktärer Status epilepticus ab 12 Jahren (K 10)',
   d:'60 mg/kgKG, max. 4500 mg, als Kurzinfusion über 10 Min.',
   c:'Kontraindiziert unter 12 Jahren. Kommt erst, wenn Midazolam den Status nicht durchbrochen hat.',
-  who:['ns','na'], k:['k10'], neu:true},
+  who:['ns','na'], k:['k10'], neu:true, board:true},
 
  {id:'m16', m:'M 16', n:'Midazolam', h:'Dormicum', g:'benzo',
   w:'Verstärkt GABA — dämpfend, angstlösend, muskelentspannend, krampfunterbrechend.',
   i:'Status epilepticus (K 10), Co-Analgesie beim traumatischen Schmerz (K 16b), Sedierung in der Postreanimationsphase (K 15)',
   d:'Status: 0,2 mg/kgKG i.v. (max. 10 mg Bolus, unter 40 kg max. 5 mg), Wdh. nach 2 Min. falls ohne Wirkung · nasal ebenso 0,2 mg/kgKG, Wdh. nach 4 Min. · Co-Analgesie: 10–50 kg 0,2 mg je 10 kg, über 50 kg 1 mg langsam i.v. · Postreanimation: über 50 kg 5 mg, unter 50 kg 1 mg je 10 kg',
   c:'Gute Überwachung — A- und B-Problem durch Midazolam auslösbar. Für die nasale Gabe die Konzentration 5 mg/ml verwenden, es gibt verschiedene! KI: Ateminsuffizienz (AF unter 10, SpO2 unter 90 %), Kreislaufinstabilität, Myasthenia gravis. Hypotonie, anterograde Amnesie.',
-  who:['ns','na'], k:['k10','k16b','k15']},
+  who:['ns','na'], k:['k10','k16b','k15'], board:true},
 
  {id:'m17', m:'M 17', n:'Morphin', h:'Morphinhydrochlorid, MSI', g:'opioid',
   w:'Klassisches starkes Opioid, gute analgetische Potenz.',
   i:'Starke Schmerzen NRS über 5, traumatisch und nicht traumatisch (K 16a/b/c)',
   d:'0,04 mg/kgKG langsam titriert i.v., Wiederholung alle 2 Min. bei NRS über 5',
   c:'Atemdepression, Kreislaufdepression, Übelkeit — deshalb langsam geben und an ein Antiemetikum denken. KI wie bei den anderen Opioiden: AF unter 10 / SpO2 unter 90 %, GCS unter 12 durch psychoaktive Substanzen, HF unter 50 / RRsys unter 100 mmHg, Kinder unter 12 Monaten.',
-  who:['ns','na'], k:['k16a','k16b','k16c']},
+  who:['ns','na'], k:['k16a','k16b','k16c'], board:false, boardNote:'Steht nicht auf der RTW-231-Materialliste — dort ist Nalbuphin (M 18) das gelistete Analgetikum. Trotzdem im Bereich ASB Wetterau real im Einsatz gesehen (Praktikum) — am wahrscheinlichsten über den Notarzt oder ein anderes Fahrzeug, nicht aus dem RTW-231-Fach. Am Fahrzeug selbst prüfen.'},
 
  {id:'m18', m:'M 18', n:'Nalbuphin', h:'Nalpain', g:'opioid',
   w:'Partieller Opioidagonist (Kappa-Agonist, My-Antagonist) — gute Analgesie bei geringerem Atemdepressionsrisiko. Kein BtM.',
   i:'Starke Schmerzen, traumatisch und nicht traumatisch (K 16a/b/c)',
   d:'12–65 J.: 0,2 mg/kgKG langsam titriert i.v. · unter 12 oder über 65 J.: 0,1 mg/kgKG · ab 12 J. einmalige Wiederholung 0,1 mg/kgKG ab 6 Min. bei NRS ab 6 · Gesamtdosis max. 20 mg',
   c:'Früher Ceiling-Effekt: mehr Dosis bringt keine zusätzliche Analgesie, nur mehr Nebenwirkungen. Bei Patienten unter My-Agonisten (Morphin, Fentanyl, Methadon) Entzugssymptome. KI: Kinder unter 18 Monaten, schwere Nieren-/Leberschäden.',
-  who:['ns','na'], k:['k16a','k16b','k16c']},
+  who:['ns','na'], k:['k16a','k16b','k16c'], board:true},
 
  {id:'m19', m:'M 19', n:'Naloxon', h:'Narcanti', g:'antidot',
   w:'Verdrängt Opioide vom Rezeptor und hebt ihre Wirkung — vor allem die Atemdepression — auf.',
   i:'Opioidüberhang / Opioidintoxikation mit Atemdepression',
   d:'', saa:true,
   c:'Wirkt kürzer als die meisten Opioide — Rebound der Atemdepression, deshalb lückenlose Überwachung und Transport. Löst beim Abhängigen einen akuten Entzug aus. Erst Atemweg und Beatmung sichern, dann titrieren.',
-  who:['ns','na'], k:[]},
+  who:['ns','na'], k:[], board:true},
 
  {id:'m20', m:'M 20', n:'Paracetamol', h:'Perfalgan', g:'nonop',
   w:'Zentral wirksames Analgetikum und Antipyretikum, keine relevante Entzündungshemmung.',
   i:'Mittelstarke Schmerzen (K 16a)',
-  d:'', saa:true,
+  d:'Kurzinfusion ca. 15 Min.: 10–50 kgKG 15 mg/kgKG · über 50 kgKG 1000 mg. Wiederholungsdosis kontraindiziert, andere Substanzklasse erwägen.',
   c:'Zwingend die Anamnese zu vorangegangenen Paracetamolgaben — Maximaldosis beachten! KI: Allergie gegen Paracetamol/NSAR, Leberfunktionsstörung (auch bei schwerem Alkoholmissbrauch und Mangelernährung), schwere Nierenerkrankung, Epilepsie unter Antiepileptika, Blutbildungsstörungen. Kreislaufkollaps bei schneller Gabe. Vorteil: keine Atemdepression, gut kombinierbar.',
-  who:['ns'], k:['k16a']},
+  who:['ns'], k:['k16a'], board:true},
 
  {id:'m21', m:'M 21', n:'Piritramid', h:'Dipidolor', g:'opioid',
   w:'Starkes Opioid mit im Vergleich längerer Wirkdauer.',
   i:'Starke Schmerzen NRS über 5 (K 16a/b/c)',
-  d:'0,06 mg/kgKG langsam titriert i.v., Wiederholung alle 2 Min.',
-  dwarn:'Die Änderungsliste zur V 4.2 nennt für M 21 dagegen 0,1–0,2 mg/kgKG. Widerspruch — vor der Anwendung in der SAA gegenprüfen.',
+  d:'0,06 mg/kgKG langsam titriert i.v., Wiederholung alle 2 Min. bei NRS > 5.',
   c:'Wie alle Opioide: Atemdepression, Kreislaufdepression, Übelkeit, GCS-Abfall. KI: GCS unter 12 durch psychoaktive Substanzen, Kreislaufinstabilität, Ateminsuffizienz.',
-  who:['ns','na'], k:['k16a','k16b','k16c']},
+  who:['ns','na'], k:['k16a','k16b','k16c'], board:false, boardNote:'Steht nicht auf der RTW-231-Materialliste — dort ist Nalbuphin (M 18) das gelistete Analgetikum. Kommt am ehesten über den Notarzt (eigene Ausstattung) ins Spiel, nicht aus dem RTW-Fach.'},
 
  {id:'m22', m:'M 22', n:'Prednisolon', h:'Solu-Decortin, Rectodelt', g:'steroid',
   w:'Glukokortikoid: dämpft Entzündung und Schwellung. Wirkt verzögert über Minuten bis Stunden — deshalb früh geben.',
   i:'Obstruktive Atemwegserkrankung (K 5/K 6), extrapulmonale Obstruktion beim Kind / Krupp (K 7), Anaphylaxie (K 9)',
   d:'Erw.: 50–100 mg p.o. oder i.v. (nach lokalen Vorgaben) · Anaphylaxie: 250 mg i.v. (bei leichter Symptomatik nur bei Rebound) · Kind: 100 mg Supp. rektal, ggf. 2 mg/kgKG i.v.',
   c:'Kein Ersatz für Adrenalin bei der Anaphylaxie — nur Ergänzung. Bei Einmalgabe kaum akute Nebenwirkungen. Bei Kindern erfragen, ob die Eltern schon 100 mg rektal gegeben haben.',
-  who:['ns'], k:['k5','k6','k7','k9']},
+  who:['ns'], k:['k5','k6','k7','k9'], board:true},
 
  {id:'m23', m:'M 23', n:'Salbutamol', h:'Sultanol, Ventolin', g:'beta2',
   w:'Stimuliert Beta-2-Rezeptoren der Bronchialmuskulatur — die Bronchien weiten sich, der Atemwegswiderstand sinkt.',
   i:'Akute obstruktive Atemwegserkrankung (K 5 Erwachsene / K 6 Kinder), Bronchospasmus bei Anaphylaxie',
   d:'Erw.: 2 Amp. à 1,25 mg in 2,5 ml (= 2,5 mg in 5 ml) mit Sauerstoff vernebeln, nach 15 Min. wiederholen · Kinder: 1 Amp. à 1,25 mg, über 20 kg nach 15 Min. wiederholbar',
   c:'KI laut K 5/K 6: vorausgegangene Überdosierung mit Beta-Mimetika, Tachykardie über 150/min, Tachyarrhythmie, im Kinderalgorithmus zusätzlich Kinder unter 4 Jahren. Tremor, Unruhe, Kalium fällt. Bei „kreißender Schwangerer“ Kontraindikation beachten.',
-  who:['ns'], k:['k5','k6','k9']},
+  who:['ns'], k:['k5','k6','k9'], board:true},
 
  {id:'m24', m:'M 24', n:'Sauerstoff', h:'O2, medizinisch', g:'gas',
   w:'Erhöht den Sauerstoffanteil der Einatemluft und damit das Angebot ans Gewebe.',
@@ -534,21 +547,21 @@ const DRUGS = [
   d:'Zielbereich SpO2 94–98 % · Schlaganfall: Gabe bei SpO2 unter 95 % · CO-Vergiftung: 15 l/min über Maske bzw. 100 % — hier richtet sich die Indikation nach der Klinik, nicht nach der Sättigung · Reanimation 100 %',
   c:'Bei CO-Vergiftung ist die Pulsoxymetrie trügerisch — sie kann trotz schwerer Vergiftung normal sein. Bei COPD nicht blind hochdosieren. Brandgefahr, kein Öl/Fett an Armaturen.',
   who:['rs','ns','na'], k:['k19','k11','k12'],
-  rsnote:'Der eine Wirkstoff, den du als RS im Rahmen der Basismaßnahmen eigenständig einsetzt.'},
+  rsnote:'Der eine Wirkstoff, den du als RS im Rahmen der Basismaßnahmen eigenständig einsetzt.', board:true},
 
  {id:'m25', m:'M 25', n:'Thiamin', h:'Vitamin B1, Betabion', g:'vitamin',
   w:'Ersetzt Vitamin B1 — beugt der Wernicke-Enzephalopathie vor, die durch Glukosegabe beim Mangelzustand ausgelöst werden kann.',
   i:'Begleitend zur Hypoglykämie-Behandlung (K 8) bei Verdacht auf alkoholassoziierte Bewusstlosigkeit, Alkoholerkrankung und Kachexie',
   d:'100 mg i.v.',
   c:'Selten anaphylaktische Reaktionen bei schneller i.v.-Gabe.',
-  who:['ns','na'], k:['k8']},
+  who:['ns','na'], k:['k8'], board:true},
 
  {id:'m26', m:'M 26', n:'Urapidil', h:'Ebrantil', g:'antihyp',
   w:'Alpha-1-Blocker mit zentraler Komponente — weitet die Gefäße und senkt den Blutdruck kontrolliert, meist ohne Reflextachykardie.',
   i:'Hypertensiver Notfall (K 4)',
   d:'5 mg i.v. über 1 Min., Wiederholung nach 3 Min., bis max. 25 mg',
   c:'Ziel ist nicht der Normwert, sondern eine Senkung der Extremwerte um etwa 10–15 % — zu schnelle Senkung gefährdet die Hirndurchblutung. Grenzwerte: RRsys über 180 und/oder RRdia über 110 mmHg, Schwangere über 160/110, Schlaganfall erst über 220/120. Potenziell stark wirksam mit nicht vorhersehbarer individueller Reaktion — deshalb vorsichtig beginnen.',
-  who:['ns','na'], k:['k4']},
+  who:['ns','na'], k:['k4'], board:true},
 
  {id:'vel', m:'—', n:'Vollelektrolytlösung', h:'VEL, Sterofundin, Ringer-Acetat', g:'volumen',
   w:'Kristalloide Infusionslösung: füllt das Gefäßsystem, hält den Zugang offen, dient als Trägerlösung.',
@@ -557,7 +570,7 @@ const DRUGS = [
   c:'Bei Linksherzinsuffizienz und Lungenödem zurückhaltend. Bei der Nierenkolik langsam laufen lassen — zu viel Volumen verstärkt über den Harnstau den Schmerz.',
   who:['rs','ns'], k:['k18','k9','k1'],
   rsnote:'Zugang und Infusion darfst du als RS nur nach Anordnung/Delegation — die Trägerlösung selbst ist unkritisch, „scharfe“ Medikamente kommen über NotSan/NA.',
-  extra:true}
+  extra:true, board:true, boardNote:'An Bord als Jonosteril (Fach Wärmefach).'}
 ];
 
 const CASES = [
@@ -660,6 +673,10 @@ function whoTags(d){
     const lbl = w==='rs'?'RS':(w==='ns'?'NotSan':'Notarzt');
     return '<span class="tag '+w+'">'+lbl+'</span>';
   }).join('');
+}
+function boardTag(d){
+  if(d.board===undefined) return '';
+  return d.board? '<span class="tag board">an Bord RTW 231</span>' : '<span class="tag noboard">nicht auf RTW 231</span>';
 }
 /* Wirkstoffe, die für den Trainer wenig taugen, aus manchen Modi halten */
 function playable(){ return DRUGS.filter(function(d){ return !d.extra; }); }
@@ -1083,7 +1100,7 @@ function drawRef(){
     return '<div class="card'+(d.g==='gas'?' o2':'')+'">'+
       '<h3>'+esc(d.n)+' <span class="mno">'+esc(d.m)+'</span>'+(d.neu?' <span class="saa">neu in V 4.x</span>':'')+'</h3>'+
       '<div class="grp">'+esc(GROUPS[d.g].n)+(d.h?' · '+esc(d.h):'')+'</div>'+
-      '<div class="who">'+whoTags(d)+'</div>'+
+      '<div class="who">'+whoTags(d)+boardTag(d)+'</div>'+
       '<div class="row"><div class="k">Wirkung</div><div class="v">'+esc(d.w)+'</div></div>'+
       '<div class="row"><div class="k">Indikation</div><div class="v">'+esc(d.i)+'</div></div>'+
       '<div class="row"><div class="k">Dosis</div><div class="v">'+
@@ -1092,6 +1109,7 @@ function drawRef(){
       '</div></div>'+
       '<div class="row cave"><div class="k">Cave</div><div class="v">'+esc(d.c)+'</div></div>'+
       (d.rsnote?'<div class="row"><div class="k">Für dich</div><div class="v">'+esc(d.rsnote)+'</div></div>':'')+
+      (d.boardNote?'<div class="row"><div class="k">RTW 231</div><div class="v">'+esc(d.boardNote)+'</div></div>':'')+
     '</div>';
   }).join('') : '<div class="note">Nichts gefunden. Andere Schreibweise probieren — auch Handelsnamen funktionieren.</div>';
 }
