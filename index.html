@@ -158,6 +158,36 @@ header.top{display:flex;align-items:center;gap:.75rem;padding:.9rem 0 1.1rem;bor
   color:#FCD34D;border:1px solid rgba(252,211,77,.45);background:rgba(252,211,77,.1);
   border-radius:5px;padding:.15rem .38rem;margin-left:.3rem}
 
+/* ---------- Übersichtsblätter M 27 / M 28 ---------- */
+details.sheet{background:rgba(16,40,65,.7);border:1px solid rgba(230,223,210,.14);border-radius:13px;
+  padding:.9rem 1rem;margin-top:.7rem;border-left:3px solid var(--blue)}
+details.sheet summary{font-size:1.05rem;font-weight:600;cursor:pointer;list-style:none;
+  display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;min-height:32px}
+details.sheet summary::-webkit-details-marker{display:none}
+details.sheet summary::after{content:'▾';margin-left:auto;color:var(--ember);font-size:.9rem}
+details.sheet[open] summary::after{content:'▴'}
+details.sheet .risk{margin-top:.9rem;padding-top:.7rem;border-top:1px solid rgba(230,223,210,.13)}
+details.sheet .risk h4{font-size:.98rem;font-weight:600;color:var(--paper)}
+details.sheet .row .v ul{margin:0;padding-left:1.05rem}
+details.sheet .row .v li{margin:.12rem 0}
+details.sheet .stamp{font-family:var(--font-mono);font-size:.56rem;letter-spacing:.11em;
+  text-transform:uppercase;color:rgba(250,248,244,.45);margin-top:.9rem}
+.tbl{overflow-x:auto;margin-top:.8rem;-webkit-overflow-scrolling:touch}
+table.dose{border-collapse:collapse;font-size:.8rem;min-width:680px}
+table.dose th,table.dose td{text-align:left;padding:.5rem .55rem;vertical-align:top;
+  border-bottom:1px solid rgba(230,223,210,.13)}
+table.dose th{font-family:var(--font-mono);font-size:.54rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ember);font-weight:500}
+table.dose td{color:rgba(250,248,244,.84);line-height:1.4}
+table.dose td b{color:var(--paper)}
+.dosecards{display:none}
+.dosecards .dc{margin-top:.8rem;padding:.65rem .75rem;border-radius:10px;
+  background:rgba(30,58,95,.4);border:1px solid rgba(230,223,210,.12)}
+.dosecards .dc h4{font-size:.98rem;font-weight:600}
+.dosecards .dc .row{margin-top:.4rem}
+.dosecards .dc .row .k{flex:0 0 4.1rem}
+@media(max-width:600px){ .tbl{display:none} .dosecards{display:block} }
+
 /* ---------- Info / Recht ---------- */
 .note{background:rgba(244,162,97,.09);border:1px solid rgba(244,162,97,.3);border-radius:12px;
   padding:.85rem 1rem;font-size:.87rem;line-height:1.55;margin-top:1rem;color:rgba(250,248,244,.88)}
@@ -210,7 +240,8 @@ body.glove .filt{font-size:.66rem;padding:.55rem .85rem}
     <div class="hero">
       <h2>Welcher Wirkstoff gehört zu <em>welchem Notfall?</em></h2>
       <p>Fünf Spielmodi auf Basis der Notfallmedikamente M 1–M 26 der hessischen Algorithmen
-      (Stand 04.12.2025). Kurze Runden, sofortiges Feedback, Fortschritt bleibt auf dem Gerät.</p>
+      (V 4.2, Stand 04.12.2025) — dazu die Analgetika-Übersichtsblätter M 27 und M 28 zum Nachschlagen.
+      Kurze Runden, sofortiges Feedback, Fortschritt bleibt auf dem Gerät.</p>
     </div>
     <div class="stats">
       <div class="stat"><b id="s-drugs">26</b><span>Wirkstoffe</span></div>
@@ -254,7 +285,8 @@ body.glove .filt{font-size:.66rem;padding:.55rem .85rem}
     <div class="hero" style="padding-bottom:.4rem">
       <h2>Nachschlagen</h2>
       <p>Alle 26 Wirkstoffe der hessischen Algorithmen plus Vollelektrolytlösung — mit Gruppe,
-      Indikation, Dosis und Cave.</p>
+      Indikation, Dosis und Cave. Obendrauf die beiden Analgetika-Übersichtsblätter
+      <b>M 27</b> (Risikoprofile) und <b>M 28</b> (Dosierung, Verdünnung, Wartezeiten).</p>
     </div>
     <input class="search" id="q" placeholder="Suchen: Wirkstoff, Handelsname, Gruppe, Notfall…" autocomplete="off">
     <div class="filters" id="filters"></div>
@@ -294,9 +326,11 @@ body.glove .filt{font-size:.66rem;padding:.55rem .85rem}
     </div>
 
     <div class="note">
-      <b>Gelbe SAA-Marker.</b> Wo im Trainer <span class="saa">SAA prüfen</span> steht, ist der Zahlenwert
-      in den öffentlich zugänglichen Blättern nicht eindeutig belegt oder lokal geregelt. Dort steht bewusst
-      keine erfundene Dosis — das trägst du aus deinem SOP-Ordner nach.
+      <b>Gelbe Marker.</b> Alle Dosisangaben stehen inzwischen belegt in der App — auch Flumazenil (M 11)
+      und Naloxon (M 19), die anfangs offen waren; beide sind aus den Originalblättern von Teil 2 nachgetragen.
+      Ein gelber Marker steht jetzt nur noch dort, wo die Blätter sich <i>selbst</i> widersprechen oder wo die
+      Ampullenstärke am Fahrzeug entscheidet — der bekannteste Fall ist die Midazolam-Co-Analgesie
+      (M 16 gegen M 28). Das klärst du im SOP-Ordner deines ÄLRD, nicht in dieser App.
     </div>
 
     <div class="note">
@@ -316,9 +350,13 @@ body.glove .filt{font-size:.66rem;padding:.55rem .85rem}
         <p style="margin:0 0 .5rem">
         <b>Algorithmen zur Notfallversorgung — Lehrmeinung für die Notfallsanitäter-Ausbildung an den
         hessischen Rettungsdienstschulen</b>, Hessenalgorithmen <b>V 4.2</b>, Stand 04.12.2025,
-        Teil 1 (Krankheitsbilder K, Prozeduren P, Verfahren V) und Teil 2 (Medikamente M 1–M 26).
+        Teil 1 (Krankheitsbilder K, Prozeduren P, Verfahren V) und Teil 2 (Medikamente M 1–M 26,
+        Übersichtsblätter M 27/M 28, Änderungsverzeichnis U 1).
         Quelle: UAG 3 (ÄLRD) der hessischen Expertengruppe zum NotSanG (HMfG).</p>
-        <p style="margin:0 0 .5rem">Digitalfassung: hessen.sop-easy.de</p>
+        <p style="margin:0 0 .5rem">V 4.2 ist die aktuelle Fassung — im Dokumenttitel als „2026-1-1“ geführt,
+        gedruckt ist darin aber nur der <b>Stand 04.12.2025</b>, keine Gültigkeitszeile. Zuletzt gegen die
+        Originalquelle geprüft am 09.08.2026: unverändert.</p>
+        <p style="margin:0 0 .5rem">Digitalfassung: hessen.sop-easy.de (zeigt teils noch V 4.0)</p>
         <p style="margin:0 0 .5rem">Rechtsrahmen: NotSanG, Hessisches Rettungsdienstgesetz (HRDG).</p>
         <p style="margin:0">Bestückung RTW 231: Materialfinder-Liste ASB (Stand 30.07.2026).</p>
       </div>
@@ -450,11 +488,11 @@ const DRUGS = [
   c:'Hohes Risiko der Atemdepression bei großer Dosisvarianz. KI: AF unter 10/min oder SpO2 unter 90 %, GCS unter 12 durch psychoaktive Substanzen, HF unter 50 oder RRsys unter 100 mmHg, eingeschränkter Zugriff zum Patienten, Kinder unter 12 Monaten. Antidot Naloxon.',
   who:['ns'], k:['k16a','k16b','k16c'], board:false, boardNote:'Steht nicht auf der RTW-231-Materialliste — dort ist Nalbuphin (M 18) das gelistete Analgetikum. Kommt am ehesten über den Notarzt (eigene Ausstattung) ins Spiel, nicht aus dem RTW-Fach.'},
 
- {id:'m11', m:'M 11', n:'Flumazenil', h:'Anexate', g:'antidot',
-  w:'Verdrängt Benzodiazepine kompetitiv vom GABA-Rezeptor und hebt ihre Wirkung auf.',
-  i:'Antagonisierung von Benzodiazepinen — im Algorithmus ausdrücklich nur „sehr kritisch in Erwägung ziehen“ bei Midazolam-bedingtem A-/B-Problem (K 10, K 16b)',
-  d:'', saa:true,
-  c:'Krampfgefahr, besonders bei Mischintoxikation und bei Epileptikern. Wirkt kürzer als das Benzodiazepin — Rebound. Erst Atemweg und Beatmung, dann Antidot.',
+ {id:'m11', m:'M 11', n:'Flumazenil', h:'Flumazenil, Anexate', g:'antidot',
+  w:'Verdrängt Benzodiazepine kompetitiv vom GABA-Rezeptor und hebt ihre zentral dämpfende Wirkung auf — unter anderem den gehemmten zentralen Atemantrieb.',
+  i:'Überdosierung oder Intoxikation mit Benzodiazepinen (M 11). In K 10 und K 16b ausdrücklich nur „sehr kritisch in Erwägung ziehen“ beim Midazolam-bedingten A-/B-Problem',
+  d:'Fertiglösung 0,5 mg in 5 ml · 0,2 mg in 15 Sek. · Wiederholung in 0,1-mg-Schritten bis max. 0,5 mg',
+  c:'Kontraindiziert bei Epilepsiepatienten mit Mischintoxikation, die Benzodiazepine als Zusatz- und Schutzmedikation erhielten (Angstzustände, Suizidneigung) — Krampfgefahr. Wirkt kürzer als das Benzodiazepin — Rebound. Bei rascher Injektion Angstgefühle, Herzklopfen, Bedrohungsgefühl; akutes Entzugssyndrom bei chronischer Benzodiazepineinnahme. Erst Atemweg und Beatmung, dann Antidot.',
   who:['ns'], k:['k10','k16b'], neu:true, board:true},
 
  {id:'m12', m:'M 12', n:'Glucose', h:'Glucose 40 %, G 40', g:'antihypo',
@@ -488,8 +526,9 @@ const DRUGS = [
  {id:'m16', m:'M 16', n:'Midazolam', h:'Dormicum', g:'benzo',
   w:'Verstärkt GABA — dämpfend, angstlösend, muskelentspannend, krampfunterbrechend.',
   i:'Status epilepticus (K 10), Co-Analgesie beim traumatischen Schmerz (K 16b), Sedierung in der Postreanimationsphase (K 15)',
-  d:'Status: 0,2 mg/kgKG i.v. (max. 10 mg Bolus, unter 40 kg max. 5 mg), Wdh. nach 2 Min. falls ohne Wirkung · nasal ebenso 0,2 mg/kgKG, Wdh. nach 4 Min. · Co-Analgesie: 10–50 kg 0,2 mg je 10 kg, über 50 kg 1 mg langsam i.v. · Postreanimation: über 50 kg 5 mg, unter 50 kg 1 mg je 10 kg',
-  c:'Gute Überwachung — A- und B-Problem durch Midazolam auslösbar. Für die nasale Gabe die Konzentration 5 mg/ml verwenden, es gibt verschiedene! KI: Ateminsuffizienz (AF unter 10, SpO2 unter 90 %), Kreislaufinstabilität, Myasthenia gravis. Hypotonie, anterograde Amnesie.',
+  d:'Status: 0,2 mg/kgKG i.v. und nasal (max. 10 mg, unter 40 kgKG max. 5 mg), Wdh. i.v. nach 2 Min., nasal nach 4 Min. falls ohne Wirkung · Co-Analgesie zu Esketamin i.v.: 10–50 kgKG 0,2 mg je 10 kg, über 50 kgKG 1 mg langsam · nasal: 10–50 kgKG 0,4 mg je 10 kg, über 50 kgKG 2 mg · Postreanimation: über 50 kg 5 mg, unter 50 kg 1 mg je 10 kg',
+  dwarn:'M 16 und M 28 widersprechen sich bei der Co-Analgesie: M 16 nennt 0,2 mg je 10 kgKG (= 0,02 mg/kgKG) bzw. 1 mg über 50 kg, die Analgetika-Tabelle M 28 dagegen 0,04 mg/kgKG — also das Doppelte. Nicht aus den Blättern auflösbar: im SOP-Ordner klären.',
+  c:'Gute Überwachung — A- und B-Problem durch Midazolam auslösbar. Für die nasale Gabe die Konzentration 5 mg/ml verwenden, es gibt verschiedene: M 16 nennt 5 mg/1 ml und 15 mg/3 ml (beides 5 mg/ml), M 28 rechnet mit der Ampulle 5 ml/5 mg = 1 mg/ml. Antidot laut M 16: Flumazenil 0,5 mg in 5 ml. KI: Ateminsuffizienz (AF unter 10, SpO2 unter 90 %), Kreislaufinstabilität, Myasthenia gravis. Hypotonie, anterograde Amnesie.',
   who:['ns'], k:['k10','k16b','k15'], board:true},
 
  {id:'m17', m:'M 17', n:'Morphin', h:'Morphinhydrochlorid, MSI', g:'opioid',
@@ -506,11 +545,11 @@ const DRUGS = [
   c:'Früher Ceiling-Effekt: mehr Dosis bringt keine zusätzliche Analgesie, nur mehr Nebenwirkungen. Bei Patienten unter My-Agonisten (Morphin, Fentanyl, Methadon) Entzugssymptome. KI: Kinder unter 18 Monaten, schwere Nieren-/Leberschäden.',
   who:['ns'], k:['k16a','k16b','k16c'], board:true},
 
- {id:'m19', m:'M 19', n:'Naloxon', h:'Narcanti', g:'antidot',
-  w:'Verdrängt Opioide vom Rezeptor und hebt ihre Wirkung — vor allem die Atemdepression — auf.',
-  i:'Opioidüberhang / Opioidintoxikation mit Atemdepression',
-  d:'', saa:true,
-  c:'Wirkt kürzer als die meisten Opioide — Rebound der Atemdepression, deshalb lückenlose Überwachung und Transport. Löst beim Abhängigen einen akuten Entzug aus. Erst Atemweg und Beatmung sichern, dann titrieren.',
+ {id:'m19', m:'M 19', n:'Naloxon', h:'Naloxon, Narcanti', g:'antidot',
+  w:'Spezifischer kompetitiver Opioid-Antagonist (µ-, κ- und δ-Rezeptoren) — hebt die Opioidwirkung, vor allem die Atemdepression, auf.',
+  i:'Opioidüberdosierung mit nicht beherrschbarer Atemdepression · Opioidüberdosierung mit Koma oder fehlenden Schutzreflexen (M 19)',
+  d:'Vorbereitung: 1 Amp. 0,4 mg/1 ml auf 10 ml verdünnen (ergibt 0,04 mg/ml) · fraktionierte Gabe in 0,1-mg-Schritten (= 2,5 ml) bis suffiziente Spontanatmung, Schutzreflexe und Vigilanz vorhanden sind bzw. das Ausgangsproblem gelöst ist (Titrationsmethode) · Wiederholung frühestens nach 2 Min. in gleicher Dosierung',
+  c:'Titriert wird bis zur suffizienten Atmung — nicht bis der Patient wach ist. Kürzere Halbwertszeit als das Opioid: Nachbeobachtung zwingend, keine ambulante Behandlung. Löst beim Abhängigen ein akutes Entzugssyndrom aus; überschießend möglich mit Schwindel, Schwitzen, Tremor, Muskelkrämpfen, Tachykardie, Blutdruckanstieg. Bei Verlust des i.v.-Zugangs nasale oder i.m. Gabe möglich. Erst Atemweg und Beatmung sichern, dann titrieren.',
   who:['ns'], k:[], board:true},
 
  {id:'m20', m:'M 20', n:'Paracetamol', h:'Perfalgan', g:'nonop',
@@ -634,6 +673,51 @@ const CASES = [
  {id:'k19', n:'Kohlenmonoxid-Vergiftung', k:'K 19',
   s:'CO-Exposition; Kopfschmerz, Schwindel, Übelkeit bis Bewusstlosigkeit. „Kratzen im Hals“ ist KEIN CO-Zeichen',
   rs:'Eigenschutz! Patient aus der Gefahrenzone, 15 l/min Sauerstoff unabhängig von der Sättigung'}
+];
+
+/* =========================================================================
+   ÜBERSICHTSBLÄTTER M 27 / M 28 — Analgetika
+   Wörtlich aus den Seitenbildern von Teil 2 (V 4.2) abgelesen, nicht per OCR.
+   ========================================================================= */
+const M27_HEAD = [
+  'Analgetikagabe durch Rettungsdienstpersonal nicht bei Patienten unter 1 Jahr bzw. 10 kgKG.',
+  'Midazolam nur Sedativum und Co-Analgetikum in Verbindung mit Esketamin.',
+  'Kombinationen von Analgetika verschiedener Substanzklassen können empfohlen werden — Kombinationen gleicher/ähnlicher Substanzklassen werden nicht empfohlen.'
+];
+const M27 = [
+ {n:'Paracetamol',
+  ki:['Allergien (gegen Paracetamol oder andere Nicht-Opioid-Analgetika)','Leberfunktionsstörung (z. B. bei schwerer Mangelernährung und schwerem Alkoholmissbrauch)','(schwere) Nierenerkrankung','Epilepsie (mit Einnahme von Anti-Epileptika)','Blutbildungsstörungen angeboren oder erworben (z. B. hepatische Porphyrie, Glukose-6-Phosphat-Dehydrogenase-Mangel, Chemotherapie)','Schwangerschaft (relativ)'],
+  uaw:['RR-Abfall (daher langsame Gabe!)','Asthmaanfall','Blutbildungsstörungen (bis zur Agranulozytose, sehr selten)','Übelkeit (daher langsame Gabe!)','Hautrötung, -jucken']},
+ {n:'Esketamin',
+  ki:['Bewusstseinsstörung bzw. Einfluss psychoaktiver Substanzen wie Alkohol, Drogen, Psychopharmaka (GCS < 12)','Manifeste Hyperthyreose','Akute KHK','Maligner Hypertonus','Schwangerschaft (relativ)'],
+  uaw:['Übelkeit (daher langsame i.v. Gabe!)','Psychische Störungen („neben der Spur“, Dysphorie, Euphorie)','Bewusstseinstrübung (Wirkungsverstärkung zentral dämpfender Mittel)']},
+ {n:'Midazolam (+ Esketamin)',
+  ki:['Bewusstseinsstörung bzw. Einfluss psychoaktiver Substanzen wie Alkohol, Drogen, Psychopharmaka (GCS < 12)','Ateminsuffizienz (AF < 10/min, SpO2 < 90 %)','Kreislaufinstabilität (HF < 50, RRsyst < 100 mmHg)','Myasthenia gravis'],
+  uaw:['Brennen bei nasaler Gabe (an der Schleimhaut)','Psychische Störungen („neben der Spur“, Euphorie, Dysphorie)','Atemdepression','Bewusstseinstrübung (Wirkungsverstärkung zentral dämpfender Mittel)','Hypotonie','Anterograde Amnesie']},
+ {n:'Nalbuphin (partieller Opioidagonist)',
+  ki:['Bewusstseinsstörung mit GCS < 12, z. B. durch psychoaktive Substanzen: Alkohol, Drogen, Psychopharmaka','Kreislaufinstabilität (HF < 50, RRsyst < 100 mmHg)','Schwere Nieren- oder Leberschäden','Aktuelle Therapie mit sog. µ-agonistischen Opioiden wie z. B. Morphin, Fentanyl, Methadon','Relativ: Ateminsuffizienz (AF < 10/min, SpO2 < 90 %)','Relativ: Schwangerschaft','Kinder unter 18 Monaten'],
+  uaw:['Bewusstseinstrübung (Wirkungsverstärkung zentral dämpfender Mittel und psychische Störungen — Interaktion mit psychotropen Substanzen, „neben der Spur“, eher als Dysphorie)','Kreislaufstörungen','Schwindel mit Übelkeit/Erbrechen']},
+ {n:'Opioide (Morphin, Piritramid, Fentanyl)',
+  ki:['Bewusstseinsstörung bzw. Einfluss psychoaktiver Substanzen wie Alkohol, Drogen, Psychopharmaka (GCS < 12)','Ateminsuffizienz (AF < 10/min, SpO2 < 90 %)','Kreislaufinstabilität (HF < 50, RRsyst < 100 mmHg)','Eingeschränkter Zugriff (zur Lagerung/Beatmung des Patienten)','Kinder unter 12 Monaten'],
+  uaw:['Psychische Störungen („neben der Spur“, Euphorie, Dysphorie)','Atemdepression','Bewusstseinstrübung (Wirkungsverstärkung zentral dämpfender Mittel)','Schwindel mit Übelkeit/Erbrechen']}
+];
+const M28 = [
+ {n:'Paracetamol', amp:'100 ml / 1000 mg', menge:'1000 mg', verd:'pur', konz:'10 mg/ml',
+  dosis:'15 mg/kgKG', zeit:'15 Min.', wdh:'keine'},
+ {n:'Esketamin', amp:'2 ml / 50 mg', ampwarn:true, menge:'50 mg (2 ml = 1 Amp.)',
+  verd:'10 ml (bei nasaler Gabe Bolus vorher festlegen)', konz:'5 mg/ml (bei nasaler Gabe 25 mg/ml)',
+  dosis:'i.v. 0,125–0,250 mg/kgKG · nasal 0,250–0,500 mg/kgKG',
+  zeit:'30 Sek. i.v.; nasal nur per Bolus (z. B. MAD-Nasenadapter)', wdh:'2–5 Minuten'},
+ {n:'Midazolam', amp:'5 ml / 5 mg', ampwarn:true, menge:'5 mg', verd:'pur — Cave bei anderen Konzentrationen!',
+  konz:'1 mg/ml', dosis:'0,04 mg/kgKG', zeit:'30 Sek. i.v.; nasal nur per Bolus (z. B. MAD)', wdh:'2–5 Minuten'},
+ {n:'Nalbuphin', amp:'2 ml / 20 mg', menge:'20 mg', verd:'10 ml', konz:'2 mg/ml',
+  dosis:'0,1 bis 0,2 mg/kgKG', zeit:'30 Sek.', wdh:'6 Minuten (Anschlagszeit 4–5 Min.)'},
+ {n:'Morphin', amp:'1 ml / 10 mg', menge:'10 mg', verd:'10 ml', konz:'1 mg/ml',
+  dosis:'0,04 mg/kgKG', zeit:'30 Sek.', wdh:'2 Minuten'},
+ {n:'Piritramid', amp:'2 ml / 15 mg', menge:'15 mg', verd:'10 ml', konz:'1,5 mg/ml',
+  dosis:'0,06 mg/kgKG', zeit:'30 Sek.', wdh:'2 Minuten'},
+ {n:'Fentanyl', amp:'10 ml / 0,5 mg', ampwarn:true, menge:'0,5 mg', verd:'pur', konz:'0,05 mg/ml',
+  dosis:'0,001 mg/kgKG', zeit:'30 Sek.', wdh:'2 Minuten'}
 ];
 
 /* ---- abgeleitete Strukturen ---- */
@@ -886,7 +970,28 @@ const CAVES = [
   correct:0, why:'K 8: ggf. 100 mg i.v. bei Verdacht auf alkoholassoziierte Bewusstlosigkeit, Alkoholerkrankung und Kachexie — begleitend zur Glukosegabe.'},
  {id:'m11', q:'Wie beschreibt der Algorithmus den Einsatz von Flumazenil?',
   opts:['Sehr kritisch in Erwägung ziehen — erst Atemweg sichern','Standard nach jeder Midazolamgabe','Immer vor dem Transport','Nur bei Kindern'],
-  correct:0, why:'Die Fußnote in K 10 und K 16b sagt wörtlich, das Antidot sei „sehr kritisch in Erwägung“ zu ziehen — Atemwegssicherung kommt zuerst. Krampfgefahr bei Mischintoxikation.'}
+  correct:0, why:'Die Fußnote in K 10 und K 16b sagt wörtlich, das Antidot sei „sehr kritisch in Erwägung“ zu ziehen — Atemwegssicherung kommt zuerst. Krampfgefahr bei Mischintoxikation.'},
+ {id:'m11', q:'Wie wird Flumazenil laut M 11 dosiert?',
+  opts:['0,2 mg in 15 Sek., dann in 0,1-mg-Schritten bis max. 0,5 mg','1 mg als Bolus','0,5 mg auf einmal','0,04 mg/kgKG titriert'],
+  correct:0, why:'Fertiglösung 0,5 mg in 5 ml. Die Gesamtdosis ist bei 0,5 mg gedeckelt — bewusst niedrig, weil das Antidot Krämpfe auslösen kann.'},
+ {id:'m19', q:'Bis wohin wird Naloxon titriert?',
+  opts:['Bis suffiziente Spontanatmung, Schutzreflexe und Vigilanz da sind','Bis der Patient vollständig wach ist','Bis die Pupillen weit sind','Bis 2 mg gegeben sind'],
+  correct:0, why:'M 19: fraktioniert in 0,1-mg-Schritten (= 2,5 ml der auf 10 ml verdünnten Ampulle) bis das Ausgangsproblem gelöst ist. Wer bis zum Aufwachen titriert, holt sich einen Entzug ins Auto.'},
+ {id:'m20', q:'Ab wann gibt Rettungsdienstpersonal laut M 27 überhaupt Analgetika?',
+  opts:['Nicht unter 1 Jahr bzw. 10 kgKG','Nicht unter 6 Jahren','Ab 20 kgKG','Es gibt keine Altersgrenze'],
+  correct:0, why:'Der Kopf von M 27 zieht diese Grenze für alle Analgetika gemeinsam — unabhängig davon, was das einzelne Wirkstoffblatt sagt.'},
+ {id:'m9',  q:'Midazolam ist laut M 27 als Co-Analgetikum nur zulässig …',
+  opts:['in Verbindung mit Esketamin','zusammen mit jedem Opioid','allein bei starken Schmerzen','zusammen mit Paracetamol'],
+  correct:0, why:'M 27 im Kopf: Midazolam ist Sedativum und Co-Analgetikum ausschließlich in Verbindung mit Esketamin — es ist selbst kein Schmerzmittel.'},
+ {id:'m17', q:'Welche Analgetika-Kombination empfiehlt M 27?',
+  opts:['Verschiedene Substanzklassen kombinieren','Zwei Opioide kombinieren','Nie kombinieren','Immer Opioid plus Opioid'],
+  correct:0, why:'Kombinationen verschiedener Substanzklassen können empfohlen werden, gleicher oder ähnlicher Klassen nicht — mehr vom Gleichen bringt vor allem mehr Nebenwirkungen.'},
+ {id:'m18', q:'Nalbuphin nach M 28: 1 Amp. 2 ml/20 mg auf 10 ml verdünnt — welche Konzentration?',
+  opts:['2 mg/ml','1 mg/ml','0,5 mg/ml','5 mg/ml'],
+  correct:0, why:'20 mg auf 10 ml = 2 mg/ml. Zum Vergleich in derselben Tabelle: Morphin 1 mg/ml, Piritramid 1,5 mg/ml, Fentanyl pur 0,05 mg/ml.'},
+ {id:'m9',  q:'Wie lange wartest du laut M 28 nach einer Esketamin-Einzeldosis, bevor du nachlegst?',
+  opts:['2–5 Minuten','30 Sekunden','10 Minuten','Gar nicht, keine Wiederholung'],
+  correct:0, why:'Injektionszeit 30 Sek. i.v., Wartezeit bis zur Wiederholung 2–5 Min. Nur Paracetamol hat in der Tabelle gar keine Wiederholung.'}
 ];
 function buildCave(){
   return pick(CAVES, 8).map(function(x){
@@ -1088,6 +1193,59 @@ function renderRef(){
   });
   drawRef();
 }
+/* Übersichtsblätter M 27 / M 28 — Analgetika */
+function sheetsHTML(q){
+  const hay27 = ['M 27','Risikoprofile von Analgetika','Analgetika','Kontraindikation','UAW','unerwünschte Arzneimittelwirkungen'].concat(M27_HEAD)
+    .concat(M27.map(function(r){ return r.n+' '+r.ki.join(' ')+' '+r.uaw.join(' '); })).join(' ').toLowerCase();
+  const hay28 = ['M 28','Dosierungs- und Applikationsmöglichkeiten von Analgetika','Analgetika','aufziehen','verdünnen','Ampulle','Konzentration','Einzeldosis','Wartezeit']
+    .concat(M28.map(function(r){ return [r.n,r.amp,r.menge,r.verd,r.konz,r.dosis,r.zeit,r.wdh].join(' '); })).join(' ').toLowerCase();
+  let out = '';
+  if(!q || hay27.indexOf(q)>=0){
+    out += '<details class="sheet"><summary>Risikoprofile von Analgetika <span class="mno">M 27</span></summary>'+
+      '<div class="note" style="margin-top:.7rem">'+
+        M27_HEAD.map(function(t){ return '<div style="margin:.15rem 0">• '+esc(t)+'</div>'; }).join('')+
+      '</div>'+
+      M27.map(function(r){
+        return '<div class="risk"><h4>'+esc(r.n)+'</h4>'+
+          '<div class="row"><div class="k">Kontra</div><div class="v"><ul>'+
+            r.ki.map(function(t){ return '<li>'+esc(t)+'</li>'; }).join('')+'</ul></div></div>'+
+          '<div class="row"><div class="k">UAW</div><div class="v"><ul>'+
+            r.uaw.map(function(t){ return '<li>'+esc(t)+'</li>'; }).join('')+'</ul></div></div>'+
+        '</div>';
+      }).join('')+
+      '<div class="stamp">Hessenalgorithmen V 4.2, Teil 2 · Stand 04.12.2025 · M 27</div></details>';
+  }
+  if(!q || hay28.indexOf(q)>=0){
+    out += '<details class="sheet"><summary>Dosierung &amp; Applikation von Analgetika <span class="mno">M 28</span></summary>'+
+      '<div class="tbl"><table class="dose"><tr>'+
+        '<th>Wirkstoff</th><th>Ampullen&shy;größe</th><th>Wirkstoff&shy;menge</th>'+
+        '<th>verdünnt auf (isoton. NaCl)</th><th>Konzentration der Lösung</th>'+
+        '<th>Einzeldosis</th><th>Injektions&shy;zeit</th><th>Wartezeit bis Wieder&shy;holung</th></tr>'+
+        M28.map(function(r){
+          return '<tr><td><b>'+esc(r.n)+'</b></td>'+
+            '<td>'+esc(r.amp)+(r.ampwarn?'<br><span class="saa">Cave: z. T. andere Amp./Konzentration!</span>':'')+'</td>'+
+            '<td>'+esc(r.menge)+'</td><td>'+esc(r.verd)+'</td><td>'+esc(r.konz)+'</td>'+
+            '<td><b>'+esc(r.dosis)+'</b></td><td>'+esc(r.zeit)+'</td><td>'+esc(r.wdh)+'</td></tr>';
+        }).join('')+
+      '</table></div>'+
+      '<div class="dosecards">'+
+        M28.map(function(r){
+          return '<div class="dc"><h4>'+esc(r.n)+'</h4>'+
+            '<div class="row"><div class="k">Dosis</div><div class="v"><b>'+esc(r.dosis)+'</b></div></div>'+
+            '<div class="row"><div class="k">Ampulle</div><div class="v">'+esc(r.amp)+' → '+esc(r.menge)+
+              (r.ampwarn?' <span class="saa">Cave: z. T. andere Amp./Konzentration!</span>':'')+'</div></div>'+
+            '<div class="row"><div class="k">Verdünnt</div><div class="v">'+esc(r.verd)+' → <b>'+esc(r.konz)+'</b></div></div>'+
+            '<div class="row"><div class="k">Zeit</div><div class="v">Injektion '+esc(r.zeit)+' · Wiederholung '+esc(r.wdh)+'</div></div>'+
+          '</div>';
+        }).join('')+
+      '</div>'+
+      '<div class="note" style="margin-top:.7rem"><b>Lies die Tabelle als Aufziehhilfe.</b> Sie sagt, worauf verdünnt wird und '+
+      'welche Konzentration dabei herauskommt — genau der Schritt, den du als Rettungssanitäter vorbereitest, '+
+      'während der Notfallsanitäter die Indikation stellt. Die Ampullenstärke am eigenen Fahrzeug vorher prüfen.</div>'+
+      '<div class="stamp">Hessenalgorithmen V 4.2, Teil 2 · Stand 04.12.2025 · M 28</div></details>';
+  }
+  return out;
+}
 function drawRef(){
   const q = (el('q').value||'').toLowerCase().trim();
   const list = DRUGS.filter(function(d){
@@ -1096,7 +1254,9 @@ function drawRef(){
     const hay = [d.n,d.h,d.m,GROUPS[d.g].n,d.i,d.w,d.c].join(' ').toLowerCase();
     return hay.indexOf(q)>=0;
   });
-  el('reflist').innerHTML = list.length? list.map(function(d){
+  const showSheets = (refFilter==='all' || ['opioid','nonop','dissoz','benzo'].indexOf(refFilter)>=0);
+  const sheets = showSheets? sheetsHTML(q) : '';
+  el('reflist').innerHTML = sheets + (list.length? list.map(function(d){
     return '<div class="card'+(d.g==='gas'?' o2':'')+'">'+
       '<h3>'+esc(d.n)+' <span class="mno">'+esc(d.m)+'</span>'+(d.neu?' <span class="saa">neu in V 4.x</span>':'')+'</h3>'+
       '<div class="grp">'+esc(GROUPS[d.g].n)+(d.h?' · '+esc(d.h):'')+'</div>'+
@@ -1111,7 +1271,7 @@ function drawRef(){
       (d.rsnote?'<div class="row"><div class="k">Für dich</div><div class="v">'+esc(d.rsnote)+'</div></div>':'')+
       (d.boardNote?'<div class="row"><div class="k">RTW 231</div><div class="v">'+esc(d.boardNote)+'</div></div>':'')+
     '</div>';
-  }).join('') : '<div class="note">Nichts gefunden. Andere Schreibweise probieren — auch Handelsnamen funktionieren.</div>';
+  }).join('') : (sheets? '' : '<div class="note">Nichts gefunden. Andere Schreibweise probieren — auch Handelsnamen funktionieren.</div>'));
 }
 
 /* =========================================================================
