@@ -1318,5 +1318,30 @@ if('serviceWorker' in navigator){
   });
 }
 </script>
+
+<!-- Zugriffszaehlung: eigener Zaehler auf uhdris-zaehler.netlify.app.
+     Cookielos, kein Personenbezug, keine Einwilligung noetig.
+     Eigene Aufrufe abschalten: diese Seite einmal mit #zaehler-aus aufrufen
+     (wieder einschalten mit #zaehler-an). Lokale Adressen zaehlen nie mit. -->
+<script>
+(function(){
+  var APP = 'wirkstoff-trainer';
+  try{
+    if (location.hash === '#zaehler-aus'){ localStorage.setItem('zaehler_aus','1'); return; }
+    if (location.hash === '#zaehler-an'){ localStorage.removeItem('zaehler_aus'); }
+    if (localStorage.getItem('zaehler_aus') === '1') return;
+  }catch(e){}
+  var h = location.hostname;
+  if (!h || h === 'localhost' || h === '127.0.0.1' || h.slice(-6) === '.local'
+      || /^(192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[01])\.)/.test(h)) return;
+  var u = 'https://uhdris-zaehler.netlify.app/.netlify/functions/zaehler'
+        + '?a=' + encodeURIComponent(APP)
+        + '&h=' + encodeURIComponent(h)
+        + '&r=' + encodeURIComponent(document.referrer || '');
+  try{
+    if (navigator.sendBeacon) navigator.sendBeacon(u); else new Image().src = u;
+  }catch(e){ try{ new Image().src = u; }catch(e2){} }
+})();
+</script>
 </body>
 </html>
