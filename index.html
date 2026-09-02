@@ -188,6 +188,21 @@ table.dose td b{color:var(--paper)}
 .dosecards .dc .row .k{flex:0 0 4.1rem}
 @media(max-width:600px){ .tbl{display:none} .dosecards{display:block} }
 
+/* ---------- Spritzenetikett ---------- */
+.etiketten{display:grid;gap:.7rem;margin-top:.8rem}
+@media(min-width:620px){ .etiketten{grid-template-columns:1fr 1fr} }
+.etikett{border:2px dashed rgba(230,223,210,.38);border-radius:10px;
+  background:rgba(11,26,46,.45);padding:.65rem .75rem;font-family:var(--font-mono);line-height:1.3}
+.etikett .z{display:block;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(250,248,244,.5)}
+.etikett .w{font-size:1rem;font-weight:600;color:var(--paper)}
+.etikett .k{font-size:1.35rem;font-weight:700;color:var(--ember);line-height:1.15}
+.etikett .u{font-size:1rem;font-weight:600;color:var(--paper)}
+.etikett > div + div{margin-top:.4rem}
+.etikett .fuss{margin-top:.55rem;font-family:var(--font-sans);font-size:.78rem;line-height:1.5;
+  color:rgba(250,248,244,.78)}
+.etikett .fuss b{color:var(--ember)}
+
 /* ---------- Info / Recht ---------- */
 .note{background:rgba(244,162,97,.09);border:1px solid rgba(244,162,97,.3);border-radius:12px;
   padding:.85rem 1rem;font-size:.87rem;line-height:1.55;margin-top:1rem;color:rgba(250,248,244,.88)}
@@ -1239,12 +1254,41 @@ function sheetsHTML(q){
           '</div>';
         }).join('')+
       '</div>'+
+      '<h4 style="margin:1.2rem 0 .1rem;font-size:.98rem">Das steht auf der Spritze</h4>'+
+      '<p class="hint" style="margin:.25rem 0 0;font-size:.82rem;color:rgba(250,248,244,.7)">'+
+        'Wirkstoff, Konzentration <b>der fertigen Lösung</b> und Uhrzeit — nicht das, was auf der Ampulle stand. '+
+        'Wer nach dir an die Spritze geht, rechnet mit der Zahl, die draufsteht.</p>'+
+      '<div class="etiketten">'+
+        M28.map(function(r){
+          var teile = String(r.konz).split(' (');
+          var konz = teile[0];
+          var rest = teile[1] ? teile[1].replace(/\)$/,'') : '';
+          var pur  = /^pur/i.test(r.verd);
+          var fuss = pur
+            ? 'Fertiglösung <b>'+esc(r.amp)+'</b> — Ampulle und Spritze haben dieselbe Konzentration. Das Etikett bleibt trotzdem dran.'
+            : 'Auf der Ampulle steht <b>'+esc(r.amp)+'</b>, verdünnt wird auf '+esc(r.verd)+'. Aufs Etikett gehört die Zahl aus der Spritze.';
+          if (rest) fuss += ' Anderer Weg, andere Zahl: '+esc(rest)+' — dann gehört die aufs Etikett.';
+          if (r.ampwarn) fuss += ' <b>Cave:</b> von diesem Wirkstoff sind andere Ampullenstärken im Umlauf; dann stimmt auch die Konzentration nicht mehr.';
+          return '<div class="etikett">'+
+            '<div><span class="z">Wirkstoff</span><span class="w">'+esc(r.n)+'</span></div>'+
+            '<div><span class="z">Konzentration in der Spritze</span><span class="k">'+esc(konz)+'</span></div>'+
+            '<div><span class="z">Uhrzeit</span><span class="u" data-uhr>--:--</span></div>'+
+            '<div class="fuss">'+fuss+'</div>'+
+          '</div>';
+        }).join('')+
+      '</div>'+
       '<div class="note" style="margin-top:.7rem"><b>Lies die Tabelle als Aufziehhilfe.</b> Sie sagt, worauf verdünnt wird und '+
       'welche Konzentration dabei herauskommt — genau der Schritt, den du als Rettungssanitäter vorbereitest, '+
       'während der Notfallsanitäter die Indikation stellt. Die Ampullenstärke am eigenen Fahrzeug vorher prüfen.</div>'+
       '<div class="stamp">Hessenalgorithmen V 4.2, Teil 2 · Stand 04.12.2025 · M 28</div></details>';
   }
   return out;
+}
+/* Die Uhrzeit auf den Etiketten wird beim Zeichnen gesetzt, nicht beim Laden. */
+function nowHHMM(){ var t = new Date();
+  return ('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2); }
+function paintUhr(root){
+  (root||document).querySelectorAll('[data-uhr]').forEach(function(e){ e.textContent = nowHHMM(); });
 }
 function drawRef(){
   const q = (el('q').value||'').toLowerCase().trim();
@@ -1272,6 +1316,7 @@ function drawRef(){
       (d.boardNote?'<div class="row"><div class="k">RTW 231</div><div class="v">'+esc(d.boardNote)+'</div></div>':'')+
     '</div>';
   }).join('') : (sheets? '' : '<div class="note">Nichts gefunden. Andere Schreibweise probieren — auch Handelsnamen funktionieren.</div>'));
+  paintUhr(el('reflist'));
 }
 
 /* =========================================================================
