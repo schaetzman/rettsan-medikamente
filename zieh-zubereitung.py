@@ -23,10 +23,14 @@ Was passiert
    (Klammern werden gezaehlt, nicht per Regex geraten).
 2. node wandelt das JS-Literal in JSON -- es ist kein JSON: unquotierte
    Schluessel, einfache Anfuehrungszeichen, Kommentare.
-3. Aus jedem Eintrag wird genommen, was das Etikett braucht. Nichts wird
-   umgerechnet und nichts ergaenzt; was der Rechentrainer nicht weiss,
-   weiss diese App auch nicht.
-4. Der Block zwischen den beiden Markierungen in index.html wird ersetzt.
+3. Aus jedem Eintrag wird genommen, was Etikett und Zubereitung brauchen.
+   Nichts wird umgerechnet und nichts ergaenzt; was der Rechentrainer nicht
+   weiss, weiss diese App auch nicht.
+4. Ebenso gezogen werden die Tabellen zur Zubereitung: AUFZIEHEN (die acht
+   Schritte), MATERIAL (Fach 5) und die namentliche Zuordnung SPIKE / MAD /
+   IM / SPRITZE_FEST. Sie stehen woertlich in der Lernunterlage RTW 231
+   (27.08.2026, S. 5, 7-8) und werden im Rechentrainer gepflegt.
+5. Der Block zwischen den beiden Markierungen in index.html wird ersetzt.
 
 Der Zuordnungsschluessel ist die M-Nummer. Wirkstoffe ohne M-Nummer (die
 Vollelektrolytloesung) haben keine Entsprechung und bekommen kein Etikett.
@@ -38,6 +42,7 @@ etwas umbenannt.
 
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -54,11 +59,11 @@ FELDER = ['name', 'form', 'prep', 'conc', 'concText', 'kind', 'anchor', 'stock',
 
 def schneide_literal(text, name):
     """Gibt das Array-Literal hinter `const <name> = ` zurueck, per Klammerzaehlung."""
-    start = text.find('const %s = [' % name)
-    if start < 0:
+    m = re.search(r'const\s+%s\s*=\s*\[' % re.escape(name), text)
+    if not m:
         raise SystemExit('Im Rechentrainer steht kein `const %s = [`. '
                          'Wurde es umbenannt?' % name)
-    i = text.index('[', start)
+    i = text.index('[', m.start())
     tiefe, j, in_str, quote, esc = 0, i, False, '', False
     while j < len(text):
         c = text[j]
@@ -112,6 +117,26 @@ def ampulle(d):
     return None, None
 
 
+def schneide_objekt(text, name):
+    """Wie schneide_literal, aber fuer ein Objekt-Literal `const <name> = {...}`."""
+    m = re.search(r'const\s+%s\s*=\s*\{' % re.escape(name), text)
+    if not m:
+        raise SystemExit('Im Rechentrainer steht kein `const %s = {`. '
+                         'Wurde es umbenannt?' % name)
+    i = text.index('{', m.start())
+    tiefe, j = 0, i
+    while j < len(text):
+        c = text[j]
+        if c == '{':
+            tiefe += 1
+        elif c == '}':
+            tiefe -= 1
+            if tiefe == 0:
+                return text[i:j + 1]
+        j += 1
+    raise SystemExit('Das Objekt %s hoert nicht auf.' % name)
+
+
 def bauen():
     quelle = open(QUELLE, encoding='utf-8').read()
     drugs = js_zu_json(schneide_literal(quelle, 'DRUGS'))
@@ -132,20 +157,35 @@ def bauen():
         if d.get('forms'):
             e['forms'] = d['forms']
         raus[m] = e
-    return raus, len(drugs)
+
+    # Die Zubereitungstabellen -- ebenfalls aus dem Rechentrainer, nicht getippt.
+    tabellen = {
+        'AUFZIEHEN': js_zu_json(schneide_literal(quelle, 'AUFZIEHEN')),
+        'MATERIAL': js_zu_json(schneide_literal(quelle, 'MATERIAL')),
+        'SPIKE': js_zu_json(schneide_objekt(quelle, 'SPIKE')),
+        'MAD': js_zu_json(schneide_objekt(quelle, 'MAD')),
+        'IM': js_zu_json(schneide_objekt(quelle, 'IM')),
+        'SPRITZE_FEST': js_zu_json(schneide_objekt(quelle, 'SPRITZE_FEST')),
+    }
+    return raus, len(drugs), tabellen
 
 
-def schreiben(daten, probe=False):
+def schreiben(daten, tabellen, probe=False):
     ziel = open(ZIEL, encoding='utf-8').read()
     if ANFANG not in ziel or ENDE not in ziel:
         raise SystemExit('Die Markierungen fehlen in index.html -- '
                          'ZUBEREITUNG:ANFANG und ZUBEREITUNG:ENDE muessen drinstehen.')
     a = ziel.index(ANFANG)
     b = ziel.index(ENDE) + len(ENDE)
-    neu = (ANFANG + '\n/* Quelle: ~/rettsan-rechentrainer/index.html · '
-           'neu ziehen mit `python3 zieh-zubereitung.py` */\n'
-           'const ZUB = ' + json.dumps(daten, ensure_ascii=False, sort_keys=False) + ';\n'
-           + ENDE)
+    zeilen = [ANFANG,
+              '/* Quelle: ~/rettsan-rechentrainer/index.html · '
+              'neu ziehen mit `python3 zieh-zubereitung.py` */',
+              'const ZUB = ' + json.dumps(daten, ensure_ascii=False) + ';']
+    for name in ('AUFZIEHEN', 'MATERIAL', 'SPIKE', 'MAD', 'IM', 'SPRITZE_FEST'):
+        zeilen.append('const %s = %s;'
+                      % (name, json.dumps(tabellen[name], ensure_ascii=False)))
+    zeilen.append(ENDE)
+    neu = '\n'.join(zeilen)
     if probe:
         alt = ziel[a:b]
         print('unveraendert' if alt == neu else
@@ -155,11 +195,13 @@ def schreiben(daten, probe=False):
 
 
 if __name__ == '__main__':
-    daten, gesamt = bauen()
+    daten, gesamt, tabellen = bauen()
     ohne = [m for m, e in daten.items() if not e.get('concText')]
     print('%d Wirkstoffe aus dem Rechentrainer gelesen, %d mit M-Nummer uebernommen.'
           % (gesamt, len(daten)))
     if ohne:
         print('ohne Konzentrationsangabe (bekommen ein offenes Feld): '
               + ', '.join(ohne))
-    schreiben(daten, probe='--probe' in sys.argv)
+    print('Tabellen: %d Aufziehschritte, %d Materialposten.'
+          % (len(tabellen['AUFZIEHEN']), len(tabellen['MATERIAL'])))
+    schreiben(daten, tabellen, probe='--probe' in sys.argv)
