@@ -196,12 +196,23 @@ table.dose td b{color:var(--paper)}
 .etikett .z{display:block;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;
   color:rgba(250,248,244,.5)}
 .etikett .w{font-size:1rem;font-weight:600;color:var(--paper)}
-.etikett .k{font-size:1.35rem;font-weight:700;color:var(--ember);line-height:1.15}
+.etikett .kz{font-size:1.35rem;font-weight:700;color:var(--ember);line-height:1.15}
 .etikett .u{font-size:1rem;font-weight:600;color:var(--paper)}
 .etikett > div + div{margin-top:.4rem}
 .etikett .fuss{margin-top:.55rem;font-family:var(--font-sans);font-size:.78rem;line-height:1.5;
   color:rgba(250,248,244,.78)}
 .etikett .fuss b{color:var(--ember)}
+.etikett .offen{font-size:.95rem;font-weight:600;color:rgba(250,248,244,.55)}
+.etikett.klein{padding:.55rem .65rem}
+.etikett.klein .kopf{display:flex;gap:1.1rem;flex-wrap:wrap}
+.etikett.klein .kopf > div + div{margin-top:0}
+.etikett.klein .w{font-size:.92rem}
+.etikett.klein .kz{font-size:1.05rem}
+.etikett.klein .u{font-size:.92rem}
+.etikett.klein .offen{font-size:.85rem}
+.etikett.klein .fuss{margin-top:.45rem;font-size:.74rem}
+.keinetikett{font-size:.82rem;line-height:1.5;color:rgba(250,248,244,.72)}
+.keinetikett b{color:var(--paper)}
 
 /* ---------- Info / Recht ---------- */
 .note{background:rgba(244,162,97,.09);border:1px solid rgba(244,162,97,.3);border-radius:12px;
@@ -373,7 +384,9 @@ body.glove .filt{font-size:.66rem;padding:.55rem .85rem}
         Originalquelle geprüft am 09.08.2026: unverändert.</p>
         <p style="margin:0 0 .5rem">Digitalfassung: hessen.sop-easy.de (zeigt teils noch V 4.0)</p>
         <p style="margin:0 0 .5rem">Rechtsrahmen: NotSanG, Hessisches Rettungsdienstgesetz (HRDG).</p>
-        <p style="margin:0">Bestückung RTW 231: Materialfinder-Liste ASB (Stand 30.07.2026).</p>
+        <p style="margin:0 0 .5rem">Bestückung RTW 231: Materialfinder-Liste ASB (Stand 30.07.2026).</p>
+        <p style="margin:0">Zubereitung und Konzentration auf den Etiketten: <b id="zubCount">—</b> — erzeugt
+        aus dem Rechentrainer (<span class="mno">zieh-zubereitung.py</span>), keine Zahl hier abgetippt.</p>
       </div>
     </div>
 
@@ -734,6 +747,11 @@ const M28 = [
  {n:'Fentanyl', amp:'10 ml / 0,5 mg', ampwarn:true, menge:'0,5 mg', verd:'pur', konz:'0,05 mg/ml',
   dosis:'0,001 mg/kgKG', zeit:'30 Sek.', wdh:'2 Minuten'}
 ];
+
+/* === ZUBEREITUNG:ANFANG — erzeugt von zieh-zubereitung.py, nicht von Hand pflegen === */
+/* Quelle: ~/rettsan-rechentrainer/index.html · neu ziehen mit `python3 zieh-zubereitung.py` */
+const ZUB = {"M 1": {"name": "Acetylsalicylsäure", "form": "500 mg Trockensubstanz + 5 ml Wasser f. Inj.", "prep": "Trockensubstanz auflösen", "conc": 100, "concText": "100 mg/ml", "kind": "ts", "anchor": "250 mg = 2,5 ml", "amp": {"mg": 500, "ml": 5}, "ts": true}, "M 2": {"name": "Adrenalin", "form": "1 Amp. 1 mg / 1 ml", "prep": "fünf Wege — eigene Seite", "concText": "1 · 0,1 · 0,01 mg/ml", "kind": "adrenalin", "anchor": "fünf Konzentrationen"}, "M 3": {"name": "Amiodaron", "form": "150 mg / 3 ml", "prep": "unverdünnt / Fertiglösung", "conc": 50, "concText": "50 mg/ml", "kind": "std", "anchor": "300 mg = 6 ml (2 Amp.)", "amp": {"mg": 150, "ml": 3}, "ampConc": 50.0}, "M 4": {"name": "Atropin", "form": "0,5 mg / 1 ml ODER 1,0 mg / 1 ml", "prep": "unverdünnt / Fertiglösung", "concText": "0,5 oder 1,0 mg/ml", "kind": "multi", "anchor": "0,5 mg = 1 ml (0,5er) bzw. 0,5 ml (1,0er)", "forms": [{"mg": 0.5, "ml": 1, "conc": 0.5}, {"mg": 1, "ml": 1, "conc": 1}]}, "M 5": {"name": "Butylscopolamin", "form": "20 mg / 1 ml", "prep": "unverdünnt / Fertiglösung", "conc": 20, "concText": "20 mg/ml", "kind": "std", "anchor": "20 mg = 1 ml pur, verdünnt 10 ml", "amp": {"mg": 20, "ml": 1}, "ampConc": 20.0}, "M 6": {"name": "Clemastin", "form": "2 mg / 2 ml", "prep": "unverdünnt / Fertiglösung", "conc": 1, "concText": "1 mg/ml", "kind": "std", "anchor": "2 mg = 2 ml", "amp": {"mg": 2, "ml": 2}, "ampConc": 1.0}, "M 7": {"name": "Dimenhydrinat", "form": "62 mg / 10 ml", "prep": "unverdünnt / Fertiglösung", "conc": 6.2, "concText": "6,2 mg/ml", "kind": "std", "anchor": "62 mg = 10 ml (ganze Ampulle)", "amp": {"mg": 62, "ml": 10}, "ampConc": 6.2}, "M 8": {"name": "Dimetinden", "form": "4 mg / 4 ml", "prep": "unverdünnt / Fertiglösung", "conc": 1, "concText": "1 mg/ml", "kind": "std", "anchor": "1 mg = 1 ml", "amp": {"mg": 4, "ml": 4}, "ampConc": 1.0}, "M 9": {"name": "Esketamin", "form": "50 mg / 5 ml (10 mg/ml) ODER 25 mg / 5 ml (5 mg/ml) ODER 50 mg / 2 ml (25 mg/ml)", "prep": "50-mg-Amp. auf 10 ml · 5-mg/ml-Amp. pur", "conc": 5, "concText": "5 mg/ml", "kind": "multi", "anchor": "Ziel i.v. immer 5 mg/ml", "stock": "Apothekerschrank — 50 mg / 5 ml, also 10 mg/ml. Auf 10 ml aufgefüllt ergibt das 5 mg/ml. Diese Ampulle sieht aus wie die 25-mg/5-ml-Ampulle, ist aber doppelt so stark: nicht pur verwenden.", "forms": [{"mg": 50, "ml": 5, "conc": 5, "note": "auf 10 ml verdünnt = 5 mg/ml", "dilute10": true, "stock": true}, {"mg": 25, "ml": 5, "conc": 5, "note": "pur — schon 5 mg/ml"}, {"mg": 50, "ml": 2, "conc": 5, "note": "auf 10 ml verdünnt = 5 mg/ml", "dilute10": true}]}, "M 10": {"name": "Fentanyl", "form": "0,5 mg / 10 ml ODER 0,1 mg / 2 ml", "prep": "unverdünnt / Fertiglösung", "conc": 0.05, "concText": "0,05 mg/ml", "kind": "std", "anchor": "beide Formen 0,05 mg/ml", "amp": {"mg": 0.5, "ml": 10}, "ampConc": 0.05}, "M 11": {"name": "Flumazenil", "form": "0,5 mg / 5 ml", "prep": "unverdünnt / Fertiglösung", "conc": 0.1, "concText": "0,1 mg/ml", "kind": "std", "anchor": "0,1 mg = 1 ml · 0,2 mg = 2 ml", "amp": {"mg": 0.5, "ml": 5}, "ampConc": 0.1}, "M 12": {"name": "Glucose", "form": "G 20 % / 100 ml · G 40 % / 10 ml", "prep": "Erw. pur · Kind bis 12 J. 1:1 mit NaCl", "concText": "200 bzw. 400 mg/ml", "kind": "glucose", "anchor": "8 g = 40 ml G 20 % bzw. 20 ml G 40 %"}, "M 13": {"name": "Glyceroltrinitrat", "form": "1 Hub = 0,4 mg", "prep": "nichts vorzubereiten", "concText": "0,4 mg/Hub", "kind": "hub", "anchor": "nichts aufzuziehen"}, "M 14": {"name": "Ipratropiumbromid", "form": "Fertiginhalat 0,25 mg / 2 ml", "prep": "unverdünnt / Fertiglösung", "conc": 0.125, "concText": "0,125 mg/ml", "kind": "std", "anchor": "0,5 mg = 2 Amp. = 4 ml", "amp": {"mg": 0.25, "ml": 2}, "ampConc": 0.125}, "M 15": {"name": "Levetiracetam", "form": "Konzentrat 500 mg / 5 ml", "prep": "Konzentrat in ≥ 100 ml NaCl", "conc": 100, "concText": "100 mg/ml", "kind": "std", "anchor": "4500 mg = 45 ml Konzentrat in ≥ 100 ml NaCl", "infusion": true, "amp": {"mg": 500, "ml": 5}, "ampConc": 100.0}, "M 16": {"name": "Midazolam", "form": "5 mg / 1 ml · 15 mg / 3 ml (beide 5 mg/ml) · 5 mg / 5 ml (1 mg/ml)", "prep": "nasal pur · i.v. zum Titrieren verdünnen", "concText": "5 bzw. 1 mg/ml", "kind": "multi", "anchor": "bei 5 mg/ml: 5 mg = 1 ml", "forms": [{"mg": 5, "ml": 1, "conc": 5}, {"mg": 15, "ml": 3, "conc": 5}, {"mg": 5, "ml": 5, "conc": 1}]}, "M 17": {"name": "Morphin", "form": "10 mg / 1 ml", "prep": "1 Amp. auf 10 ml NaCl 0,9 %", "conc": 1, "concText": "1 mg/ml", "kind": "std", "anchor": "1 mg = 1 ml", "amp": {"mg": 10, "ml": 1}, "ampConc": 10.0}, "M 18": {"name": "Nalbuphin", "form": "20 mg / 2 ml", "prep": "1 Amp. auf 10 ml NaCl 0,9 %", "conc": 2, "concText": "2 mg/ml", "kind": "std", "anchor": "2 mg = 1 ml", "amp": {"mg": 20, "ml": 2}, "ampConc": 10.0}, "M 19": {"name": "Naloxon", "form": "0,4 mg / 1 ml", "prep": "1 Amp. auf 10 ml NaCl 0,9 %", "conc": 0.04, "concText": "0,04 mg/ml", "kind": "std", "anchor": "0,1 mg = 2,5 ml", "amp": {"mg": 0.4, "ml": 1}, "ampConc": 0.4}, "M 20": {"name": "Paracetamol", "form": "1000 mg / 100 ml (10 mg/ml)", "prep": "unverdünnt / Fertiglösung", "conc": 10, "concText": "10 mg/ml", "kind": "std", "anchor": "1000 mg = 100 ml (ganze Flasche)", "infusion": true, "amp": {"mg": 1000, "ml": 100}, "ampConc": 10.0}, "M 21": {"name": "Piritramid", "form": "15 mg / 2 ml", "prep": "1 Amp. auf 10 ml NaCl 0,9 %", "conc": 1.5, "concText": "1,5 mg/ml", "kind": "std", "anchor": "1,5 mg = 1 ml", "amp": {"mg": 15, "ml": 2}, "ampConc": 7.5}, "M 22": {"name": "Prednisolon", "form": "250 mg Trockensubstanz + 5 ml Lösungsmittel · Zäpfchen 100 mg", "prep": "Trockensubstanz auflösen", "conc": 50, "concText": "50 mg/ml", "kind": "ts", "anchor": "250 mg = 5 ml (ganze Flasche)", "amp": {"mg": 250, "ml": 5}, "ts": true}, "M 23": {"name": "Salbutamol", "form": "1 Amp. 1,25 mg / 2,5 ml", "prep": "unverdünnt / Fertiglösung", "conc": 0.5, "concText": "0,5 mg/ml", "kind": "std", "anchor": "2,5 mg = 2 Amp. = 5 ml", "amp": {"mg": 1.25, "ml": 2.5}, "ampConc": 0.5}, "M 24": {"name": "Sauerstoff", "form": "Druckgasflasche", "prep": "nichts vorzubereiten", "concText": "—", "kind": "none", "anchor": "nichts aufzuziehen"}, "M 25": {"name": "Thiamin", "form": "100 mg / 2 ml", "prep": "unverdünnt / Fertiglösung", "conc": 50, "concText": "50 mg/ml", "kind": "std", "anchor": "100 mg = 2 ml (ganze Ampulle)", "amp": {"mg": 100, "ml": 2}, "ampConc": 50.0}, "M 26": {"name": "Urapidil", "form": "25 mg / 5 ml ODER 50 mg / 10 ml — beide 5 mg/ml", "prep": "unverdünnt / Fertiglösung", "conc": 5, "concText": "5 mg/ml", "kind": "std", "anchor": "5 mg = 1 ml", "stock": "25 mg / 5 ml — die kleine Ampulle. Ganze Ampulle = 25 mg = 5 ml.", "amp": {"mg": 25, "ml": 5}, "ampConc": 5.0}};
+/* === ZUBEREITUNG:ENDE === */
 
 /* ---- abgeleitete Strukturen ---- */
 const D = {}; DRUGS.forEach(function(d){ D[d.id]=d; });
@@ -1271,7 +1289,7 @@ function sheetsHTML(q){
           if (r.ampwarn) fuss += ' <b>Cave:</b> von diesem Wirkstoff sind andere Ampullenstärken im Umlauf; dann stimmt auch die Konzentration nicht mehr.';
           return '<div class="etikett">'+
             '<div><span class="z">Wirkstoff</span><span class="w">'+esc(r.n)+'</span></div>'+
-            '<div><span class="z">Konzentration in der Spritze</span><span class="k">'+esc(konz)+'</span></div>'+
+            '<div><span class="z">Konzentration in der Spritze</span><span class="kz">'+esc(konz)+'</span></div>'+
             '<div><span class="z">Uhrzeit</span><span class="u" data-uhr>--:--</span></div>'+
             '<div class="fuss">'+fuss+'</div>'+
           '</div>';
@@ -1284,6 +1302,71 @@ function sheetsHTML(q){
   }
   return out;
 }
+/* ============================================================
+   SPRITZENETIKETT je Wirkstoff
+   Die Zubereitungsdaten stehen nicht in dieser App, sondern kommen aus dem
+   Rechentrainer -- gezogen von zieh-zubereitung.py in den Block ZUB.
+   Hier wird nur noch angezeigt, nicht gerechnet.
+   ============================================================ */
+const NUR_VERNEBELT = {'M 14':1, 'M 23':1};
+function etikettFuer(d){
+  const z = ZUB[d.m];
+  if(!z || z.kind==='none' || z.kind==='hub') return '';
+  if(NUR_VERNEBELT[d.m]) return '<div class="keinetikett"><b>Kein Spritzenetikett.</b> '+
+    'Wird vernebelt, nicht gespritzt. Die Ampulle ('+esc(z.form)+') trotzdem laut lesen.</div>';
+  if(z.kind==='adrenalin') return '<div class="keinetikett"><b>Kein festes Etikett.</b> '+
+    'Aus einer Ampulle entstehen fünf Konzentrationen ('+esc(z.concText)+'). Auf die Spritze gehört die '+
+    'des Weges, den du gezogen hast — ohne Beschriftung sehen 1:10 und 1:100 gleich aus.</div>';
+
+  const offen = z.conc == null;
+  const feld = offen
+    ? '<span class="offen">erst die Ampulle lesen</span>'
+    : '<span class="kz">'+esc(z.concText)+'</span>';
+  /* Ob etwas pur gegeben wird, entscheidet die Zubereitungsangabe des
+     Rechentrainers -- nicht ein Zahlenvergleich. Esketamin und Levetiracetam
+     haben rechnerisch dieselbe Konzentration wie ihre Ampulle und werden
+     trotzdem nie pur gegeben. */
+  const pur = /^unverdünnt/i.test(z.prep || '');
+  let fuss = '';
+  if(offen){
+    fuss = 'Mehrere Stärken im Umlauf: '+esc(z.form)+'. Die Zahl fürs Etikett steht erst fest, '+
+           'wenn die Ampulle in der Hand liegt.';
+  } else if(z.ts){
+    fuss = 'Auf der Flasche steht nur die Menge (<b>'+esc(z.form.split(' ·')[0])+'</b>). Eine Konzentration '+
+           'hat sie erst, wenn sie aufgelöst ist — ohne Etikett weiß der Nächste nicht, in wie viel ml.';
+  } else if(z.infusion && !pur){
+    fuss = 'Beschriftet wird der <b>Beutel</b>, nicht die Spritze. Die '+esc(z.concText)+' gelten für das '+
+           'Konzentrat ('+esc(z.form)+'); zubereitet wird '+esc(z.prep)+', im Beutel ist es also ein '+
+           'Bruchteil davon. Dort gehören Gesamtdosis, Beutelvolumen und Startzeit hin.';
+  } else if(!pur){
+    fuss = 'Auf der Ampulle steht <b>'+esc(z.form)+'</b>, zubereitet wird '+esc(z.prep)+
+           '. Aufs Etikett gehört die Zahl aus der Spritze.';
+  } else if(z.infusion){
+    fuss = 'Fertige Infusionsflasche <b>'+esc(z.form)+'</b>. Angebrochen gehören Uhrzeit und Name '+
+           'trotzdem drauf — auch eine Flasche steht irgendwann ohne Zeugen herum.';
+  } else {
+    fuss = 'Fertiglösung <b>'+esc(z.form)+'</b> — Ampulle und Spritze haben dieselbe Konzentration. '+
+           'Das Etikett bleibt trotzdem dran.';
+  }
+  if(z.stock) fuss += ' <b>Im Fahrzeug:</b> '+esc(z.stock);
+  return '<div class="etikett klein"><div class="kopf">'+
+      '<div><span class="z">Wirkstoff</span><span class="w">'+esc(z.name)+'</span></div>'+
+      '<div><span class="z">Konzentration in der Spritze</span>'+feld+'</div>'+
+      '<div><span class="z">Uhrzeit</span><span class="u" data-uhr>--:--</span></div>'+
+    '</div><div class="fuss">'+fuss+'</div></div>';
+}
+
+/* Selbstpruefung: wie viele Wirkstoffe eine gezogene Zubereitung haben.
+   Faellt die Zahl nach einem Lauf von zieh-zubereitung.py, hat der
+   Rechentrainer etwas umbenannt. */
+(function(){
+  const box = document.getElementById('zubCount'); if(!box) return;
+  const mit = DRUGS.filter(function(d){ return ZUB[d.m]; }).length;
+  const mitKonz = DRUGS.filter(function(d){ return ZUB[d.m] && ZUB[d.m].conc != null; }).length;
+  box.textContent = mit + ' von ' + DRUGS.length + ' Wirkstoffen, davon ' + mitKonz +
+    ' mit einer festen Konzentration';
+})();
+
 /* Die Uhrzeit auf den Etiketten wird beim Zeichnen gesetzt, nicht beim Laden. */
 function nowHHMM(){ var t = new Date();
   return ('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2); }
@@ -1312,6 +1395,8 @@ function drawRef(){
         (d.dwarn? '<br><span class="saa">Achtung</span> '+esc(d.dwarn):'')+
       '</div></div>'+
       '<div class="row cave"><div class="k">Cave</div><div class="v">'+esc(d.c)+'</div></div>'+
+      (function(){ const e = etikettFuer(d);
+        return e? '<div class="row"><div class="k">Etikett</div><div class="v">'+e+'</div></div>' : ''; })()+
       (d.rsnote?'<div class="row"><div class="k">Für dich</div><div class="v">'+esc(d.rsnote)+'</div></div>':'')+
       (d.boardNote?'<div class="row"><div class="k">RTW 231</div><div class="v">'+esc(d.boardNote)+'</div></div>':'')+
     '</div>';
