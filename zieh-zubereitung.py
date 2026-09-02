@@ -49,7 +49,7 @@ ENDE = '/* === ZUBEREITUNG:ENDE === */'
 
 # Was das Etikett braucht. Alles andere aus dem Rechentrainer bleibt dort.
 FELDER = ['name', 'form', 'prep', 'conc', 'concText', 'kind', 'anchor', 'stock',
-          'infusion']
+          'infusion', 'orders', 'wholeAmp']
 
 
 def schneide_literal(text, name):
