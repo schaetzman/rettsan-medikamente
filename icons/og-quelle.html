@@ -1,0 +1,57 @@
+<!doctype html>
+<!-- Quelle des Teilbilds fuer Messenger und soziale Netze. Grund, Wellenmuster und
+     Farben sind woertlich aus dem body-Stil der App uebernommen, damit die Karte
+     aussieht wie das, was sich danach oeffnet. Neu rendern:
+     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless \
+       --disable-gpu --hide-scrollbars --force-device-scale-factor=1 \
+       --virtual-time-budget=8000 --window-size=1200,630 \
+       --screenshot=icons/og.png icons/og-quelle.html                          -->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Inter+Tight:wght@400;600;700&family=JetBrains+Mono:wght@500&display=block" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{
+    background-color:#0B1A2E;
+    background-image:
+      radial-gradient(ellipse at 20% 30%, rgba(244,162,97,0.10) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(58,92,135,0.20) 0%, transparent 50%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'><g fill='none' stroke='%231E3A5F' stroke-width='0.6' opacity='0.35'><path d='M-50 200 Q 150 120, 300 200 T 650 180'/><path d='M-50 240 Q 150 160, 300 240 T 650 220'/><path d='M-50 280 Q 150 200, 300 280 T 650 260'/><path d='M-50 320 Q 150 240, 300 320 T 650 300'/><path d='M-50 360 Q 150 280, 300 360 T 650 340'/><path d='M-50 400 Q 150 320, 300 400 T 650 380'/><path d='M-50 440 Q 150 360, 300 440 T 650 420'/></g></svg>");
+    background-size:cover,cover,600px 600px;
+    font-family:'Inter Tight',system-ui,sans-serif;color:#FAF8F4;
+    display:flex;align-items:center;gap:64px;padding:0 86px;position:relative}
+  .tile{flex:0 0 290px;width:290px;height:290px;border-radius:64px;background:#F4A261;
+        display:flex;align-items:center;justify-content:center;
+        box-shadow:0 24px 70px -24px rgba(0,0,0,.8)}
+  .tile span{font-family:'Fraunces',Georgia,serif;font-variation-settings:"opsz" 144;
+             font-weight:700;font-size:184px;line-height:1;color:#0B1A2E;letter-spacing:-.02em;
+             transform:translateY(-6px)}
+  .txt{flex:1 1 auto;min-width:0}
+  .kicker{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:18px;
+          letter-spacing:.22em;text-transform:uppercase;color:#F4A261}
+  h1{font-family:'Fraunces',Georgia,serif;font-variation-settings:"opsz" 144;font-weight:700;
+     font-size:74px;line-height:1.02;letter-spacing:-.025em;margin:20px 0 0}
+  .rule{width:96px;height:5px;border-radius:3px;background:#D96C2C;margin:28px 0 24px}
+  .lead{font-size:29px;line-height:1.36;font-weight:400;color:rgba(250,248,244,.78);max-width:640px}
+  .lead b{color:#FAF8F4;font-weight:600}
+  .foot{position:absolute;left:86px;right:86px;bottom:44px;display:flex;justify-content:space-between;
+        font-family:'JetBrains Mono',ui-monospace,monospace;font-size:17px;letter-spacing:.13em;
+        text-transform:uppercase;color:rgba(250,248,244,.42)}
+  .foot .klein{text-transform:none;letter-spacing:.04em}
+</style>
+</head>
+<body>
+  <div class="tile"><span>Rx</span></div>
+  <div class="txt">
+    <div class="kicker">ASB Wetterau · Rettungsdienst</div>
+    <h1>Wirkstoff-Trainer</h1>
+    <div class="rule"></div>
+    <p class="lead"><b>Welcher Wirkstoff gehört zu welchem Notfall?</b><br>
+    Fünf Spielmodi über die 26 Notfallmedikamente.</p>
+  </div>
+  <div class="foot"><span>Hessenalgorithmen V <span class="klein">4.2</span></span><span>medikamententrainer.netlify.app</span></div>
+</body>
+</html>

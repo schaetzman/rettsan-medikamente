@@ -1,7 +1,7 @@
 /* Wirkstoff-Trainer — Service Worker
    Muster nach pattern-pwa-ios-autoupdate: HTML/SW nie aus dem Cache bedienen,
    damit hängende iPad-PWAs nicht auf einem alten Stand einfrieren. */
-const CACHE = 'rs-wirkstoff-v1.2.0';
+const CACHE = 'rs-wirkstoff-v1.3.0';
 const ASSETS = [
   './',
   './index.html',
