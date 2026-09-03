@@ -176,6 +176,25 @@ header.top{display:flex;align-items:center;gap:.75rem;padding:.9rem 0 1.1rem;bor
    Dieselbe Regel gilt in QRH Med und im Rechentrainer.                        */
 .gl{font-family:var(--font-mono);font-size:.56rem;font-weight:500;letter-spacing:.13em;
   text-transform:uppercase;color:rgba(250,248,244,.55);margin-right:.32rem;white-space:nowrap}
+
+/* ---------- Querverweise in die Schwester-Apps ----------
+   Die Rueckleiste erscheint nur, wenn man aus einer der anderen Apps kommt.
+   Der Kopf dieser App klebt nicht oben, deshalb reicht der Abstand am body. */
+.zurueckleiste{position:fixed;top:0;left:0;right:0;z-index:60;display:none;align-items:center;
+  background:var(--steel-700);color:var(--paper);
+  padding:env(safe-area-inset-top) 1rem 0}
+body.mitleiste .zurueckleiste{display:flex}
+body.mitleiste{padding-top:calc(46px + env(safe-area-inset-top));overflow-anchor:none}
+.zurueckleiste button{background:none;border:0;color:var(--paper);font-family:inherit;font-size:.92rem;
+  font-weight:600;cursor:pointer;display:flex;align-items:center;gap:.4rem;min-height:46px;padding:0;max-width:100%;white-space:nowrap}
+.zurueckleiste #zurueckZiel{overflow:hidden;text-overflow:ellipsis;min-width:0}
+@media print{.zurueckleiste{display:none!important}}
+.querlinks{display:flex;flex-wrap:wrap;gap:.4rem}
+.querlinks button{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.03em;
+  background:rgba(230,223,210,.07);color:rgba(250,248,244,.82);
+  border:1px solid rgba(230,223,210,.22);border-radius:9px;
+  padding:.45rem .65rem;min-height:38px;cursor:pointer}
+.querlinks button:active{transform:translateY(1px)}
 .who{display:inline-flex;gap:.3rem;flex-wrap:wrap;margin-top:.15rem}
 .tag{font-family:var(--font-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;
   border-radius:5px;padding:.18rem .4rem;border:1px solid}
@@ -305,6 +324,7 @@ body.glove .filt{font-size:.66rem;padding:.55rem .85rem}
 </style>
 </head>
 <body>
+<div class="zurueckleiste"><button type="button" id="zurueckBtn"><span aria-hidden="true">‹</span> <span id="zurueckZiel">zurück</span></button></div>
 <div class="wrap">
   <header class="top">
     <div class="mark">Rx</div>
@@ -890,6 +910,86 @@ document.addEventListener('click', function(e){
   const b = e.target.closest('[data-go]');
   if(b){ go(b.getAttribute('data-go')); }
 });
+
+/* ============================================================
+   QUERVERWEISE ZWISCHEN DEN DREI APPS
+   Rechentrainer (lernen) · QRH Med (nachschlagen) · Wirkstoff-Trainer (abfragen)
+   beschreiben dieselben Wirkstoffe. Schluessel ist die M-Nummer — die einzige
+   Angabe, die in allen dreien Zeichen fuer Zeichen dieselbe ist.
+
+   ⚠ Die drei sind eigene PWAs. Im Standalone-Modus ignoriert iOS target="_blank"
+   und navigiert INNERHALB der App; ohne Adresszeile und ohne Zurueck-Pfeil sitzt
+   man dann fest. Deshalb: beim Sprung selbst navigieren, damit ein Verlaufseintrag
+   entsteht, und drueben die Rueckleiste zeigen.
+   ⚠ Kein Timer-Fallback nach history.back() — Safari friert die Seite im
+   Vor/Zurueck-Cache ein und laesst den Timer beim Wiederherstellen weiterlaufen.
+   ============================================================ */
+var APPS = {
+  rechnen:   {n:'Rechentrainer',     u:'https://rechnenmitmedikamenten.netlify.app/'},
+  qrh:       {n:'QRH Med',           u:'https://qrh-med.netlify.app/'},
+  wirkstoff: {n:'Wirkstoff-Trainer', u:'https://medikamententrainer.netlify.app/'}
+};
+var QUERTEXT = {rechnen:'Rechnen üben', qrh:'Im Dienst nachschlagen', wirkstoff:'Wirkstoffkunde'};
+var ICH = 'wirkstoff';
+
+function imStandalone(){
+  return window.navigator.standalone === true
+      || matchMedia('(display-mode: standalone)').matches
+      || matchMedia('(display-mode: fullscreen)').matches;
+}
+function springZu(key, mnr){
+  var ziel = APPS[key].u + '#m=' + mnr + '&von=' + ICH;
+  if (imStandalone()) location.href = ziel;
+  else window.open(ziel, '_blank', 'noopener');
+}
+function ankunft(){
+  var p = {}, h = location.hash.replace(/^#/, '');
+  h.split('&').forEach(function(t){ var i = t.indexOf('='); if (i > 0) p[t.slice(0, i)] = t.slice(i + 1); });
+  return {m: String(p.m || '').replace(/\D/g, ''), von: APPS[p.von] ? p.von : ''};
+}
+function zurueckZu(von){
+  if (window.opener && !window.opener.closed) { window.close(); return; }
+  var ursprung = APPS[von].u;
+  if (document.referrer && document.referrer.indexOf(ursprung) === 0 && history.length > 1) { history.back(); return; }
+  location.href = ursprung;
+}
+/* Knoepfe zu den beiden Schwester-Apps, immer mit derselben M-Nummer. */
+function querlinksHTML(mnr){
+  var n = String(mnr == null ? '' : mnr).replace(/\D/g, '');
+  if (!n) return '';
+  return Object.keys(APPS).filter(function(k){ return k !== ICH; }).map(function(k){
+    return '<button type="button" data-quer="' + k + '" data-m="' + n + '">' + QUERTEXT[k] + '</button>';
+  }).join('');
+}
+function querStart(oeffne){
+  var a = ankunft();
+  /* Beim Ankommen aus einer Schwester-App soll immer der Kopf zu sehen sein.
+     Die Wiederherstellung der alten Scrollposition durch den Browser laeuft
+     asynchron nach dem Laden und gewinnt sonst gegen jedes scrollTo. */
+  if (a.von || a.m) { try { history.scrollRestoration = 'manual'; } catch (e) {} }
+  if (a.von) {
+    document.body.classList.add('mitleiste');
+    var z = document.getElementById('zurueckZiel'); if (z) z.textContent = 'zurück zu ' + APPS[a.von].n;
+    var b = document.getElementById('zurueckBtn'); if (b) b.onclick = function(){ zurueckZu(a.von); };
+  }
+  if (a.m) oeffne(a.m);
+  /* Beim Ankommen soll der Kopf zu sehen sein. Zwei Dinge arbeiten dagegen:
+     die Wiederherstellung der alten Scrollposition (oben abgeschaltet) und das
+     Scroll-Anchoring — der Innenabstand fuer die Leiste schiebt den Inhalt um
+     46px nach unten, und der Browser gleicht das aus, indem er mitscrollt.
+     Deshalb zusaetzlich nach dem Layout noch einmal nach oben. */
+  if (a.von || a.m) {
+    var nachOben = function(){ window.scrollTo(0, 0); };
+    nachOben();
+    requestAnimationFrame(function(){ requestAnimationFrame(nachOben); });
+    window.addEventListener('load', nachOben);
+  }
+}
+document.addEventListener('click', function(e){
+  var b = e.target && e.target.closest ? e.target.closest('[data-quer]') : null;
+  if (b) springZu(b.getAttribute('data-quer'), b.getAttribute('data-m'));
+});
+
 
 /* =========================================================================
    HOME
@@ -1669,6 +1769,8 @@ function drawRef(){
         return e? '<div class="row"><div class="k">Etikett</div><div class="v">'+e+'</div></div>' : ''; })()+
       (d.rsnote?'<div class="row"><div class="k">Für dich</div><div class="v">'+esc(d.rsnote)+'</div></div>':'')+
       (d.boardNote?'<div class="row"><div class="k">Am Fahrzeug</div><div class="v">'+esc(d.boardNote)+'</div></div>':'')+
+      (function(){ const q = querlinksHTML(d.m);
+        return q? '<div class="row"><div class="k">Nebenan</div><div class="v"><div class="querlinks">'+q+'</div></div></div>' : ''; })()+
     '</div>';
   }).join('') : (sheets? '' : '<div class="note">Nichts gefunden. Andere Schreibweise probieren — auch Handelsnamen funktionieren.</div>'));
   paintUhr(el('reflist'));
@@ -1703,6 +1805,11 @@ el('resetBtn').addEventListener('click', function(){
 });
 if(S.glove) document.body.classList.add('glove');
 renderHome();
+/* Kommt der Aufruf aus einer Schwester-App, das Nachschlagen auf den Wirkstoff stellen. */
+querStart(function(n){
+  go('ref');
+  var q = el('q'); if (q) { q.value = 'M ' + n; drawRef(); }
+});
 
 /* Service Worker + Auto-Update */
 if('serviceWorker' in navigator){
