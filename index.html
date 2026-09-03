@@ -146,6 +146,15 @@ header.top{display:flex;align-items:center;gap:.75rem;padding:.9rem 0 1.1rem;bor
   color:var(--ember);flex:0 0 4.6rem;padding-top:.18rem}
 .row .v{flex:1;color:rgba(250,248,244,.86)}
 .row.cave .k{color:var(--wrong)}
+/* ---------- Dosis-Grammatik ----------
+   Jede Groesse traegt ihr Etikett: DOSIS (mg), KONZ. (mg/ml), VOLUMEN (ml), GEWICHT (kg).
+   Die Akzentfarbe sagt nur "das ist der Hauptwert dieser Flaeche" — WELCHE Groesse das
+   ist, sagt immer das Etikett, nie die Farbe allein. Reihenfolge, wo mehrere
+   nebeneinander stehen: Dosis -> Konzentration -> Volumen.
+   .row .k ist die Blockform davon; .gl die Form mitten im Text.
+   Dieselbe Regel gilt in QRH Med und im Rechentrainer.                        */
+.gl{font-family:var(--font-mono);font-size:.56rem;font-weight:500;letter-spacing:.13em;
+  text-transform:uppercase;color:rgba(250,248,244,.55);margin-right:.32rem;white-space:nowrap}
 .who{display:inline-flex;gap:.3rem;flex-wrap:wrap;margin-top:.15rem}
 .tag{font-family:var(--font-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;
   border-radius:5px;padding:.18rem .4rem;border:1px solid}
@@ -338,6 +347,13 @@ body.glove .filt{font-size:.66rem;padding:.55rem .85rem}
       <p>Alle 26 Wirkstoffe der hessischen Algorithmen plus Vollelektrolytlösung — mit Gruppe,
       Indikation, Dosis und Cave. Obendrauf die beiden Analgetika-Übersichtsblätter
       <b>M 27</b> (Risikoprofile) und <b>M 28</b> (Dosierung, Verdünnung, Wartezeiten).</p>
+      <p style="margin-top:.5rem"><b>So liest du die Zahlen.</b> Vor jedem Wert steht in kleinen
+      Großbuchstaben, welche Größe er ist: <span class="gl">Dosis</span> in mg — wie viel Wirkstoff
+      der Patient bekommt. <span class="gl">Konzentration</span> in mg/ml — wie viel Wirkstoff in
+      einem Milliliter steckt. <span class="gl">Volumen</span> in ml — was du an der Spritze abliest.
+      Stehen mehrere nebeneinander, ist die Reihenfolge immer Dosis → Konzentration → Volumen.
+      Milliliter allein sind keine Aussage: erst die Konzentration macht aus einem Volumen eine Dosis.
+      Dieselbe Regel gilt im Rechentrainer und in QRH Med.</p>
     </div>
     <input class="search" id="q" placeholder="Suchen: Wirkstoff, Handelsname, Gruppe, Notfall…" autocomplete="off">
     <div class="filters" id="filters"></div>
@@ -1298,7 +1314,7 @@ function sheetsHTML(q){
             '<div class="row"><div class="k">Dosis</div><div class="v"><b>'+esc(r.dosis)+'</b></div></div>'+
             '<div class="row"><div class="k">Ampulle</div><div class="v">'+esc(r.amp)+' → '+esc(r.menge)+
               (r.ampwarn?' <span class="saa">Cave: z. T. andere Amp./Konzentration!</span>':'')+'</div></div>'+
-            '<div class="row"><div class="k">Verdünnt</div><div class="v">'+esc(r.verd)+' → <b>'+esc(r.konz)+'</b></div></div>'+
+            '<div class="row"><div class="k">Verdünnt</div><div class="v">'+esc(r.verd)+' → <span class="gl">Konzentration</span><b>'+esc(r.konz)+'</b></div></div>'+
             '<div class="row"><div class="k">Zeit</div><div class="v">Injektion '+esc(r.zeit)+' · Wiederholung '+esc(r.wdh)+'</div></div>'+
           '</div>';
         }).join('')+
